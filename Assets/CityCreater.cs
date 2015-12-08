@@ -49,6 +49,7 @@ public class CityCreater : MonoBehaviour
 	public GameObject ground;
 	public GameObject testGround;
 	public GameObject building; 
+	public GameObject check;
 	public Dictionary<string,object> city;
 	
 	public string jsonText = "";
@@ -248,9 +249,16 @@ public class CityCreater : MonoBehaviour
 				clone.GetComponent<Building>().Init(new Color (float.Parse (oneBuilding ["color_r"].ToString ()), float.Parse (oneBuilding ["color_g"].ToString ()), float.Parse (oneBuilding ["color_b"].ToString ())));
 				
 				IList sList = oneBuilding["SATD"] as IList;
+				Debug.Log(this.check);
+				Debug.Log(this.building);
 				if(sList.Count != 0){
-					GameObject check = Instantiate (this.building, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ())) + 10, float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
-					check.transform.localScale = new Vector3 (float.Parse (oneBuilding ["width"].ToString ()), float.Parse("10.0"), float.Parse (oneBuilding ["width"].ToString ()));
+					//GameObject test = Instantiate (this.check, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ())) + 10, float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
+
+					GameObject check = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+					check.transform.Translate(float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ())) + float.Parse (oneBuilding ["width"].ToString ()), float.Parse (oneBuilding ["globalY"].ToString ()));
+					//test.transform.localScale = new Vector3 (float.Parse (oneBuilding ["width"].ToString ()), float.Parse (oneBuilding ["width"].ToString ()), float.Parse (oneBuilding ["width"].ToString ()));
+					//GameObject check = Instantiate (this.building, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ())) + 10, float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
+					check.transform.localScale = new Vector3 (float.Parse (oneBuilding ["width"].ToString ()), float.Parse (oneBuilding ["width"].ToString ()), float.Parse (oneBuilding ["width"].ToString ()));
 				}
 			}
 		}
