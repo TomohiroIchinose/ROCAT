@@ -1,959 +1,2642 @@
 {
     "buildings": [
         {
-            "width": 3, 
-            "color_b": 0.7528663605067644, 
+            "width": 20, 
+            "color_b": 0.4340654873572265, 
             "SATD": [], 
-            "name": "zip.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib/zip.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib", 
-            "height": 14
+            "name": "setup.py", 
+            "color_g": 0.6695266371176901, 
+            "path": "C:\\Users\\Ichinose\\swift/setup.py", 
+            "color_r": 0.8774671155216108, 
+            "block": "C:\\Users\\Ichinose\\swift", 
+            "height": 10
         }, 
         {
-            "width": 32, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [
-                17
-            ], 
-            "name": "central_directory.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/central_directory.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 60
+            "width": 138, 
+            "color_b": 0.4771425595432711, 
+            "SATD": [], 
+            "name": "conf.py", 
+            "color_g": 0.11289618167121795, 
+            "path": "C:\\Users\\Ichinose\\swift\\doc\\source/conf.py", 
+            "color_r": 0.2456368357229065, 
+            "block": "C:\\Users\\Ichinose\\swift\\doc\\source", 
+            "height": 106
         }, 
         {
-            "width": 4, 
-            "color_b": 0.8137152356669881, 
+            "width": 20, 
+            "color_b": 0.2868710233589852, 
             "SATD": [], 
-            "name": "compressor.rb", 
-            "color_g": 0.023000086323364033, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/compressor.rb", 
-            "color_r": 0.6838112291790974, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 6
+            "name": "__init__.py", 
+            "color_g": 0.9389408662830054, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift/__init__.py", 
+            "color_r": 0.5854350441793371, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift", 
+            "height": 16
         }, 
         {
-            "width": 1, 
-            "color_b": 0.7528663605067644, 
+            "width": 15, 
+            "color_b": 0.2868710233589852, 
             "SATD": [], 
-            "name": "constants.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/constants.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 14
+            "name": "auditor.py", 
+            "color_g": 0.9389408662830054, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\account/auditor.py", 
+            "color_r": 0.5854350441793371, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\account", 
+            "height": 30
         }, 
         {
-            "width": 4, 
-            "color_b": 0.7528663605067644, 
+            "width": 35, 
+            "color_b": 0.972725031338129, 
             "SATD": [], 
-            "name": "decompressor.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/decompressor.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 6
-        }, 
-        {
-            "width": 4, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "deflater.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/deflater.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 12
+            "name": "backend.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\account/backend.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\account", 
+            "height": 136
         }, 
         {
             "width": 14, 
-            "color_b": 0.7528663605067644, 
+            "color_b": 0.972725031338129, 
             "SATD": [], 
-            "name": "dos_time.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/dos_time.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 18
+            "name": "reaper.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\account/reaper.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\account", 
+            "height": 90
         }, 
         {
-            "width": 70, 
-            "color_b": 0.7528663605067644, 
+            "width": 14, 
+            "color_b": 0.4340654873572265, 
             "SATD": [], 
-            "name": "entry.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/entry.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 178
+            "name": "replicator.py", 
+            "color_g": 0.6695266371176901, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\account/replicator.py", 
+            "color_r": 0.8774671155216108, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\account", 
+            "height": 10
         }, 
         {
-            "width": 5, 
-            "color_b": 0.936359744001321, 
+            "width": 23, 
+            "color_b": 0.972725031338129, 
             "SATD": [], 
-            "name": "entry_set.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/entry_set.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
+            "name": "server.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\account/server.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\account", 
             "height": 42
         }, 
         {
-            "width": 1, 
-            "color_b": 0.7528663605067644, 
+            "width": 14, 
+            "color_b": 0.972725031338129, 
             "SATD": [], 
-            "name": "errors.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/errors.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 6
-        }, 
-        {
-            "width": 5, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "extra_field.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/extra_field.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 34
-        }, 
-        {
-            "width": 100, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "file.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/file.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 82
-        }, 
-        {
-            "width": 66, 
-            "color_b": 0.936359744001321, 
-            "SATD": [], 
-            "name": "filesystem.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/filesystem.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 222
-        }, 
-        {
-            "width": 8, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "inflater.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/inflater.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 22
-        }, 
-        {
-            "width": 55, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "input_stream.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/input_stream.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 38
-        }, 
-        {
-            "width": 6, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "ioextras.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/ioextras.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 16
-        }, 
-        {
-            "width": 4, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "null_compressor.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/null_compressor.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 10
-        }, 
-        {
-            "width": 4, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "null_decompressor.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/null_decompressor.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 16
-        }, 
-        {
-            "width": 4, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "null_input_stream.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/null_input_stream.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 6
-        }, 
-        {
-            "width": 31, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "output_stream.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/output_stream.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 44
-        }, 
-        {
-            "width": 4, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "pass_thru_compressor.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/pass_thru_compressor.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 10
-        }, 
-        {
-            "width": 4, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "pass_thru_decompressor.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/pass_thru_decompressor.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 16
-        }, 
-        {
-            "width": 3, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "streamable_directory.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/streamable_directory.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 8
-        }, 
-        {
-            "width": 5, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "streamable_stream.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/streamable_stream.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
-            "height": 14
+            "name": "utils.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\account/utils.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\account", 
+            "height": 30
         }, 
         {
             "width": 0, 
-            "color_b": 0.7528663605067644, 
+            "color_b": 0.66855086017488, 
             "SATD": [], 
-            "name": "version.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip/version.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip", 
+            "name": "__init__.py", 
+            "color_g": 0.47055836573517407, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\account/__init__.py", 
+            "color_r": 0.14280334772073144, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\account", 
             "height": 4
         }, 
         {
-            "width": 4, 
-            "color_b": 0.6914917500780522, 
+            "width": 15, 
+            "color_b": 0.972725031338129, 
             "SATD": [], 
-            "name": "encryption.rb", 
-            "color_g": 0.11989286962485113, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\crypto/encryption.rb", 
-            "color_r": 0.1827318587931407, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\crypto", 
-            "height": 8
-        }, 
-        {
-            "width": 3, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "null_encryption.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\crypto/null_encryption.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\crypto", 
-            "height": 24
-        }, 
-        {
-            "width": 3, 
-            "color_b": 0.7417055176840994, 
-            "SATD": [], 
-            "name": "traditional_encryption.rb", 
-            "color_g": 0.6341956267295914, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\crypto/traditional_encryption.rb", 
-            "color_r": 0.2329930511897571, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\crypto", 
-            "height": 42
-        }, 
-        {
-            "width": 2, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "generic.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\extra_field/generic.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\extra_field", 
-            "height": 14
-        }, 
-        {
-            "width": 5, 
-            "color_b": 0.936359744001321, 
-            "SATD": [], 
-            "name": "ntfs.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\extra_field/ntfs.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\extra_field", 
-            "height": 34
-        }, 
-        {
-            "width": 2, 
-            "color_b": 0.936359744001321, 
-            "SATD": [], 
-            "name": "old_unix.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\extra_field/old_unix.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\extra_field", 
+            "name": "form_signature.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\cli/form_signature.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\cli", 
             "height": 16
         }, 
         {
-            "width": 1, 
-            "color_b": 0.7528663605067644, 
+            "width": 18, 
+            "color_b": 0.972725031338129, 
             "SATD": [], 
-            "name": "universal_time.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\extra_field/universal_time.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\extra_field", 
-            "height": 16
-        }, 
-        {
-            "width": 2, 
-            "color_b": 0.936359744001321, 
-            "SATD": [], 
-            "name": "unix.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\extra_field/unix.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\extra_field", 
-            "height": 16
-        }, 
-        {
-            "width": 9, 
-            "color_b": 0.936359744001321, 
-            "SATD": [], 
-            "name": "zip64.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\extra_field/zip64.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\extra_field", 
-            "height": 18
-        }, 
-        {
-            "width": 4, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "zip64_placeholder.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\extra_field/zip64_placeholder.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\extra_field", 
-            "height": 8
-        }, 
-        {
-            "width": 3, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "abstract_input_stream.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\ioextras/abstract_input_stream.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\ioextras", 
-            "height": 36
-        }, 
-        {
-            "width": 2, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "abstract_output_stream.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\ioextras/abstract_output_stream.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\ioextras", 
-            "height": 14
-        }, 
-        {
-            "width": 19, 
-            "color_b": 0.936359744001321, 
-            "SATD": [], 
-            "name": "example.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\samples/example.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\samples", 
-            "height": 42
-        }, 
-        {
-            "width": 5, 
-            "color_b": 0.5457781299515492, 
-            "SATD": [], 
-            "name": "example_filesystem.rb", 
-            "color_g": 0.41447375758261207, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\samples/example_filesystem.rb", 
-            "color_r": 0.1806071164444223, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\samples", 
-            "height": 20
-        }, 
-        {
-            "width": 13, 
-            "color_b": 0.936359744001321, 
-            "SATD": [], 
-            "name": "example_recursive.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\samples/example_recursive.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\samples", 
-            "height": 20
-        }, 
-        {
-            "width": 1, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "gtk_ruby_zip.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\samples/gtk_ruby_zip.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\samples", 
-            "height": 32
-        }, 
-        {
-            "width": 1, 
-            "color_b": 0.936359744001321, 
-            "SATD": [], 
-            "name": "qtzip.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\samples/qtzip.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\samples", 
-            "height": 36
-        }, 
-        {
-            "width": 1, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "write_simple.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\samples/write_simple.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\samples", 
-            "height": 12
-        }, 
-        {
-            "width": 1, 
-            "color_b": 0.5457781299515492, 
-            "SATD": [], 
-            "name": "zipfind.rb", 
-            "color_g": 0.41447375758261207, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\samples/zipfind.rb", 
-            "color_r": 0.1806071164444223, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\samples", 
-            "height": 26
-        }, 
-        {
-            "width": 0, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "basic_zip_file_test.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/basic_zip_file_test.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 18
-        }, 
-        {
-            "width": 3, 
-            "color_b": 0.936359744001321, 
-            "SATD": [], 
-            "name": "case_sensitivity_test.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/case_sensitivity_test.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 38
+            "name": "info.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\cli/info.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\cli", 
+            "height": 136
         }, 
         {
             "width": 16, 
-            "color_b": 0.936359744001321, 
+            "color_b": 0.972725031338129, 
             "SATD": [], 
-            "name": "central_directory_entry_test.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/central_directory_entry_test.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 20
+            "name": "recon.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\cli/recon.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\cli", 
+            "height": 158
         }, 
         {
-            "width": 1, 
-            "color_b": 0.7528663605067644, 
+            "width": 39, 
+            "color_b": 0.972725031338129, 
             "SATD": [], 
-            "name": "central_directory_test.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/central_directory_test.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 28
+            "name": "ringbuilder.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\cli/ringbuilder.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\cli", 
+            "height": 318
         }, 
         {
-            "width": 0, 
-            "color_b": 0.936359744001321, 
+            "width": 15, 
+            "color_b": 0.972725031338129, 
             "SATD": [], 
-            "name": "deflater_test.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/deflater_test.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 28
-        }, 
-        {
-            "width": 0, 
-            "color_b": 0.7417055176840994, 
-            "SATD": [], 
-            "name": "encryption_test.rb", 
-            "color_g": 0.6341956267295914, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/encryption_test.rb", 
-            "color_r": 0.2329930511897571, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 18
-        }, 
-        {
-            "width": 6, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [
-                146
-            ], 
-            "name": "entry_set_test.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/entry_set_test.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 52
-        }, 
-        {
-            "width": 7, 
-            "color_b": 0.936359744001321, 
-            "SATD": [], 
-            "name": "entry_test.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/entry_test.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 52
-        }, 
-        {
-            "width": 1, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "errors_test.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/errors_test.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 16
+            "name": "ring_builder_analyzer.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\cli/ring_builder_analyzer.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\cli", 
+            "height": 134
         }, 
         {
             "width": 0, 
-            "color_b": 0.7528663605067644, 
+            "color_b": 0.972725031338129, 
             "SATD": [], 
-            "name": "extra_field_test.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/extra_field_test.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
+            "name": "__init__.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\cli/__init__.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\cli", 
+            "height": 4
+        }, 
+        {
+            "width": 15, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "base_storage_server.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common/base_storage_server.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common", 
             "height": 26
         }, 
         {
-            "width": 0, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "file_extract_directory_test.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/file_extract_directory_test.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 24
+            "width": 39, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                130
+            ], 
+            "name": "bufferedhttp.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common/bufferedhttp.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common", 
+            "height": 68
         }, 
         {
-            "width": 0, 
-            "color_b": 0.936359744001321, 
+            "width": 31, 
+            "color_b": 0.972725031338129, 
             "SATD": [], 
-            "name": "file_extract_test.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/file_extract_test.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 32
-        }, 
-        {
-            "width": 3, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "file_permissions_test.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/file_permissions_test.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 42
-        }, 
-        {
-            "width": 0, 
-            "color_b": 0.936359744001321, 
-            "SATD": [], 
-            "name": "file_split_test.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/file_split_test.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 28
-        }, 
-        {
-            "width": 10, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "file_test.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/file_test.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 162
-        }, 
-        {
-            "width": 9, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "gentestfiles.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/gentestfiles.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 52
-        }, 
-        {
-            "width": 0, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "inflater_test.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/inflater_test.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 8
+            "name": "constraints.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common/constraints.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common", 
+            "height": 136
         }, 
         {
             "width": 14, 
-            "color_b": 0.7528663605067644, 
+            "color_b": 0.972725031338129, 
             "SATD": [], 
-            "name": "input_stream_test.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/input_stream_test.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 52
-        }, 
-        {
-            "width": 9, 
-            "color_b": 0.936359744001321, 
-            "SATD": [], 
-            "name": "local_entry_test.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/local_entry_test.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 42
-        }, 
-        {
-            "width": 4, 
-            "color_b": 0.936359744001321, 
-            "SATD": [], 
-            "name": "output_stream_test.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/output_stream_test.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 42
-        }, 
-        {
-            "width": 0, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "pass_thru_compressor_test.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/pass_thru_compressor_test.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 20
-        }, 
-        {
-            "width": 0, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "pass_thru_decompressor_test.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/pass_thru_decompressor_test.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 8
-        }, 
-        {
-            "width": 1, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "settings_test.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/settings_test.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 46
-        }, 
-        {
-            "width": 3, 
-            "color_b": 0.936359744001321, 
-            "SATD": [], 
-            "name": "test_helper.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/test_helper.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 72
-        }, 
-        {
-            "width": 1, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "unicode_file_names_and_comments_test.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/unicode_file_names_and_comments_test.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 14
-        }, 
-        {
-            "width": 6, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "zip64_full_test.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/zip64_full_test.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 22
-        }, 
-        {
-            "width": 0, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "zip64_support_test.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test/zip64_support_test.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test", 
-            "height": 8
-        }, 
-        {
-            "width": 0, 
-            "color_b": 0.7528663605067644, 
-            "SATD": [], 
-            "name": "null_encryption_test.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test\\crypto/null_encryption_test.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test\\crypto", 
-            "height": 26
-        }, 
-        {
-            "width": 0, 
-            "color_b": 0.7417055176840994, 
-            "SATD": [], 
-            "name": "traditional_encryption_test.rb", 
-            "color_g": 0.6341956267295914, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test\\crypto/traditional_encryption_test.rb", 
-            "color_r": 0.2329930511897571, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test\\crypto", 
-            "height": 26
-        }, 
-        {
-            "width": 1, 
-            "color_b": 0.5457781299515492, 
-            "SATD": [], 
-            "name": "notzippedruby.rb", 
-            "color_g": 0.41447375758261207, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test\\data/notzippedruby.rb", 
-            "color_r": 0.1806071164444223, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test\\data", 
-            "height": 6
-        }, 
-        {
-            "width": 5, 
-            "color_b": 0.936359744001321, 
-            "SATD": [], 
-            "name": "directory_test.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test\\filesystem/directory_test.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test\\filesystem", 
-            "height": 42
-        }, 
-        {
-            "width": 1, 
-            "color_b": 0.936359744001321, 
-            "SATD": [], 
-            "name": "dir_iterator_test.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test\\filesystem/dir_iterator_test.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test\\filesystem", 
-            "height": 18
-        }, 
-        {
-            "width": 2, 
-            "color_b": 0.936359744001321, 
-            "SATD": [], 
-            "name": "file_mutating_test.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test\\filesystem/file_mutating_test.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test\\filesystem", 
+            "name": "container_sync_realms.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common/container_sync_realms.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common", 
             "height": 34
         }, 
         {
-            "width": 13, 
-            "color_b": 0.936359744001321, 
+            "width": 25, 
+            "color_b": 0.4340654873572265, 
             "SATD": [], 
-            "name": "file_nonmutating_test.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test\\filesystem/file_nonmutating_test.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test\\filesystem", 
+            "name": "daemon.py", 
+            "color_g": 0.6695266371176901, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common/daemon.py", 
+            "color_r": 0.8774671155216108, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common", 
+            "height": 44
+        }, 
+        {
+            "width": 29, 
+            "color_b": 0.4340654873572265, 
+            "SATD": [], 
+            "name": "db.py", 
+            "color_g": 0.6695266371176901, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common/db.py", 
+            "color_r": 0.8774671155216108, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common", 
+            "height": 198
+        }, 
+        {
+            "width": 52, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "db_replicator.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common/db_replicator.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common", 
+            "height": 150
+        }, 
+        {
+            "width": 16, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "direct_client.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common/direct_client.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common", 
+            "height": 138
+        }, 
+        {
+            "width": 14, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "exceptions.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common/exceptions.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common", 
+            "height": 208
+        }, 
+        {
+            "width": 38, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "http.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common/http.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common", 
+            "height": 58
+        }, 
+        {
+            "width": 28, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "internal_client.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common/internal_client.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common", 
+            "height": 282
+        }, 
+        {
+            "width": 62, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "manager.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common/manager.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common", 
+            "height": 226
+        }, 
+        {
+            "width": 26, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "memcached.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common/memcached.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common", 
+            "height": 100
+        }, 
+        {
+            "width": 36, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "request_helpers.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common/request_helpers.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common", 
             "height": 156
         }, 
         {
-            "width": 0, 
-            "color_b": 0.7528663605067644, 
+            "width": 16, 
+            "color_b": 0.972725031338129, 
             "SATD": [], 
-            "name": "file_stat_test.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test\\filesystem/file_stat_test.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test\\filesystem", 
-            "height": 32
+            "name": "splice.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common/splice.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common", 
+            "height": 118
         }, 
         {
-            "width": 1, 
-            "color_b": 0.936359744001321, 
+            "width": 57, 
+            "color_b": 0.972725031338129, 
             "SATD": [], 
-            "name": "abstract_input_stream_test.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test\\ioextras/abstract_input_stream_test.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test\\ioextras", 
+            "name": "storage_policy.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common/storage_policy.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common", 
+            "height": 236
+        }, 
+        {
+            "width": 81, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                29
+            ], 
+            "name": "swob.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common/swob.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common", 
+            "height": 422
+        }, 
+        {
+            "width": 182, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                2915
+            ], 
+            "name": "utils.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common/utils.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common", 
+            "height": 1224
+        }, 
+        {
+            "width": 72, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "wsgi.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common/wsgi.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common", 
+            "height": 414
+        }, 
+        {
+            "width": 0, 
+            "color_b": 0.800624821878395, 
+            "SATD": [], 
+            "name": "__init__.py", 
+            "color_g": 0.9815404020002483, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common/__init__.py", 
+            "color_r": 0.23778731962739608, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common", 
+            "height": 4
+        }, 
+        {
+            "width": 20, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "account_quotas.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/account_quotas.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 72
+        }, 
+        {
+            "width": 14, 
+            "color_b": 0.4340654873572265, 
+            "SATD": [], 
+            "name": "acl.py", 
+            "color_g": 0.6695266371176901, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/acl.py", 
+            "color_r": 0.8774671155216108, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 108
+        }, 
+        {
+            "width": 24, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "bulk.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/bulk.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 168
+        }, 
+        {
+            "width": 17, 
+            "color_b": 0.4340654873572265, 
+            "SATD": [], 
+            "name": "catch_errors.py", 
+            "color_g": 0.6695266371176901, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/catch_errors.py", 
+            "color_r": 0.8774671155216108, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 34
+        }, 
+        {
+            "width": 22, 
+            "color_b": 0.2868710233589852, 
+            "SATD": [], 
+            "name": "cname_lookup.py", 
+            "color_g": 0.9389408662830054, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/cname_lookup.py", 
+            "color_r": 0.5854350441793371, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 50
+        }, 
+        {
+            "width": 20, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "container_quotas.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/container_quotas.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 44
+        }, 
+        {
+            "width": 16, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "container_sync.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/container_sync.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 26
+        }, 
+        {
+            "width": 15, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "crossdomain.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/crossdomain.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 44
+        }, 
+        {
+            "width": 65, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                246
+            ], 
+            "name": "dlo.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/dlo.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 150
+        }, 
+        {
+            "width": 16, 
+            "color_b": 0.2868710233589852, 
+            "SATD": [], 
+            "name": "domain_remap.py", 
+            "color_g": 0.9389408662830054, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/domain_remap.py", 
+            "color_r": 0.5854350441793371, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 46
+        }, 
+        {
+            "width": 20, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "formpost.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/formpost.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 144
+        }, 
+        {
+            "width": 26, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "gatekeeper.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/gatekeeper.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
             "height": 36
         }, 
         {
-            "width": 1, 
-            "color_b": 0.7528663605067644, 
+            "width": 15, 
+            "color_b": 0.4340654873572265, 
             "SATD": [], 
-            "name": "abstract_output_stream_test.rb", 
-            "color_g": 0.5726472618897909, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test\\ioextras/abstract_output_stream_test.rb", 
-            "color_r": 0.9970570111712618, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test\\ioextras", 
+            "name": "healthcheck.py", 
+            "color_g": 0.6695266371176901, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/healthcheck.py", 
+            "color_r": 0.8774671155216108, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 30
+        }, 
+        {
+            "width": 56, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                37
+            ], 
+            "name": "keystoneauth.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/keystoneauth.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 184
+        }, 
+        {
+            "width": 19, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "list_endpoints.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/list_endpoints.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 96
+        }, 
+        {
+            "width": 20, 
+            "color_b": 0.4340654873572265, 
+            "SATD": [], 
+            "name": "memcache.py", 
+            "color_g": 0.6695266371176901, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/memcache.py", 
+            "color_r": 0.8774671155216108, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 36
+        }, 
+        {
+            "width": 16, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "name_check.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/name_check.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 56
+        }, 
+        {
+            "width": 24, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                66
+            ], 
+            "name": "proxy_logging.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/proxy_logging.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 94
+        }, 
+        {
+            "width": 18, 
+            "color_b": 0.16636499288889395, 
+            "SATD": [], 
+            "name": "ratelimit.py", 
+            "color_g": 0.07739100877265925, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/ratelimit.py", 
+            "color_r": 0.4004223897657895, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 90
+        }, 
+        {
+            "width": 19, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "recon.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/recon.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 80
+        }, 
+        {
+            "width": 77, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "slo.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/slo.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 334
+        }, 
+        {
+            "width": 21, 
+            "color_b": 0.4340654873572265, 
+            "SATD": [], 
+            "name": "staticweb.py", 
+            "color_g": 0.6695266371176901, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/staticweb.py", 
+            "color_r": 0.8774671155216108, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 124
+        }, 
+        {
+            "width": 57, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "tempauth.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/tempauth.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 176
+        }, 
+        {
+            "width": 75, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "tempurl.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/tempurl.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 200
+        }, 
+        {
+            "width": 77, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "versioned_writes.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/versioned_writes.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 160
+        }, 
+        {
+            "width": 30, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                261
+            ], 
+            "name": "xprofile.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/xprofile.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 106
+        }, 
+        {
+            "width": 0, 
+            "color_b": 0.8438356200578975, 
+            "SATD": [], 
+            "name": "__init__.py", 
+            "color_g": 0.5881973853145009, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware/__init__.py", 
+            "color_r": 0.06040835025472824, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware", 
+            "height": 4
+        }, 
+        {
+            "width": 14, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "exceptions.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware\\x_profile/exceptions.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware\\x_profile", 
+            "height": 34
+        }, 
+        {
+            "width": 38, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "html_viewer.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware\\x_profile/html_viewer.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware\\x_profile", 
+            "height": 62
+        }, 
+        {
+            "width": 18, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                76
+            ], 
+            "name": "profile_model.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware\\x_profile/profile_model.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware\\x_profile", 
+            "height": 82
+        }, 
+        {
+            "width": 0, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "__init__.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware\\x_profile/__init__.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware\\x_profile", 
+            "height": 4
+        }, 
+        {
+            "width": 287, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                866
+            ], 
+            "name": "builder.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\ring/builder.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\ring", 
+            "height": 356
+        }, 
+        {
+            "width": 43, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "ring.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\ring/ring.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\ring", 
+            "height": 114
+        }, 
+        {
+            "width": 32, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "utils.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\ring/utils.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\ring", 
+            "height": 204
+        }, 
+        {
+            "width": 0, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "__init__.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\common\\ring/__init__.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\common\\ring", 
+            "height": 6
+        }, 
+        {
+            "width": 15, 
+            "color_b": 0.2868710233589852, 
+            "SATD": [], 
+            "name": "auditor.py", 
+            "color_g": 0.9389408662830054, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\container/auditor.py", 
+            "color_r": 0.5854350441793371, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\container", 
+            "height": 26
+        }, 
+        {
+            "width": 60, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "backend.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\container/backend.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\container", 
+            "height": 170
+        }, 
+        {
+            "width": 39, 
+            "color_b": 0.800624821878395, 
+            "SATD": [
+                520
+            ], 
+            "name": "reconciler.py", 
+            "color_g": 0.9815404020002483, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\container/reconciler.py", 
+            "color_r": 0.23778731962739608, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\container", 
+            "height": 184
+        }, 
+        {
+            "width": 18, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "replicator.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\container/replicator.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\container", 
+            "height": 64
+        }, 
+        {
+            "width": 40, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "server.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\container/server.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\container", 
+            "height": 80
+        }, 
+        {
+            "width": 82, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "sync.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\container/sync.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\container", 
+            "height": 78
+        }, 
+        {
+            "width": 18, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "updater.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\container/updater.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\container", 
+            "height": 42
+        }, 
+        {
+            "width": 0, 
+            "color_b": 0.66855086017488, 
+            "SATD": [], 
+            "name": "__init__.py", 
+            "color_g": 0.47055836573517407, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\container/__init__.py", 
+            "color_r": 0.14280334772073144, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\container", 
+            "height": 4
+        }, 
+        {
+            "width": 28, 
+            "color_b": 0.16636499288889395, 
+            "SATD": [], 
+            "name": "auditor.py", 
+            "color_g": 0.07739100877265925, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\obj/auditor.py", 
+            "color_r": 0.4004223897657895, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\obj", 
+            "height": 58
+        }, 
+        {
+            "width": 188, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                1513, 
+                1515
+            ], 
+            "name": "diskfile.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\obj/diskfile.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\obj", 
+            "height": 596
+        }, 
+        {
+            "width": 15, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "expirer.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\obj/expirer.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\obj", 
+            "height": 80
+        }, 
+        {
+            "width": 24, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "mem_diskfile.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\obj/mem_diskfile.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\obj", 
+            "height": 122
+        }, 
+        {
+            "width": 14, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "mem_server.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\obj/mem_server.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\obj", 
+            "height": 28
+        }, 
+        {
+            "width": 82, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "reconstructor.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\obj/reconstructor.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\obj", 
+            "height": 186
+        }, 
+        {
+            "width": 38, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "replicator.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\obj/replicator.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\obj", 
+            "height": 96
+        }, 
+        {
+            "width": 107, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "server.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\obj/server.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\obj", 
+            "height": 158
+        }, 
+        {
+            "width": 56, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                101
+            ], 
+            "name": "ssync_receiver.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\obj/ssync_receiver.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\obj", 
+            "height": 110
+        }, 
+        {
+            "width": 74, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "ssync_sender.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\obj/ssync_sender.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\obj", 
+            "height": 56
+        }, 
+        {
+            "width": 18, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "updater.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\obj/updater.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\obj", 
+            "height": 36
+        }, 
+        {
+            "width": 0, 
+            "color_b": 0.66855086017488, 
+            "SATD": [], 
+            "name": "__init__.py", 
+            "color_g": 0.47055836573517407, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\obj/__init__.py", 
+            "color_r": 0.14280334772073144, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\obj", 
+            "height": 4
+        }, 
+        {
+            "width": 70, 
+            "color_b": 0.4340654873572265, 
+            "SATD": [], 
+            "name": "server.py", 
+            "color_g": 0.6695266371176901, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\proxy/server.py", 
+            "color_r": 0.8774671155216108, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\proxy", 
+            "height": 98
+        }, 
+        {
+            "width": 0, 
+            "color_b": 0.66855086017488, 
+            "SATD": [], 
+            "name": "__init__.py", 
+            "color_g": 0.47055836573517407, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\proxy/__init__.py", 
+            "color_r": 0.14280334772073144, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\proxy", 
+            "height": 4
+        }, 
+        {
+            "width": 18, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "account.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\proxy\\controllers/account.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\proxy\\controllers", 
+            "height": 28
+        }, 
+        {
+            "width": 155, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                596
+            ], 
+            "name": "base.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\proxy\\controllers/base.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\proxy\\controllers", 
+            "height": 432
+        }, 
+        {
+            "width": 16, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "container.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\proxy\\controllers/container.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\proxy\\controllers", 
+            "height": 44
+        }, 
+        {
+            "width": 17, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "info.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\proxy\\controllers/info.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\proxy\\controllers", 
+            "height": 38
+        }, 
+        {
+            "width": 340, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                467, 
+                523
+            ], 
+            "name": "obj.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\proxy\\controllers/obj.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\proxy\\controllers", 
+            "height": 628
+        }, 
+        {
+            "width": 12, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "__init__.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\swift\\proxy\\controllers/__init__.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\swift\\proxy\\controllers", 
+            "height": 8
+        }, 
+        {
+            "width": 20, 
+            "color_b": 0.800624821878395, 
+            "SATD": [], 
+            "name": "__init__.py", 
+            "color_g": 0.9815404020002483, 
+            "path": "C:\\Users\\Ichinose\\swift\\test/__init__.py", 
+            "color_r": 0.23778731962739608, 
+            "block": "C:\\Users\\Ichinose\\swift\\test", 
+            "height": 24
+        }, 
+        {
+            "width": 28, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "swift_test_client.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\functional/swift_test_client.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\functional", 
+            "height": 382
+        }, 
+        {
+            "width": 220, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "tests.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\functional/tests.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\functional", 
+            "height": 1504
+        }, 
+        {
+            "width": 104, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                592, 
+                656, 
+                670
+            ], 
+            "name": "test_account.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\functional/test_account.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\functional", 
+            "height": 258
+        }, 
+        {
+            "width": 140, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_container.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\functional/test_container.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\functional", 
+            "height": 492
+        }, 
+        {
+            "width": 111, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_object.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\functional/test_object.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\functional", 
+            "height": 346
+        }, 
+        {
+            "width": 104, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "__init__.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\functional/__init__.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\functional", 
+            "height": 302
+        }, 
+        {
+            "width": 14, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "brain.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\probe/brain.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\probe", 
+            "height": 62
+        }, 
+        {
+            "width": 34, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "common.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\probe/common.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\probe", 
+            "height": 126
+        }, 
+        {
+            "width": 33, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_account_failures.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\probe/test_account_failures.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\probe", 
+            "height": 50
+        }, 
+        {
+            "width": 23, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_account_get_fake_responses_match.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\probe/test_account_get_fake_responses_match.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\probe", 
+            "height": 52
+        }, 
+        {
+            "width": 28, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_account_reaper.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\probe/test_account_reaper.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\probe", 
+            "height": 42
+        }, 
+        {
+            "width": 35, 
+            "color_b": 0.4340654873572265, 
+            "SATD": [], 
+            "name": "test_container_failures.py", 
+            "color_g": 0.6695266371176901, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\probe/test_container_failures.py", 
+            "color_r": 0.8774671155216108, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\probe", 
+            "height": 64
+        }, 
+        {
+            "width": 63, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_container_merge_policy_index.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\probe/test_container_merge_policy_index.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\probe", 
+            "height": 80
+        }, 
+        {
+            "width": 18, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_container_sync.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\probe/test_container_sync.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\probe", 
+            "height": 36
+        }, 
+        {
+            "width": 33, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_empty_device_handoff.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\probe/test_empty_device_handoff.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\probe", 
+            "height": 50
+        }, 
+        {
+            "width": 26, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_object_async_update.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\probe/test_object_async_update.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\probe", 
+            "height": 60
+        }, 
+        {
+            "width": 26, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_object_expirer.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\probe/test_object_expirer.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\probe", 
+            "height": 44
+        }, 
+        {
+            "width": 17, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_object_failures.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\probe/test_object_failures.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\probe", 
+            "height": 52
+        }, 
+        {
+            "width": 60, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_object_handoff.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\probe/test_object_handoff.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\probe", 
+            "height": 88
+        }, 
+        {
+            "width": 55, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_object_metadata_replication.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\probe/test_object_metadata_replication.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\probe", 
+            "height": 126
+        }, 
+        {
+            "width": 28, 
+            "color_b": 0.8330880318036746, 
+            "SATD": [], 
+            "name": "test_reconstructor_durable.py", 
+            "color_g": 0.0002646625880650122, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\probe/test_reconstructor_durable.py", 
+            "color_r": 0.28037742160054213, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\probe", 
+            "height": 60
+        }, 
+        {
+            "width": 44, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_reconstructor_rebuild.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\probe/test_reconstructor_rebuild.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\probe", 
+            "height": 86
+        }, 
+        {
+            "width": 74, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_reconstructor_revert.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\probe/test_reconstructor_revert.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\probe", 
+            "height": 114
+        }, 
+        {
+            "width": 35, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_replication_servers_working.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\probe/test_replication_servers_working.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\probe", 
+            "height": 62
+        }, 
+        {
+            "width": 20, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_wsgi_servers.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\probe/test_wsgi_servers.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\probe", 
             "height": 52
         }, 
         {
             "width": 0, 
-            "color_b": 0.936359744001321, 
+            "color_b": 0.39439822586918294, 
             "SATD": [], 
-            "name": "fake_io_test.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test\\ioextras/fake_io_test.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test\\ioextras", 
-            "height": 10
+            "name": "__init__.py", 
+            "color_g": 0.22727331636388548, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\probe/__init__.py", 
+            "color_r": 0.3623433816256202, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\probe", 
+            "height": 4
+        }, 
+        {
+            "width": 42, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "__init__.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit/__init__.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit", 
+            "height": 354
+        }, 
+        {
+            "width": 26, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_auditor.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\account/test_auditor.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\account", 
+            "height": 98
+        }, 
+        {
+            "width": 113, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                1268
+            ], 
+            "name": "test_backend.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\account/test_backend.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\account", 
+            "height": 400
+        }, 
+        {
+            "width": 40, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_reaper.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\account/test_reaper.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\account", 
+            "height": 192
+        }, 
+        {
+            "width": 29, 
+            "color_b": 0.4340654873572265, 
+            "SATD": [], 
+            "name": "test_replicator.py", 
+            "color_g": 0.6695266371176901, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\account/test_replicator.py", 
+            "color_r": 0.8774671155216108, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\account", 
+            "height": 30
+        }, 
+        {
+            "width": 91, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_server.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\account/test_server.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\account", 
+            "height": 318
+        }, 
+        {
+            "width": 15, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_utils.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\account/test_utils.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\account", 
+            "height": 38
         }, 
         {
             "width": 0, 
-            "color_b": 0.936359744001321, 
+            "color_b": 0.66855086017488, 
             "SATD": [], 
-            "name": "example_recursive_test.rb", 
-            "color_g": 0.22908244514661658, 
-            "path": "C:\\Users\\Ichinose\\rubyzip\\test\\samples/example_recursive_test.rb", 
-            "color_r": 0.6580335134775719, 
-            "block": "C:\\Users\\Ichinose\\rubyzip\\test\\samples", 
-            "height": 18
+            "name": "__init__.py", 
+            "color_g": 0.47055836573517407, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\account/__init__.py", 
+            "color_r": 0.14280334772073144, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\account", 
+            "height": 4
+        }, 
+        {
+            "width": 16, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_form_signature.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\cli/test_form_signature.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\cli", 
+            "height": 28
+        }, 
+        {
+            "width": 24, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_info.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\cli/test_info.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\cli", 
+            "height": 152
+        }, 
+        {
+            "width": 37, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_recon.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\cli/test_recon.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\cli", 
+            "height": 224
+        }, 
+        {
+            "width": 227, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_ringbuilder.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\cli/test_ringbuilder.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\cli", 
+            "height": 502
+        }, 
+        {
+            "width": 36, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_ring_builder_analyzer.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\cli/test_ring_builder_analyzer.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\cli", 
+            "height": 104
+        }, 
+        {
+            "width": 0, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "__init__.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\cli/__init__.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\cli", 
+            "height": 4
+        }, 
+        {
+            "width": 20, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_base_storage_server.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common/test_base_storage_server.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common", 
+            "height": 58
+        }, 
+        {
+            "width": 17, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_bufferedhttp.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common/test_bufferedhttp.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common", 
+            "height": 40
+        }, 
+        {
+            "width": 40, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_constraints.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common/test_constraints.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common", 
+            "height": 140
+        }, 
+        {
+            "width": 14, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_container_sync_realms.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common/test_container_sync_realms.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common", 
+            "height": 42
+        }, 
+        {
+            "width": 19, 
+            "color_b": 0.4340654873572265, 
+            "SATD": [], 
+            "name": "test_daemon.py", 
+            "color_g": 0.6695266371176901, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common/test_daemon.py", 
+            "color_r": 0.8774671155216108, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common", 
+            "height": 52
+        }, 
+        {
+            "width": 49, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_db.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common/test_db.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common", 
+            "height": 214
+        }, 
+        {
+            "width": 65, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_db_replicator.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common/test_db_replicator.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common", 
+            "height": 458
+        }, 
+        {
+            "width": 18, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_direct_client.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common/test_direct_client.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common", 
+            "height": 222
+        }, 
+        {
+            "width": 15, 
+            "color_b": 0.4340654873572265, 
+            "SATD": [], 
+            "name": "test_exceptions.py", 
+            "color_g": 0.6695266371176901, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common/test_exceptions.py", 
+            "color_r": 0.8774671155216108, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common", 
+            "height": 20
+        }, 
+        {
+            "width": 38, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_internal_client.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common/test_internal_client.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common", 
+            "height": 430
+        }, 
+        {
+            "width": 192, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_manager.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common/test_manager.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common", 
+            "height": 368
+        }, 
+        {
+            "width": 39, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_memcached.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common/test_memcached.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common", 
+            "height": 112
+        }, 
+        {
+            "width": 18, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_request_helpers.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common/test_request_helpers.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common", 
+            "height": 40
+        }, 
+        {
+            "width": 21, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_splice.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common/test_splice.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common", 
+            "height": 168
+        }, 
+        {
+            "width": 64, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                738, 
+                873
+            ], 
+            "name": "test_storage_policy.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common/test_storage_policy.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common", 
+            "height": 254
+        }, 
+        {
+            "width": 87, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                708, 
+                709, 
+                710, 
+                714, 
+                717, 
+                721
+            ], 
+            "name": "test_swob.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common/test_swob.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common", 
+            "height": 542
+        }, 
+        {
+            "width": 264, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_utils.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common/test_utils.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common", 
+            "height": 1188
+        }, 
+        {
+            "width": 130, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                1180
+            ], 
+            "name": "test_wsgi.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common/test_wsgi.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common", 
+            "height": 486
+        }, 
+        {
+            "width": 0, 
+            "color_b": 0.66855086017488, 
+            "SATD": [], 
+            "name": "__init__.py", 
+            "color_g": 0.47055836573517407, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common/__init__.py", 
+            "color_r": 0.14280334772073144, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common", 
+            "height": 4
+        }, 
+        {
+            "width": 19, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "helpers.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/helpers.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 60
+        }, 
+        {
+            "width": 22, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_account_quotas.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_account_quotas.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 114
+        }, 
+        {
+            "width": 21, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_acl.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_acl.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 44
+        }, 
+        {
+            "width": 39, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_bulk.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_bulk.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 196
+        }, 
+        {
+            "width": 17, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_cname_lookup.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_cname_lookup.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 104
+        }, 
+        {
+            "width": 15, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_container_sync.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_container_sync.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 88
+        }, 
+        {
+            "width": 18, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_crossdomain.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_crossdomain.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 42
+        }, 
+        {
+            "width": 92, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_dlo.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_dlo.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 316
+        }, 
+        {
+            "width": 14, 
+            "color_b": 0.2868710233589852, 
+            "SATD": [], 
+            "name": "test_domain_remap.py", 
+            "color_g": 0.9389408662830054, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_domain_remap.py", 
+            "color_r": 0.5854350441793371, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 66
+        }, 
+        {
+            "width": 15, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_except.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_except.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 66
+        }, 
+        {
+            "width": 26, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_formpost.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_formpost.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 258
+        }, 
+        {
+            "width": 14, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_gatekeeper.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_gatekeeper.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 70
+        }, 
+        {
+            "width": 14, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_healthcheck.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_healthcheck.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 36
+        }, 
+        {
+            "width": 92, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_keystoneauth.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_keystoneauth.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 368
+        }, 
+        {
+            "width": 28, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_list_endpoints.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_list_endpoints.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 86
+        }, 
+        {
+            "width": 28, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_memcache.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_memcache.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 110
+        }, 
+        {
+            "width": 16, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_name_check.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_name_check.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 46
+        }, 
+        {
+            "width": 85, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_proxy_logging.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_proxy_logging.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 222
+        }, 
+        {
+            "width": 14, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_quotas.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_quotas.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 102
+        }, 
+        {
+            "width": 23, 
+            "color_b": 0.16636499288889395, 
+            "SATD": [], 
+            "name": "test_ratelimit.py", 
+            "color_g": 0.07739100877265925, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_ratelimit.py", 
+            "color_r": 0.4004223897657895, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 176
+        }, 
+        {
+            "width": 70, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_recon.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_recon.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 322
+        }, 
+        {
+            "width": 89, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_slo.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_slo.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 582
+        }, 
+        {
+            "width": 28, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_staticweb.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_staticweb.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 162
+        }, 
+        {
+            "width": 79, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_tempauth.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_tempauth.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 422
+        }, 
+        {
+            "width": 50, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                649
+            ], 
+            "name": "test_tempurl.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_tempurl.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 196
+        }, 
+        {
+            "width": 31, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_versioned_writes.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_versioned_writes.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 126
+        }, 
+        {
+            "width": 15, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_xprofile.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/test_xprofile.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 142
+        }, 
+        {
+            "width": 0, 
+            "color_b": 0.8438356200578975, 
+            "SATD": [], 
+            "name": "__init__.py", 
+            "color_g": 0.5881973853145009, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware/__init__.py", 
+            "color_r": 0.06040835025472824, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware", 
+            "height": 4
+        }, 
+        {
+            "width": 187, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                1998
+            ], 
+            "name": "test_builder.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\ring/test_builder.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\ring", 
+            "height": 562
+        }, 
+        {
+            "width": 56, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_ring.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\ring/test_ring.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\ring", 
+            "height": 152
+        }, 
+        {
+            "width": 30, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_utils.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\ring/test_utils.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\ring", 
+            "height": 100
+        }, 
+        {
+            "width": 0, 
+            "color_b": 0.66855086017488, 
+            "SATD": [], 
+            "name": "__init__.py", 
+            "color_g": 0.47055836573517407, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\ring/__init__.py", 
+            "color_r": 0.14280334772073144, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\ring", 
+            "height": 4
+        }, 
+        {
+            "width": 17, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_auditor.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\container/test_auditor.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\container", 
+            "height": 70
+        }, 
+        {
+            "width": 111, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_backend.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\container/test_backend.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\container", 
+            "height": 402
+        }, 
+        {
+            "width": 215, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                98, 
+                1519, 
+                1623, 
+                1724
+            ], 
+            "name": "test_reconciler.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\container/test_reconciler.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\container", 
+            "height": 276
+        }, 
+        {
+            "width": 172, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_replicator.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\container/test_replicator.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\container", 
+            "height": 168
+        }, 
+        {
+            "width": 168, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_server.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\container/test_server.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\container", 
+            "height": 440
+        }, 
+        {
+            "width": 144, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_sync.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\container/test_sync.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\container", 
+            "height": 244
+        }, 
+        {
+            "width": 17, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_updater.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\container/test_updater.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\container", 
+            "height": 58
+        }, 
+        {
+            "width": 0, 
+            "color_b": 0.66855086017488, 
+            "SATD": [], 
+            "name": "__init__.py", 
+            "color_g": 0.47055836573517407, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\container/__init__.py", 
+            "color_r": 0.14280334772073144, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\container", 
+            "height": 4
+        }, 
+        {
+            "width": 15, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "common.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj/common.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj", 
+            "height": 20
+        }, 
+        {
+            "width": 42, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_auditor.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj/test_auditor.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj", 
+            "height": 156
+        }, 
+        {
+            "width": 500, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                2553, 
+                3279, 
+                4250, 
+                4736
+            ], 
+            "name": "test_diskfile.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj/test_diskfile.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj", 
+            "height": 1080
+        }, 
+        {
+            "width": 25, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_expirer.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj/test_expirer.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj", 
+            "height": 310
+        }, 
+        {
+            "width": 169, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                268, 
+                1412, 
+                1948, 
+                2169, 
+                2551, 
+                2593, 
+                2621
+            ], 
+            "name": "test_reconstructor.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj/test_reconstructor.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj", 
+            "height": 484
+        }, 
+        {
+            "width": 128, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_replicator.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj/test_replicator.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj", 
+            "height": 284
+        }, 
+        {
+            "width": 283, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                5668, 
+                5825, 
+                6020
+            ], 
+            "name": "test_server.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj/test_server.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj", 
+            "height": 1288
+        }, 
+        {
+            "width": 125, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_ssync.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj/test_ssync.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj", 
+            "height": 178
+        }, 
+        {
+            "width": 78, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_ssync_receiver.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj/test_ssync_receiver.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj", 
+            "height": 326
+        }, 
+        {
+            "width": 44, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_ssync_sender.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj/test_ssync_sender.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj", 
+            "height": 266
+        }, 
+        {
+            "width": 41, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_updater.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj/test_updater.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj", 
+            "height": 98
+        }, 
+        {
+            "width": 0, 
+            "color_b": 0.66855086017488, 
+            "SATD": [], 
+            "name": "__init__.py", 
+            "color_g": 0.47055836573517407, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj/__init__.py", 
+            "color_r": 0.14280334772073144, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj", 
+            "height": 4
+        }, 
+        {
+            "width": 16, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_mem_server.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy/test_mem_server.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy", 
+            "height": 50
+        }, 
+        {
+            "width": 655, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                940, 
+                953, 
+                967, 
+                971, 
+                1538, 
+                1541, 
+                1551, 
+                1562, 
+                1582, 
+                1584, 
+                1609, 
+                1622, 
+                1640, 
+                1659, 
+                1672, 
+                1696, 
+                1709, 
+                1733, 
+                1746, 
+                6293, 
+                6306
+            ], 
+            "name": "test_server.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy/test_server.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy", 
+            "height": 1952
+        }, 
+        {
+            "width": 17, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_sysmeta.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy/test_sysmeta.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy", 
+            "height": 100
+        }, 
+        {
+            "width": 0, 
+            "color_b": 0.66855086017488, 
+            "SATD": [], 
+            "name": "__init__.py", 
+            "color_g": 0.47055836573517407, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy/__init__.py", 
+            "color_r": 0.14280334772073144, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy", 
+            "height": 4
+        }, 
+        {
+            "width": 32, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_account.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy\\controllers/test_account.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy\\controllers", 
+            "height": 64
+        }, 
+        {
+            "width": 69, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_base.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy\\controllers/test_base.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy\\controllers", 
+            "height": 234
+        }, 
+        {
+            "width": 23, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                196
+            ], 
+            "name": "test_container.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy\\controllers/test_container.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy\\controllers", 
+            "height": 54
+        }, 
+        {
+            "width": 14, 
+            "color_b": 0.5902998661434388, 
+            "SATD": [], 
+            "name": "test_info.py", 
+            "color_g": 0.36608341300251757, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy\\controllers/test_info.py", 
+            "color_r": 0.2943482844069385, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy\\controllers", 
+            "height": 84
+        }, 
+        {
+            "width": 164, 
+            "color_b": 0.972725031338129, 
+            "SATD": [
+                607, 
+                1335, 
+                1534
+            ], 
+            "name": "test_obj.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy\\controllers/test_obj.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy\\controllers", 
+            "height": 644
+        }, 
+        {
+            "width": 0, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "__init__.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy\\controllers/__init__.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy\\controllers", 
+            "height": 4
+        }, 
+        {
+            "width": 18, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "test_locale.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\test_locale/test_locale.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\test_locale", 
+            "height": 26
+        }, 
+        {
+            "width": 0, 
+            "color_b": 0.972725031338129, 
+            "SATD": [], 
+            "name": "__init__.py", 
+            "color_g": 0.22266667264348472, 
+            "path": "C:\\Users\\Ichinose\\swift\\test\\unit\\test_locale/__init__.py", 
+            "color_r": 0.0065424566205198875, 
+            "block": "C:\\Users\\Ichinose\\swift\\test\\unit\\test_locale", 
+            "height": 4
         }
     ], 
     "blocks": [
         {
-            "name": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\extra_field"
+            "name": "C:\\Users\\Ichinose\\swift\\swift\\proxy\\controllers"
         }, 
         {
-            "name": "C:\\Users\\Ichinose\\rubyzip\\test\\samples"
+            "name": "C:\\Users\\Ichinose\\swift\\test\\unit\\container"
         }, 
         {
-            "name": "C:\\Users\\Ichinose\\rubyzip\\samples"
+            "name": "C:\\Users\\Ichinose\\swift\\swift\\cli"
         }, 
         {
-            "name": "C:\\Users\\Ichinose\\rubyzip\\test\\filesystem"
+            "name": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware"
         }, 
         {
-            "name": "C:\\Users\\Ichinose\\rubyzip\\test\\crypto"
+            "name": "C:\\Users\\Ichinose\\swift\\swift\\common"
         }, 
         {
-            "name": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\crypto"
+            "name": "C:\\Users\\Ichinose\\swift\\swift\\common\\ring"
         }, 
         {
-            "name": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip"
+            "name": "C:\\Users\\Ichinose\\swift\\test"
         }, 
         {
-            "name": "C:\\Users\\Ichinose\\rubyzip\\test\\ioextras"
+            "name": "C:\\Users\\Ichinose\\swift\\swift"
         }, 
         {
-            "name": "C:\\Users\\Ichinose\\rubyzip\\test"
+            "name": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy\\controllers"
         }, 
         {
-            "name": "C:\\Users\\Ichinose\\rubyzip\\lib"
+            "name": "C:\\Users\\Ichinose\\swift\\swift\\proxy"
         }, 
         {
-            "name": "C:\\Users\\Ichinose\\rubyzip\\lib\\zip\\ioextras"
+            "name": "C:\\Users\\Ichinose\\swift\\test\\unit\\obj"
         }, 
         {
-            "name": "C:\\Users\\Ichinose\\rubyzip\\test\\data"
+            "name": "C:\\Users\\Ichinose\\swift\\test\\unit\\cli"
+        }, 
+        {
+            "name": "C:\\Users\\Ichinose\\swift\\test\\unit\\account"
+        }, 
+        {
+            "name": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\ring"
+        }, 
+        {
+            "name": "C:\\Users\\Ichinose\\swift\\test\\unit\\common\\middleware"
+        }, 
+        {
+            "name": "C:\\Users\\Ichinose\\swift"
+        }, 
+        {
+            "name": "C:\\Users\\Ichinose\\swift\\test\\unit\\common"
+        }, 
+        {
+            "name": "C:\\Users\\Ichinose\\swift\\swift\\container"
+        }, 
+        {
+            "name": "C:\\Users\\Ichinose\\swift\\swift\\account"
+        }, 
+        {
+            "name": "C:\\Users\\Ichinose\\swift\\swift\\common\\middleware\\x_profile"
+        }, 
+        {
+            "name": "C:\\Users\\Ichinose\\swift\\test\\functional"
+        }, 
+        {
+            "name": "C:\\Users\\Ichinose\\swift\\test\\unit\\proxy"
+        }, 
+        {
+            "name": "C:\\Users\\Ichinose\\swift\\doc\\source"
+        }, 
+        {
+            "name": "C:\\Users\\Ichinose\\swift\\swift\\obj"
+        }, 
+        {
+            "name": "C:\\Users\\Ichinose\\swift\\test\\unit\\test_locale"
+        }, 
+        {
+            "name": "C:\\Users\\Ichinose\\swift\\test\\probe"
+        }, 
+        {
+            "name": "C:\\Users\\Ichinose\\swift\\test\\unit"
         }
     ]
 }

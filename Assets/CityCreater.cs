@@ -77,24 +77,22 @@ public class CityCreater : MonoBehaviour
 	}
 	
 	/**
-	 * English
-	 * 
-	 * Japanese(Romaji)
-	 * Block to Building no ichi wo kimeru kansu.
+	 *
+     * ブロックの位置を決めるメソッド
 	 *
 	 */
 	void LocateBlockAndBuilding (IList blocks, IList buildings)
 	{
-		Dictionary<String,List<Dictionary<String, object>>> arrangedBlock = ArrangeByKey (buildings, "block"); // block gotoni building wo matomeru
-		Dictionary<String,List<Dictionary<String, object>>> blockDictionary = ArrangeByKey (blocks, "name"); // name gotoni block wo matomeru
+		Dictionary<String,List<Dictionary<String, object>>> arrangedBlock = ArrangeByKey (buildings, "block"); // ブロックごとにビルをまとめる
+		Dictionary<String,List<Dictionary<String, object>>> blockDictionary = ArrangeByKey (blocks, "name"); // 名前ごとにブロックをまとめる
 		
 		List<Dictionary<String, object>> blockList = new List<Dictionary<string, object>> ();
 		//Debug.Log (new HashSet<String>(arrangedBlock.Keys).Equals(new HashSet<String>(blockDictionary.Keys)));
 		
-		foreach (String key in blockDictionary.Keys) { // block no key gotoni yaru
+		foreach (String key in blockDictionary.Keys) { // ブロックのkeyごとに実行する
 			
-			SetLocation (arrangedBlock[key]); // mazu building no zahyo wo kimeru
-			SetWidth (arrangedBlock[key], blockDictionary[key]); // tsugini block no width wo kimeru
+			SetLocation (arrangedBlock[key]); // 1.ビルの座標を決める
+			SetWidth (arrangedBlock[key], blockDictionary[key]); // 2.ブロックの幅を決める
 			blockList.Add(blockDictionary[key][0]);
 			Debug.Log(int.Parse(blockDictionary[key][0]["width"].ToString()));
 			
@@ -109,12 +107,10 @@ public class CityCreater : MonoBehaviour
 	}
 	
 	/**
-	 * English
 	 * 
-	 * Japanese(Romaji)
-	 * key no atai gotoni target wo matomeru kansu.
-	 * building wo zokusuru block gotoni matometari
-	 * block wo name gotoni matometari suru
+     * keyの値ごとにtargetをまとめるメソッド
+     * 用途1：ビルを属するブロックごとにまとめる
+	 * 用途2：ブロックを名前ごとにまとめる
 	 *
 	 */
 	Dictionary<String,List<Dictionary<String, object>>> ArrangeByKey (IList target, String key)
@@ -125,12 +121,12 @@ public class CityCreater : MonoBehaviour
 			String contentsName = contents[key].ToString();
 			if(arrangedTarget.ContainsKey(contentsName))
 			{
-				// sudeni sonzai surunara add suru
+				// 既に辞書に存在する場合はaddだけする
 				arrangedTarget[contentsName].Add(contents);
 			}
 			else
 			{
-				// hajimete detanara new sitekara add suru
+				// 初めて出てきたらnewして辞書にaddする
 				arrangedTarget[contentsName] = new List<Dictionary<String, object>>();
 				arrangedTarget[contentsName].Add(contents);
 			}
@@ -139,19 +135,16 @@ public class CityCreater : MonoBehaviour
 	}
 	
 	/**
-	 * English
-	 * 
-	 * Japanese(Romaji)
-	 * target no soutai zahyo wo kimeru kansu.
-	 * building no zahyo ya
-	 * block no zahyo wo kimeru
+	 *
+	 * targetの相対座標を決めるメソッド
+	 * ビル間・ブロック間での座標を決める
 	 * 
 	 */
 	
 	
 	void SetLocation (List<Dictionary<String,object>> target)
 	{
-		// mazu target wo sort suru
+		// targetをソートする
 		//Debug.Log (target [0] ["width"]);
 		target.Sort((b,a) => int.Parse(a["width"].ToString()) - int.Parse(b["width"].ToString()));
 		
@@ -160,37 +153,37 @@ public class CityCreater : MonoBehaviour
 		// 1 2 7
 		// 4 5 6
 		// 
-		// ue mitaini building ya block wo haichi suru
+		// 以下のコードで上記の0→8の順番のように配置していく
 		
 		int count = 0;
-		float space = float.Parse(target[0]["width"].ToString()) + 20; // kijun to naru kankaku
+		float space = float.Parse(target[0]["width"].ToString()) + 20; // 基準になる間隔
 		for (int i = 0; ;i++) {
 			int constX = 0;
 			int y = i;
-			// mazu migi ni mukatte haichi suru
-			// ex) 1
-			// ex) 4 to 5
+			// 1.右に向かって並べていく
+			// ex) 0
+			// ex) 1→2
+            // ex) 4→6
 			for(int x = 0; x <= y; x++){
 				target[count]["x"] = (space * x) + (space / 2);
 				target[count]["y"] = (space * y) + (space / 2);
 				count++;
 				if(count == target.Count)
 				{
-					goto Finish; // zenbu owattara tobu
+					goto Finish; // 全部終わったらFinishへ行く
 				}
 				constX = x;
 			}
-			// tsugi ni ue ni mukatte haichi suru
-			// ex) 0
-			// ex) 2 to 3
-			// ex) 6 to 8
+			// 2.上に向かって並べていく
+			// ex) 3
+			// ex) 7→8
 			for(y--; y >= 0; y--){
 				target[count]["x"] = (space * constX) + (space / 2);
 				target[count]["y"] = (space * y) + (space / 2);
 				count++;
 				if(count == target.Count)
 				{
-					goto Finish; // zenbu owattara tobu
+					goto Finish; // 全部終わったらFinishへ行く
 				}
 			}
 		}
@@ -201,12 +194,13 @@ public class CityCreater : MonoBehaviour
 	
 	
 	/**
-	 * English
-	 * 
-	 * Japanese(Romaji)
-	 * block no width wo kimeru kansu.
-	 * target no 0 banme no building no width + 20 wo
-	 * target no heihoukon wo kiriageta seisu bai suru 
+	 *
+	 * ブロックの幅を決めるメソッド
+	 * targetの0番目のビルの幅に20を足して
+	 * targetの個数以上になる最小の平方根を求める
+     * ex) targetが1個（ビルが1個）→1^2 = 1 >= 1 ∴1倍でOK
+     * ex) targetが2～4個→2^2 = 4 >= 2～4 ∴0番目の2倍の幅があればOK
+     * ex) targetが5～9個→3^2 = 9 >= 5～9 ∴0番目の3倍の幅があればOK 
 	 * 
 	 */
 	void SetWidth (List<Dictionary<String,object>> target, List<Dictionary<String, object>> block)
@@ -220,23 +214,37 @@ public class CityCreater : MonoBehaviour
 			}
 		}
 	}
-	
-	
-	void SetGlobalLocation(Dictionary<String,List<Dictionary<String, object>>> building, Dictionary<String,List<Dictionary<String, object>>> block)
+
+    /**
+	 *
+	 * ビルの座標を決めていくメソッド
+	 * ブロックの座標と相対座標からビルを置く座標を決めていく
+	 * 
+	 */
+    void SetGlobalLocation(Dictionary<String,List<Dictionary<String, object>>> building, Dictionary<String,List<Dictionary<String, object>>> block)
 	{
 		foreach (String key in building.Keys) {
-			float blockX = float.Parse(block[key][0]["x"].ToString()) - float.Parse(block[key][0]["width"].ToString()) / 2;
+            // ブロックの座標を取ってくる
+            float blockX = float.Parse(block[key][0]["x"].ToString()) - float.Parse(block[key][0]["width"].ToString()) / 2;
 			float blockY = float.Parse(block[key][0]["y"].ToString()) - float.Parse(block[key][0]["width"].ToString()) / 2;
 			
 			List<Dictionary<String, object>> buildingList = building[key];
+
+            // ビルの座標を決めていく
 			foreach(Dictionary<String, object> oneBuilding in buildingList){
 				oneBuilding["globalX"] = float.Parse(blockX.ToString()) + float.Parse(oneBuilding["x"].ToString());
 				oneBuilding["globalY"] = float.Parse(blockY.ToString()) + float.Parse(oneBuilding["y"].ToString());
 			}
 		}
 	}
-	
-	void BuildBuildings(Dictionary<String,List<Dictionary<String, object>>> building, Dictionary<String,List<Dictionary<String, object>>> block){
+
+    /**
+	 *
+	 * ビルを建てるメソッド
+	 * buildingオブジェクトを複製して配置していく
+	 * 
+	 */
+    void BuildBuildings(Dictionary<String,List<Dictionary<String, object>>> building, Dictionary<String,List<Dictionary<String, object>>> block){
 		Debug.Log("TEST");
 		foreach (String key in building.Keys) {
 			List<Dictionary<String, object>> buildingList = building [key];
@@ -248,6 +256,7 @@ public class CityCreater : MonoBehaviour
 				
 				clone.GetComponent<Building>().Init(new Color (float.Parse (oneBuilding ["color_r"].ToString ()), float.Parse (oneBuilding ["color_g"].ToString ()), float.Parse (oneBuilding ["color_b"].ToString ())));
 				
+                // SATDがあった時に仮に目印を入れておく
 				IList sList = oneBuilding["SATD"] as IList;
 				Debug.Log(this.check);
 				Debug.Log(this.building);
