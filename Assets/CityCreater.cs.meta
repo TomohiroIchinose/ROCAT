@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 3e0d8ff058b404dc3a6549364d9fcf10
-timeCreated: 1449580077
+timeCreated: 1452061372
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
@@ -8,7 +8,7 @@ MonoImporter:
   - ground: {fileID: 168404, guid: 2229250c577424bdfbfb68d6d162a62f, type: 2}
   - testGround: {instanceID: 0}
   - building: {fileID: 175714, guid: 1112de34047d34b7ea6eb64e8c1a813e, type: 2}
-  - check: {fileID: 152928, guid: ac12c577e4399e7409df0be9a1e65a7c, type: 2}
+  - checktest: {fileID: 160566, guid: c8ec65585a4c27341ba84cbb2d5de505, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

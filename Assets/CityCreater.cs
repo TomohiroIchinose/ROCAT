@@ -49,7 +49,7 @@ public class CityCreater : MonoBehaviour
 	public GameObject ground;
 	public GameObject testGround;
 	public GameObject building; 
-	public GameObject check;
+	public GameObject checktest;
 	public Dictionary<string,object> city;
 	
 	public string jsonText = "";
@@ -94,15 +94,15 @@ public class CityCreater : MonoBehaviour
 			SetLocation (arrangedBlock[key]); // 1.ビルの座標を決める
 			SetWidth (arrangedBlock[key], blockDictionary[key]); // 2.ブロックの幅を決める
 			blockList.Add(blockDictionary[key][0]);
-			Debug.Log(int.Parse(blockDictionary[key][0]["width"].ToString()));
+			//Debug.Log(int.Parse(blockDictionary[key][0]["width"].ToString()));
 			
 		}
-		Debug.Log("#####");
+		//Debug.Log("#####");
 		SetLocation (blockList);
 		
-		Debug.Log("TEST");
+		//Debug.Log("TEST");
 		SetGlobalLocation (arrangedBlock, blockDictionary);
-		Debug.Log("TEST");
+		//Debug.Log("TEST");
 		BuildBuildings (arrangedBlock, blockDictionary);
 	}
 	
@@ -245,8 +245,11 @@ public class CityCreater : MonoBehaviour
 	 * 
 	 */
     void BuildBuildings(Dictionary<String,List<Dictionary<String, object>>> building, Dictionary<String,List<Dictionary<String, object>>> block){
-		Debug.Log("TEST");
-		foreach (String key in building.Keys) {
+        //Debug.Log("TEST");
+        //Debug.Log(this.checktest);
+        //Debug.Log(this.building);
+        //Debug.Log(this.ground);
+        foreach (String key in building.Keys) {
 			List<Dictionary<String, object>> buildingList = building [key];
 			foreach (Dictionary<String, object> oneBuilding in buildingList) {
 				GameObject clone = Instantiate (this.building, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ()) / 2) + 2, float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
@@ -256,25 +259,26 @@ public class CityCreater : MonoBehaviour
 				
 				clone.GetComponent<Building>().Init(new Color (float.Parse (oneBuilding ["color_r"].ToString ()), float.Parse (oneBuilding ["color_g"].ToString ()), float.Parse (oneBuilding ["color_b"].ToString ())));
 				
-                // SATDがあった時に仮に目印を入れておく
-				IList sList = oneBuilding["SATD"] as IList;
-				Debug.Log(this.check);
-				Debug.Log(this.building);
-				if(sList.Count != 0){
-					//GameObject test = Instantiate (this.check, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ())) + 10, float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
 
-					GameObject check = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-					check.transform.Translate(float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ())) + float.Parse (oneBuilding ["width"].ToString ()), float.Parse (oneBuilding ["globalY"].ToString ()));
-					//test.transform.localScale = new Vector3 (float.Parse (oneBuilding ["width"].ToString ()), float.Parse (oneBuilding ["width"].ToString ()), float.Parse (oneBuilding ["width"].ToString ()));
-					//GameObject check = Instantiate (this.building, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ())) + 10, float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
-					check.transform.localScale = new Vector3 (float.Parse (oneBuilding ["width"].ToString ()), float.Parse (oneBuilding ["width"].ToString ()), float.Parse (oneBuilding ["width"].ToString ()));
-				}
-			}
+                // SATDがあった時に目印を入れる
+				IList sList = oneBuilding["SATD"] as IList;
+				if(sList.Count != 0){
+
+                    // カプセル型のPrefabのchecktestを入れる
+                    GameObject test = Instantiate (this.checktest, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1.3), float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
+                    test.transform.localScale = new Vector3(float.Parse(oneBuilding["width"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) / 5), float.Parse(oneBuilding["width"].ToString()));
+
+                    // プリミティブなオブジェクトで仮実装
+                    //GameObject check = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    //check.transform.Translate(float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ())) + float.Parse (oneBuilding ["width"].ToString ()), float.Parse (oneBuilding ["globalY"].ToString ()));
+                   // check.transform.localScale = new Vector3(float.Parse(oneBuilding["width"].ToString()), float.Parse(oneBuilding["width"].ToString()), float.Parse(oneBuilding["width"].ToString()));
+                }
+            }
 		}
 		
-		Debug.Log("TEST");
+		//Debug.Log("TEST");
 		foreach (String key in block.Keys) {
-			Debug.Log(key);
+			//Debug.Log(key);
 			List<Dictionary<String, object>> blockList = block [key];
 			GameObject clone = Instantiate (this.ground, new Vector3(float.Parse(blockList[0]["x"].ToString()), 1, float.Parse(blockList[0]["y"].ToString())), transform.rotation) as GameObject;
 			clone.transform.localScale = new Vector3 (float.Parse (blockList [0]["width"].ToString ()), 2, float.Parse (blockList [0]["width"].ToString ()));
