@@ -51,13 +51,18 @@ public class CityCreater : MonoBehaviour
 	public GameObject building; 
 	public GameObject checktest;
 	public Dictionary<string,object> city;
+
+    public GameObject text;
+    public TextMesh meshtext;
+    public MeshRenderer textrender;
+
 	
 	public string jsonText = "";
 	// Use this for initialization
 	void Start ()
 	{ 
 		//TARGET = Application.dataPath + "/target/redmine_path.json";
-		TARGET = Application.dataPath + "/target/test.json";
+		TARGET = Application.dataPath + "/target/tumikiTest.json";
 		ReadFile ();
 		CreateCity ();
 	} 
@@ -271,7 +276,14 @@ public class CityCreater : MonoBehaviour
                     // プリミティブなオブジェクトで仮実装
                     //GameObject check = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     //check.transform.Translate(float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ())) + float.Parse (oneBuilding ["width"].ToString ()), float.Parse (oneBuilding ["globalY"].ToString ()));
-                   // check.transform.localScale = new Vector3(float.Parse(oneBuilding["width"].ToString()), float.Parse(oneBuilding["width"].ToString()), float.Parse(oneBuilding["width"].ToString()));
+                    // check.transform.localScale = new Vector3(float.Parse(oneBuilding["width"].ToString()), float.Parse(oneBuilding["width"].ToString()), float.Parse(oneBuilding["width"].ToString()));
+
+                    text = gameObject;
+                    text.transform.parent = transform;
+                    textrender = text.GetComponent<MeshRenderer>();
+                    text.transform.Translate(float.Parse(oneBuilding["globalX"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1.3), float.Parse(oneBuilding["globalY"].ToString()));
+                    //meshtext.text = "test!";
+
                 }
             }
 		}
