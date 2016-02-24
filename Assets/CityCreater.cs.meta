@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 3e0d8ff058b404dc3a6549364d9fcf10
-timeCreated: 1452061372
+timeCreated: 1456305865
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
@@ -8,7 +8,11 @@ MonoImporter:
   - ground: {fileID: 168404, guid: 2229250c577424bdfbfb68d6d162a62f, type: 2}
   - testGround: {instanceID: 0}
   - building: {fileID: 175714, guid: 1112de34047d34b7ea6eb64e8c1a813e, type: 2}
-  - checktest: {fileID: 160566, guid: c8ec65585a4c27341ba84cbb2d5de505, type: 2}
+  - checkSATD: {fileID: 110382, guid: 815c5c6415e01c149b598b57fe92c8de, type: 2}
+  - text: {instanceID: 0}
+  - meshtext: {instanceID: 0}
+  - textrender: {instanceID: 0}
+  - plate: {fileID: 112864, guid: a8a58b3ddce6b1e42941150d2a459833, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

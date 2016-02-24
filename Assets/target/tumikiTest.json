@@ -15,6 +15,19 @@
             "block": "BlockA", 
             "height": 200
         },
+ 	{
+            "width": 400, 
+            "color_b": 0.4, 
+            "SATD": [
+		50
+		], 
+            "name": "CodeA", 
+            "color_g": 0.6, 
+            "path": "PathA", 
+            "color_r": 0.8, 
+            "block": "BlockA", 
+            "height": 100
+        },
 	{
             "width": 100, 
             "color_b": 0.9, 

@@ -49,12 +49,14 @@ public class CityCreater : MonoBehaviour
 	public GameObject ground;
 	public GameObject testGround;
 	public GameObject building; 
-	public GameObject checktest;
+	public GameObject checkSATD;
 	public Dictionary<string,object> city;
 
     public GameObject text;
     public TextMesh meshtext;
     public MeshRenderer textrender;
+
+    public GameObject plate;
 
 	
 	public string jsonText = "";
@@ -257,6 +259,11 @@ public class CityCreater : MonoBehaviour
         foreach (String key in building.Keys) {
 			List<Dictionary<String, object>> buildingList = building [key];
 			foreach (Dictionary<String, object> oneBuilding in buildingList) {
+
+                PilingPlate(oneBuilding);
+
+                /*
+
 				GameObject clone = Instantiate (this.building, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ()) / 2) + 2, float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
 				clone.name = oneBuilding ["name"].ToString ();
 				clone.transform.localScale = new Vector3 (float.Parse (oneBuilding ["width"].ToString ()), float.Parse (oneBuilding ["height"].ToString ()), float.Parse (oneBuilding ["width"].ToString ()));
@@ -265,24 +272,28 @@ public class CityCreater : MonoBehaviour
 				clone.GetComponent<Building>().Init(new Color (float.Parse (oneBuilding ["color_r"].ToString ()), float.Parse (oneBuilding ["color_g"].ToString ()), float.Parse (oneBuilding ["color_b"].ToString ())));
 				
 
+                */
+
                 // SATDがあった時に目印を入れる
-				IList sList = oneBuilding["SATD"] as IList;
+                IList sList = oneBuilding["SATD"] as IList;
 				if(sList.Count != 0){
 
                     // カプセル型のPrefabのchecktestを入れる
-                    GameObject test = Instantiate (this.checktest, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1.3), float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
-                    test.transform.localScale = new Vector3(float.Parse(oneBuilding["width"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) / 5), float.Parse(oneBuilding["width"].ToString()));
+                    GameObject test = Instantiate (this.checkSATD, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float)(double.Parse(oneBuilding["height"].ToString()) * 5 + 250), float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
+                    //test.transform.localScale = new Vector3(float.Parse(oneBuilding["width"].ToString()), float.Parse(oneBuilding["width"].ToString()), float.Parse(oneBuilding["width"].ToString()));
 
                     // プリミティブなオブジェクトで仮実装
                     //GameObject check = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     //check.transform.Translate(float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ())) + float.Parse (oneBuilding ["width"].ToString ()), float.Parse (oneBuilding ["globalY"].ToString ()));
                     // check.transform.localScale = new Vector3(float.Parse(oneBuilding["width"].ToString()), float.Parse(oneBuilding["width"].ToString()), float.Parse(oneBuilding["width"].ToString()));
 
-                    text = gameObject;
-                    text.transform.parent = transform;
-                    textrender = text.GetComponent<MeshRenderer>();
-                    text.transform.Translate(float.Parse(oneBuilding["globalX"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1.3), float.Parse(oneBuilding["globalY"].ToString()));
+                   // text = gameObject;
+                   // text.transform.parent = transform;
+                   // textrender = text.GetComponent<MeshRenderer>();
+                   // text.transform.Translate(float.Parse(oneBuilding["globalX"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1.3), float.Parse(oneBuilding["globalY"].ToString()));
                     //meshtext.text = "test!";
+
+                
 
                 }
             }
@@ -297,6 +308,38 @@ public class CityCreater : MonoBehaviour
 		}
 		
 	}
+
+    // プレートを積み上げてSATDがあるトコだけ目印がついたビルを作る
+    void PilingPlate(Dictionary<String, object> target)
+    {
+        IList sList = target["SATD"] as IList;  // SATDのリスト
+        Material satd = Resources.Load("SATD") as Material; // SATD用のマテリアル
+
+        int check = 0;
+
+        // 一段ずつ積み上げる
+        for (int i = 0; i < int.Parse(target["height"].ToString()); i++)
+        {
+            GameObject clone = Instantiate(this.plate, new Vector3(float.Parse(target["globalX"].ToString()), float.Parse((i * 5).ToString()), float.Parse(target["globalY"].ToString())), transform.rotation) as GameObject; // 1段積む
+            clone.transform.localScale = new Vector3(float.Parse(target["width"].ToString()), 5, float.Parse(target["width"].ToString()));
+
+            // その段（行）にSATDがあるときはマテリアルを変更する
+            if (sList[check].ToString() == i.ToString())
+            //if (sList.Contains((object)i) == true)
+            {
+                clone.GetComponent<Renderer>().material = satd;
+
+                if(check < sList.Count-1)
+                {
+                    check++;
+                }
+
+                Debug.Log("SATD!");
+            }
+
+            clone.name = target["name"].ToString();
+        }
+    }
 	
 	
 	
