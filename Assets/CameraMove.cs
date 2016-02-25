@@ -23,14 +23,14 @@ public class CameraMove : MonoBehaviour {
 	private Building selectedBuilding;
 
 	private float rotationY = 0f;
-	private const float CAMERA_SPEED = 200f;
+	private const float CAMERA_SPEED = 500f;
 	private const float CAMERA_CONTROL_SENSITIVITY = 3F;
 	private const float MIN_ROTATION_Y = -30F;
 	private const float MAX_ROTATION_Y = 30F;
 
 	// Use this for initialization
 	void Start () {
-		view_src = true;
+		view_src = false;
 		cc = GameObject.Find ("CityCreater").GetComponent<CityCreater> ();
 		foreach( Transform child in canvas.transform){
 			file_name = child.gameObject.GetComponent<Text>();
@@ -143,6 +143,7 @@ public class CameraMove : MonoBehaviour {
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		if (Physics.Raycast(ray, out hit, 10000)) {
 			Building hitBuilding = hit.transform.GetComponent<Building>();
+            MouseClicked(hitBuilding);
 			return hitBuilding;
 		}
 
@@ -153,7 +154,7 @@ public class CameraMove : MonoBehaviour {
 	{
 		if(view_src)
 			//src_txt = GUI.TextArea (new Rect (5, 5, Screen.width-10, Screen.height-100), src_txt);
-			src_txt = GUI.TextArea (new Rect (5, 5, Screen.width-10, Screen.height-100), src_txt.Substring(0,Math.Min(1000,src_txt.Length)));
+			src_txt = GUI.TextArea (new Rect (5, 5, Screen.width-10, Screen.height-100), src_txt.Substring(0,Math.Min(10000,src_txt.Length)));
 
 	}
 
@@ -161,7 +162,6 @@ public class CameraMove : MonoBehaviour {
 		string st = "";
 		try {
 		// FileReadTest.txtファイルを読み込む
-		Debug.Log (path);
 		FileInfo fi = new FileInfo(path);
 
 

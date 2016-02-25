@@ -62,10 +62,15 @@ public class CityCreater : MonoBehaviour
 	public string jsonText = "";
 	// Use this for initialization
 	void Start ()
-	{ 
-		//TARGET = Application.dataPath + "/target/redmine_path.json";
-		TARGET = Application.dataPath + "/target/tumikiTest.json";
-		ReadFile ();
+	{
+        //TARGET = Application.dataPath + "/target/redmine_path.json";
+
+        TARGET = Application.dataPath + "/target/guice.json";
+
+        //TARGET = Application.dataPath + "/target/tumikiTest.json";
+
+
+        ReadFile ();
 		CreateCity ();
 	} 
 	
@@ -279,7 +284,7 @@ public class CityCreater : MonoBehaviour
 				if(sList.Count != 0){
 
                     // カプセル型のPrefabのchecktestを入れる
-                    GameObject test = Instantiate (this.checkSATD, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float)(double.Parse(oneBuilding["height"].ToString()) * 5 + 250), float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
+                    GameObject test = Instantiate (this.checkSATD, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float)(double.Parse(oneBuilding["height"].ToString()) * 2 + 100), float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
                     //test.transform.localScale = new Vector3(float.Parse(oneBuilding["width"].ToString()), float.Parse(oneBuilding["width"].ToString()), float.Parse(oneBuilding["width"].ToString()));
 
                     // プリミティブなオブジェクトで仮実装
@@ -320,11 +325,11 @@ public class CityCreater : MonoBehaviour
         // 一段ずつ積み上げる
         for (int i = 0; i < int.Parse(target["height"].ToString()); i++)
         {
-            GameObject clone = Instantiate(this.plate, new Vector3(float.Parse(target["globalX"].ToString()), float.Parse((i * 5).ToString()), float.Parse(target["globalY"].ToString())), transform.rotation) as GameObject; // 1段積む
-            clone.transform.localScale = new Vector3(float.Parse(target["width"].ToString()), 5, float.Parse(target["width"].ToString()));
+            GameObject clone = Instantiate(this.plate, new Vector3(float.Parse(target["globalX"].ToString()), float.Parse((i * 2).ToString()) + 1f, float.Parse(target["globalY"].ToString())), transform.rotation) as GameObject; // 1段積む
+            clone.transform.localScale = new Vector3(float.Parse(target["width"].ToString()), 2, float.Parse(target["width"].ToString()));
 
             // その段（行）にSATDがあるときはマテリアルを変更する
-            if (sList[check].ToString() == i.ToString())
+            if (sList.Count != 0 && sList[check].ToString() == i.ToString())
             //if (sList.Contains((object)i) == true)
             {
                 clone.GetComponent<Renderer>().material = satd;

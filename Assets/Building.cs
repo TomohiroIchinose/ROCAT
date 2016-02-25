@@ -6,21 +6,22 @@ public class Building : MonoBehaviour
 {
 	private Color originalColor;
 
+    private Material originalMaterial;
+
 	public void Init(Color color)
 	{
 		this.originalColor = color;
-
 		SetMaterial(originalColor);
 	}
 
 	public void Selected()
 	{
-		SetMaterial(Building.SELECTED_COLOR);
+		//SetMaterial(Building.SELECTED_COLOR);
 	}
 
 	public void Deselected()
 	{
-		SetMaterial(originalColor);
+		//SetMaterial(originalColor);
 	}
 
 	public void SetMaterial(Color color)

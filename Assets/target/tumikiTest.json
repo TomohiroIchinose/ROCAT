@@ -29,6 +29,81 @@
             "height": 100
         },
 	{
+            "width": 200, 
+            "color_b": 0.4, 
+            "SATD": [], 
+            "name": "CodeA", 
+            "color_g": 0.6, 
+            "path": "PathA", 
+            "color_r": 0.8, 
+            "block": "BlockA", 
+            "height": 50
+        },
+	{
+            "width": 100, 
+            "color_b": 0.4, 
+            "SATD": [
+		50,
+		70
+		], 
+            "name": "CodeA", 
+            "color_g": 0.6, 
+            "path": "PathA", 
+            "color_r": 0.8, 
+            "block": "BlockA", 
+            "height": 100
+        },
+	{
+            "width": 50, 
+            "color_b": 0.4, 
+            "SATD": [
+		10,
+		15,
+		180
+		], 
+            "name": "CodeA", 
+            "color_g": 0.6, 
+            "path": "PathA", 
+            "color_r": 0.8, 
+            "block": "BlockA", 
+            "height": 200
+        },
+	{
+            "width": 20, 
+            "color_b": 0.4, 
+            "SATD": [], 
+            "name": "CodeA", 
+            "color_g": 0.6, 
+            "path": "PathA", 
+            "color_r": 0.8, 
+            "block": "BlockA", 
+            "height": 70
+        },
+	{
+            "width": 40, 
+            "color_b": 0.4, 
+            "SATD": [], 
+            "name": "CodeA", 
+            "color_g": 0.6, 
+            "path": "PathA", 
+            "color_r": 0.8, 
+            "block": "BlockA", 
+            "height": 80
+        },
+	{
+            "width": 20, 
+            "color_b": 0.4, 
+            "SATD": [
+		15
+		], 
+            "name": "CodeA", 
+            "color_g": 0.6, 
+            "path": "PathA", 
+            "color_r": 0.8, 
+            "block": "BlockA", 
+            "height": 30
+        },
+	{
             "width": 100, 
             "color_b": 0.9, 
             "SATD": [
@@ -41,6 +116,113 @@
             "color_r": 0.0, 
             "block": "BlockB", 
             "height": 100
+        },
+	{
+            "width": 70, 
+            "color_b": 0.9, 
+            "SATD": [
+		10,
+		15,
+		25
+		], 
+            "name": "CodeB", 
+            "color_g": 0.2, 
+            "path": "PathB", 
+            "color_r": 0.0, 
+            "block": "BlockB", 
+            "height": 100
+        },
+	{
+            "width": 50, 
+            "color_b": 0.9, 
+            "SATD": [], 
+            "name": "CodeB", 
+            "color_g": 0.2, 
+            "path": "PathB", 
+            "color_r": 0.0, 
+            "block": "BlockB", 
+            "height": 70
+        },
+	{
+            "width": 30, 
+            "color_b": 0.9, 
+            "SATD": [], 
+            "name": "CodeB", 
+            "color_g": 0.2, 
+            "path": "PathB", 
+            "color_r": 0.0, 
+            "block": "BlockB", 
+            "height": 50
+        },
+	{
+            "width": 150, 
+            "color_b": 0.9, 
+            "SATD": [], 
+            "name": "CodeB", 
+            "color_g": 0.2, 
+            "path": "PathB", 
+            "color_r": 0.0, 
+            "block": "BlockB", 
+            "height": 30
+        },
+	{
+            "width": 80, 
+            "color_b": 0.9, 
+            "SATD": [], 
+            "name": "CodeB", 
+            "color_g": 0.2, 
+            "path": "PathB", 
+            "color_r": 0.0, 
+            "block": "BlockB", 
+            "height": 120
+        },
+	{
+            "width": 150, 
+            "color_b": 0.9, 
+            "SATD": [
+		100
+		], 
+            "name": "CodeC", 
+            "color_g": 0.2, 
+            "path": "PathC", 
+            "color_r": 0.0, 
+            "block": "BlockC", 
+            "height": 120
+        },
+	{
+            "width": 100, 
+            "color_b": 0.9, 
+            "SATD": [
+		5
+		], 
+            "name": "CodeC", 
+            "color_g": 0.2, 
+            "path": "PathC", 
+            "color_r": 0.0, 
+            "block": "BlockC", 
+            "height": 50
+        },
+	{
+            "width": 50, 
+            "color_b": 0.9, 
+            "SATD": [], 
+            "name": "CodeC", 
+            "color_g": 0.2, 
+            "path": "PathC", 
+            "color_r": 0.0, 
+            "block": "BlockC", 
+            "height": 70
+        },
+	{
+            "width": 80, 
+            "color_b": 0.9, 
+            "SATD": [], 
+            "name": "CodeC", 
+            "color_g": 0.2, 
+            "path": "PathC", 
+            "color_r": 0.0, 
+            "block": "BlockC", 
+            "height": 30
         }
     ], 
     "blocks": [
@@ -49,6 +231,10 @@
         }, 
 	{
             "name": "BlockB"
+        }
+	, 
+	{
+            "name": "BlockC"
         }
     ]
 }
