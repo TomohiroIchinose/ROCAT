@@ -339,7 +339,7 @@ public class CityCreater : MonoBehaviour
                     check++;
                 }
 
-                Debug.Log("SATD!");
+                //Debug.Log("SATD!");
             }
 
             clone.name = target["name"].ToString();

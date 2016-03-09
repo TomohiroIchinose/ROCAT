@@ -2638,5 +2638,15 @@
         {
             "name": "C:\\Users\\Ichinose\\swift\\test\\unit"
         }
+    ], 
+    "rank": [
+	{   
+	    "name": "A",
+	    "num": 1
+	},
+	{   
+            "name": "B",
+	    "num": 2
+	}
     ]
 }
