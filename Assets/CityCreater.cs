@@ -67,6 +67,8 @@ public class CityCreater : MonoBehaviour
 
         TARGET = Application.dataPath + "/target/guice.json";
 
+        //TARGET = Application.dataPath + "/target/test.json";
+
         //TARGET = Application.dataPath + "/target/tumikiTest.json";
 
 
@@ -265,26 +267,32 @@ public class CityCreater : MonoBehaviour
 			List<Dictionary<String, object>> buildingList = building [key];
 			foreach (Dictionary<String, object> oneBuilding in buildingList) {
 
-                PilingPlate(oneBuilding);
+                // プレートでビルを作る版
+                //PilingPlate(oneBuilding);
 
-                /*
-
+                // ビルを建てる
 				GameObject clone = Instantiate (this.building, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ()) / 2) + 2, float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
-				clone.name = oneBuilding ["name"].ToString ();
+
+                // ビルにおなまえを付ける
+                clone.name = oneBuilding ["name"].ToString ();
+
+                // ビルの大きさをいじる
 				clone.transform.localScale = new Vector3 (float.Parse (oneBuilding ["width"].ToString ()), float.Parse (oneBuilding ["height"].ToString ()), float.Parse (oneBuilding ["width"].ToString ()));
 				//clone.GetComponent<Renderer>().material.color = Color.blue;
 				
+                //ビルの色を変える
 				clone.GetComponent<Building>().Init(new Color (float.Parse (oneBuilding ["color_r"].ToString ()), float.Parse (oneBuilding ["color_g"].ToString ()), float.Parse (oneBuilding ["color_b"].ToString ())));
-				
-
-                */
 
                 // SATDがあった時に目印を入れる
+                AddSATD(oneBuilding);
+
                 IList sList = oneBuilding["SATD"] as IList;
 				if(sList.Count != 0){
 
-                    // カプセル型のPrefabのchecktestを入れる
+                    // 球体の目印をつくる
                     GameObject test = Instantiate (this.checkSATD, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float)(double.Parse(oneBuilding["height"].ToString()) * 2 + 100), float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
+                    test.name = "SATDMarker";
+
                     //test.transform.localScale = new Vector3(float.Parse(oneBuilding["width"].ToString()), float.Parse(oneBuilding["width"].ToString()), float.Parse(oneBuilding["width"].ToString()));
 
                     // プリミティブなオブジェクトで仮実装
@@ -345,7 +353,68 @@ public class CityCreater : MonoBehaviour
             clone.name = target["name"].ToString();
         }
     }
+
+    // SATDがあるところに幅がちょっとだけ大きい目印用のプレートを作る
+    void AddSATD(Dictionary<String, object> target)
+    {
+        IList sList = target["SATD"] as IList;  // SATDのリスト
+        int check = 0;
+
+        // 1段ずつ見ていく
+        for (int i = 0; i < int.Parse(target["height"].ToString()); i++)
+        {
+            // その段（行）にSATDがあるときに目印をつける
+            if (sList.Count != 0 && sList[check].ToString() == i.ToString())
+            {
+                GameObject clone = Instantiate(this.plate, new Vector3(float.Parse(target["globalX"].ToString()), float.Parse(i.ToString()) + 1f, float.Parse(target["globalY"].ToString())), transform.rotation) as GameObject;
+                clone.transform.localScale = new Vector3(float.Parse(target["width"].ToString()) + 0.7f, 1, float.Parse(target["width"].ToString()) + 0.7f);
+                
+                // 目印を補色にする
+                clone.GetComponent<Renderer>().material.color = CalcComplementaryColor(new Color(float.Parse(target["color_r"].ToString()), float.Parse(target["color_g"].ToString()), float.Parse(target["color_b"].ToString())));
+
+                // おなまえをつける
+                clone.name = "(SATD)" + target["name"].ToString() + "@line" + i.ToString();
+
+                if (check < sList.Count - 1)
+                {
+                    check++;
+                }
+            }
+
+        }
+    }
 	
+
+    // 補色を計算する関数
+    Color CalcComplementaryColor(Color original)
+    {
+
+        float max = original.r;
+        float min = original.r;
+
+        if(original.g > max)
+        {
+            max = original.g;
+        }
+        if(original.b > max)
+        {
+            max = original.b;
+        }
+
+        if(original.g < min)
+        {
+            min = original.g;
+        }
+        if (original.b < min)
+        {
+            min = original.b;
+        }
+
+        float sum = min + max;
+
+
+        return new Color(sum - original.r, sum - original.g, sum - original.b);
+    }
 	
 	
 	void nori_rogic_ver2 (IList blocks, IList buildings)
