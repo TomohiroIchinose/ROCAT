@@ -35,7 +35,7 @@ public class MakeRankText : MonoBehaviour {
     // ランキング用のテキストを作る関数
     void MakeRankWindow()
     {
-        this.GetComponent<Text>().text = "★STADランキング★\n";
+        this.GetComponent<Text>().text = "★STAD除去数ランキング★\n";
 
         // jsonファイルの中身を辞書にする
         this.jsonDictionary = Json.Deserialize(jsonText) as Dictionary<string, object>;
@@ -47,22 +47,51 @@ public class MakeRankText : MonoBehaviour {
         Dictionary<String, List<Dictionary<String, object>>> rankDictionary = ArrangeByKey(rankData, "name");
 
 
+        // ソート用におなまえとnum（除去数？）だけの辞書を作る
+        Dictionary<string, int> sortDic = new Dictionary<string, int>();
         foreach (String person in rankDictionary.Keys)
         {
-            this.GetComponent<Text>().text += person;
-
             // 1人ごとのデータのリストを取ってくる
             List<Dictionary<String, object>> onePersonData = rankDictionary[person];
 
             // 1人ごとのデータのリストから1つずつデータを見ていく
             foreach (Dictionary<String, object> oneData in onePersonData)
             {
-                this.GetComponent<Text>().text += "   " + oneData["num"].ToString();
+                sortDic.Add(person, int.Parse(oneData["num"].ToString())); // 辞書に追加
             }
-
-            this.GetComponent<Text>().text += "\n";
-
         }
+
+        // ソート用の辞書をリストに変換して降順にソートする
+        List<KeyValuePair<string, int>> print = new List<KeyValuePair<string, int>>(sortDic);
+        print.Sort(CompareKeyValuePair);
+
+
+        // ランキングのテキストを作る
+        int rank = 1;
+        foreach(KeyValuePair<string, int> pair in print)
+        {
+            this.GetComponent<Text>().text += rank.ToString() + "位  " +  pair.Key.ToString() + "さん   " + pair.Value.ToString() + "個\n";
+            rank++;
+        }
+
+
+        /* jsonファイルの順に表示させるパターン */
+        //foreach (String person in rankDictionary.Keys)
+        //{
+        //    this.GetComponent<Text>().text += person;
+        //
+        //    1人ごとのデータのリストを取ってくる
+        //    List<Dictionary<String, object>> onePersonData = rankDictionary[person];
+        //
+        //    1人ごとのデータのリストから1つずつデータを見ていく
+        //    foreach (Dictionary<String, object> oneData in onePersonData)
+        //    {
+        //       this.GetComponent<Text>().text += "   " + oneData["num"].ToString();
+        //    }
+        //
+        //    this.GetComponent<Text>().text += "\n";
+        //
+        //}
         //Debug.Log("%%%");
     }
 
@@ -119,4 +148,21 @@ public class MakeRankText : MonoBehaviour {
 
         return arrangedTarget;
     }
+
+
+    // 二つのKeyValuePair<string, int>を比較するためのメソッド
+    static int CompareKeyValuePair(KeyValuePair<string, int> x, KeyValuePair<string, int> y)
+    {
+        // Valueで比較した結果を返す
+        
+        //降順
+        return -x.Value.CompareTo(y.Value); 
+
+        //昇順
+        //return -x.Value.CompareTo(y.Value);
+
+        // 単に次のようにしても同じ
+        // return x.Value - y.Value;
+    }
+
 }
