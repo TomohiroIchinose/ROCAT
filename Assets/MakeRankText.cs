@@ -1,39 +1,42 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 using System.IO;
 using MiniJSON;
-using System.Text;
-using System;
 using System.Collections.Generic;
+using System;
+using System.Text;
 
-public class MakeRanking : MonoBehaviour {
+public class MakeRankText : MonoBehaviour {
 
     private string TARGET;           // jsonファイルのパスを入れる変数
     private string jsonText = "";    // jsonファイルの中身を入れる変数
-    private string rankText = "";   // ウィンドウに出すテキスト
     private Dictionary<string, object> jsonDictionary; // jsonファイルの中身を辞書にしたもの
 
     // Use this for initialization
     void Start () {
 
+        this.GetComponent<Text>().text = "";
+
         // TARGETに指定したjsonファイルの中身を読みだす
         TARGET = Application.dataPath + "/target/test.json";
         ReadFile();
 
-        rankText += "★STADランキング★\n";
         MakeRankWindow();
-	}
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
 
-    
 
     // ランキング用のテキストを作る関数
     void MakeRankWindow()
     {
+        this.GetComponent<Text>().text = "★STADランキング★\n";
+
         // jsonファイルの中身を辞書にする
         this.jsonDictionary = Json.Deserialize(jsonText) as Dictionary<string, object>;
 
@@ -44,33 +47,24 @@ public class MakeRanking : MonoBehaviour {
         Dictionary<String, List<Dictionary<String, object>>> rankDictionary = ArrangeByKey(rankData, "name");
 
 
-        foreach(String person in rankDictionary.Keys)
+        foreach (String person in rankDictionary.Keys)
         {
-            rankText += person;
+            this.GetComponent<Text>().text += person;
 
             // 1人ごとのデータのリストを取ってくる
             List<Dictionary<String, object>> onePersonData = rankDictionary[person];
-            
+
             // 1人ごとのデータのリストから1つずつデータを見ていく
-            foreach(Dictionary<String, object> oneData in onePersonData)
+            foreach (Dictionary<String, object> oneData in onePersonData)
             {
-                rankText += "   " + oneData["num"].ToString();
+                this.GetComponent<Text>().text += "   " + oneData["num"].ToString();
             }
 
-            rankText += "\n";
+            this.GetComponent<Text>().text += "\n";
 
         }
-        //rankText = "Test!";
+        //Debug.Log("%%%");
     }
-
-
-
-    // 実際にGUIを出すイベント（関数じゃないよ！）
-    void OnGUI()
-    {
-        rankText = GUI.TextArea(new Rect(5, 30, 200, 300), rankText);
-    }
-
 
 
     // jsonファイルの中身を読みだす関数
@@ -125,5 +119,4 @@ public class MakeRanking : MonoBehaviour {
 
         return arrangedTarget;
     }
-
 }
