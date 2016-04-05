@@ -41,7 +41,7 @@ public class MakeRankText : MonoBehaviour {
         this.jsonDictionary = Json.Deserialize(jsonText) as Dictionary<string, object>;
 
         // jsonDictionaryのrankの部分をリストにする
-        var rankData = this.jsonDictionary["rank"] as IList;
+        var rankData = this.jsonDictionary["SATDRanking"] as IList;
 
         // おなまえごとの辞書にする
         Dictionary<String, List<Dictionary<String, object>>> rankDictionary = ArrangeByKey(rankData, "name");
