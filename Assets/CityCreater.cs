@@ -278,10 +278,11 @@ public class CityCreater : MonoBehaviour
 
                 // ビルの大きさをいじる
 				clone.transform.localScale = new Vector3 (float.Parse (oneBuilding ["width"].ToString ()), float.Parse (oneBuilding ["height"].ToString ()), float.Parse (oneBuilding ["width"].ToString ()));
-				//clone.GetComponent<Renderer>().material.color = Color.blue;
-				
+                //clone.GetComponent<Renderer>().material.color = Color.blue;
+
                 //ビルの色を変える
-				clone.GetComponent<Building>().Init(new Color (float.Parse (oneBuilding ["color_r"].ToString ()), float.Parse (oneBuilding ["color_g"].ToString ()), float.Parse (oneBuilding ["color_b"].ToString ())));
+                //clone.GetComponent<Building>().Init(new Color (float.Parse (oneBuilding ["color_r"].ToString ()), float.Parse (oneBuilding ["color_g"].ToString ()), float.Parse (oneBuilding ["color_b"].ToString ())));
+                clone.GetComponent<Building>().Init(new Color((float)0.5, (float)0.8, (float)1.0));
 
                 // SATDがあった時に目印を入れる
                 AddSATD(oneBuilding);
@@ -290,7 +291,7 @@ public class CityCreater : MonoBehaviour
 				if(sList.Count != 0){
 
                     // 球体の目印をつくる
-                    GameObject test = Instantiate (this.checkSATD, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float)(double.Parse(oneBuilding["height"].ToString()) * 2 + 100), float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
+                    GameObject test = Instantiate (this.checkSATD, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1 + 150), float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
                     test.name = "SATDMarker";
 
                     //test.transform.localScale = new Vector3(float.Parse(oneBuilding["width"].ToString()), float.Parse(oneBuilding["width"].ToString()), float.Parse(oneBuilding["width"].ToString()));
@@ -368,9 +369,11 @@ public class CityCreater : MonoBehaviour
             {
                 GameObject clone = Instantiate(this.plate, new Vector3(float.Parse(target["globalX"].ToString()), float.Parse(i.ToString()) + 1f, float.Parse(target["globalY"].ToString())), transform.rotation) as GameObject;
                 clone.transform.localScale = new Vector3(float.Parse(target["width"].ToString()) + 0.7f, 1, float.Parse(target["width"].ToString()) + 0.7f);
-                
+
                 // 目印を補色にする
-                clone.GetComponent<Renderer>().material.color = CalcComplementaryColor(new Color(float.Parse(target["color_r"].ToString()), float.Parse(target["color_g"].ToString()), float.Parse(target["color_b"].ToString())));
+                //clone.GetComponent<Renderer>().material.color = CalcComplementaryColor(new Color(float.Parse(target["color_r"].ToString()), float.Parse(target["color_g"].ToString()), float.Parse(target["color_b"].ToString())));
+                clone.GetComponent<Renderer>().material.color = CalcComplementaryColor(new Color((float)0.5, (float)0.8, (float)1.0));
+              
 
                 // おなまえをつける
                 clone.name = "(SATD)" + target["name"].ToString() + "@line" + i.ToString();

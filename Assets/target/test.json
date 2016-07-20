@@ -2642,11 +2642,11 @@
     "SATDRanking": [
 	{   
 	    "name": "A",
-	    "num": 1
+	    "num": 5
 	},
 	{   
             "name": "B",
-	    "num": 2
+	    "num": 5
 	},
 	{   
             "name": "C",
@@ -2654,18 +2654,14 @@
 	},
 	{   
             "name": "D",
-	    "num": 4
+	    "num": 2
 	},
 	{   
             "name": "E",
-	    "num": 5
+	    "num": 7
 	},
 	{   
             "name": "F",
-	    "num": 6
-	},
-	{   
-            "name": "ほげ",
 	    "num": 0
 	}
     ]
