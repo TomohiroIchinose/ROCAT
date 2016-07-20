@@ -11,7 +11,9 @@ using MiniJSON;
 public class CameraMove : MonoBehaviour {
 	const float SPEED = 0.1f;
 	public Canvas canvas;
+    public Canvas canvas2;
 	public Text file_name;
+    public Text block_name;
 	private string src_txt = "";
 	public CityCreater cc;
 	public string ta;
@@ -21,6 +23,7 @@ public class CameraMove : MonoBehaviour {
 
 	private bool isMouseAvailable = true;
 	private Building selectedBuilding;
+    private Block selectedBlock;
 
 	private float rotationY = 0f;
 	private const float CAMERA_SPEED = 500f;
@@ -34,10 +37,17 @@ public class CameraMove : MonoBehaviour {
 		cc = GameObject.Find ("CityCreater").GetComponent<CityCreater> ();
 		foreach( Transform child in canvas.transform){
 			file_name = child.gameObject.GetComponent<Text>();
-			file_name.text = "";
+            //block_name = child.gameObject.GetComponent<Text>();
+            file_name.text = "";
+            //block_name.text = "";
 		}
+        foreach (Transform child in canvas2.transform)
+        {
+            block_name = child.gameObject.GetComponent<Text>();
+            block_name.text = "";
+        }
 
-	}
+    }
 
 	void Update ()
 	{
@@ -88,9 +98,11 @@ public class CameraMove : MonoBehaviour {
 	private void ControlByMouse()
 	{
 		Building building = GetRaycastHitBuilding();
-		HighlighMouseOverBuilding(building);
+        Block block = GetRaycastHitBlock();
+        HighlighMouseOverBuilding(building);
+        HighlighMouseOverBlock(block);
 
-		if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
 		{
 			MouseClicked(building);
 		}
@@ -137,7 +149,35 @@ public class CameraMove : MonoBehaviour {
 		}
 	}
 
-	private Building GetRaycastHitBuilding()
+    private void HighlighMouseOverBlock(Block block)
+    {
+        if (block != null)
+        {
+            if (selectedBlock == null || selectedBlock != block)
+            {
+                block_name.text = block.transform.name;
+
+                if (selectedBlock)
+                {
+                    selectedBlock.Deselected();
+                }
+
+                selectedBlock = block;
+                selectedBlock.Selected();
+            }
+        }
+        else
+        {
+            if (selectedBlock)
+            {
+                selectedBlock.Deselected();
+                selectedBlock = null;
+            }
+            block_name.text = "";
+        }
+    }
+
+    private Building GetRaycastHitBuilding()
 	{
 		RaycastHit hit;
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -149,6 +189,19 @@ public class CameraMove : MonoBehaviour {
 
 		return null;
 	}
+
+    private Block GetRaycastHitBlock()
+    {
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit, 10000))
+        {
+            Block hitBlock = hit.transform.GetComponent<Block>();
+            return hitBlock;
+        }
+
+        return null;
+    }
 
 	void OnGUI()
 	{

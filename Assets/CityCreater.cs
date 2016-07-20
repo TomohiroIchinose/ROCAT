@@ -319,6 +319,7 @@ public class CityCreater : MonoBehaviour
 			List<Dictionary<String, object>> blockList = block [key];
 			GameObject clone = Instantiate (this.ground, new Vector3(float.Parse(blockList[0]["x"].ToString()), 1, float.Parse(blockList[0]["y"].ToString())), transform.rotation) as GameObject;
 			clone.transform.localScale = new Vector3 (float.Parse (blockList [0]["width"].ToString ()), 2, float.Parse (blockList [0]["width"].ToString ()));
+            clone.name = blockList[0]["name"].ToString();
 		}
 		
 	}
