@@ -60,8 +60,19 @@ public class CityCreater : MonoBehaviour
 
 	
 	public string jsonText = "";
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+
+    void Start()
+    {
+        #if UNITY_EDITOR
+                StartCityCreater("2");
+        #else
+			    Application.ExternalCall("OnUnityReady");
+        #endif
+    }
+
+    /*
+    void Start ()
 	{
         //TARGET = Application.dataPath + "/target/redmine_path.json";
 
@@ -75,10 +86,11 @@ public class CityCreater : MonoBehaviour
         ReadFile ();
 		CreateCity ();
 	} 
-	
-	
-	
-	void CreateCity ()
+    */
+
+
+
+    void CreateCity ()
 	{
 		this.city = Json.Deserialize (jsonText) as Dictionary<string,object>;
 		var blocks = this.city ["blocks"] as IList;
@@ -1127,6 +1139,7 @@ public class CityCreater : MonoBehaviour
 		}
 	}
 	
+    /*
 	void ReadFile () 
 	{
 		FileInfo file = new FileInfo (TARGET);
@@ -1138,8 +1151,39 @@ public class CityCreater : MonoBehaviour
 			jsonText += SetDefaultText ();
 		}
 	}
-	
-	string SetDefaultText ()
+    */
+
+    // Javascriptから街を作り始めるためのメソッド
+    public void StartCityCreater(string id)
+    {
+        StartCoroutine(ReadFileOnline(id));
+    }
+
+    // サーバにあるJsonファイルを読み込むメソッド
+    IEnumerator ReadFileOnline(string id)
+    {
+
+        //string url = "http://kataribe-dev.naist.jp:802/public/code_city.json?id=" + id;
+        string url = "http://163.221.29.246/json/" + id + ".json";
+
+        WWW www = new WWW(url);
+        yield return www;
+
+        if (www.error == null)
+        {
+            jsonText = www.text;
+        }
+        else {
+            jsonText = SetDefaultText();
+        }
+
+
+        Camera.main.GetComponent<CameraMove>().isControlAvailable = true;
+        CreateCity();
+
+    }
+
+    string SetDefaultText ()
 	{
 		return "cant read\n";
 	}

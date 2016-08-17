@@ -21,7 +21,8 @@ public class CameraMove : MonoBehaviour {
 	public Material viewMaterial;
 	private bool view_src;
 
-	private bool isMouseAvailable = true;
+    public bool isControlAvailable = false;
+    private bool isMouseAvailable = true;
 	private Building selectedBuilding;
     private Block selectedBlock;
 
@@ -51,7 +52,8 @@ public class CameraMove : MonoBehaviour {
 
 	void Update ()
 	{
-		ControlByKeyboard();
+        if (!isControlAvailable) { return; }
+        ControlByKeyboard();
 		ControlByMouse();
 	}
 
@@ -117,12 +119,22 @@ public class CameraMove : MonoBehaviour {
 
 	private void MouseClicked(Building building)
 	{
+        if (building == null) { return; }
+        string path = SearchPathFromFileName(building.transform.name);
+        #if UNITY_EDITOR
+                Debug.Log(path);
+        #else
+			        Application.ExternalCall("OnBuildingClick", path);
+        #endif
+
+        /*
 		if (building == null) {return;}
 		string path = SearchPathFromFileName(building.transform.name);
 		src_txt = ReadFile(path);
-	}
+        */
+    }
 
-	private void HighlighMouseOverBuilding(Building building)
+    private void HighlighMouseOverBuilding(Building building)
 	{
 		if (building != null)
 		{
@@ -211,6 +223,7 @@ public class CameraMove : MonoBehaviour {
 
 	}
 
+    /*
 	string ReadFile(string path){
 		string st = "";
 		try {
@@ -229,6 +242,7 @@ public class CameraMove : MonoBehaviour {
 
 		return st;
 	}
+    */
 
 	string SearchPathFromFileName(string file_name){
 		string path = "";

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System;
 using System.Text;
 
-public class MakeRankText : MonoBehaviour {
+public class RankText : MonoBehaviour {
 
     private string TARGET;           // jsonファイルのパスを入れる変数
     private string jsonText = "";    // jsonファイルの中身を入れる変数
@@ -16,13 +16,19 @@ public class MakeRankText : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        this.GetComponent<Text>().text = "";
+        #if UNITY_EDITOR
+                StartRanking("2");
+        #else
+			    Application.ExternalCall("OnUnityReady");
+        #endif
+
+        //this.GetComponent<Text>().text = "start";
 
         // TARGETに指定したjsonファイルの中身を読みだす
-        TARGET = Application.dataPath + "/target/test.json";
-        ReadFile();
+        //TARGET = Application.dataPath + "/target/test.json";
+        //ReadFile();
 
-        MakeRankWindow();
+        // MakeRankWindow();
 
     }
 	
@@ -95,7 +101,7 @@ public class MakeRankText : MonoBehaviour {
         //Debug.Log("%%%");
     }
 
-
+    /*
     // jsonファイルの中身を読みだす関数
     void ReadFile()
     {
@@ -112,6 +118,7 @@ public class MakeRankText : MonoBehaviour {
             jsonText += SetDefaultText();
         }
     }
+    */
 
 
 
@@ -164,5 +171,39 @@ public class MakeRankText : MonoBehaviour {
         // 単に次のようにしても同じ
         // return x.Value - y.Value;
     }
+
+
+    // Javascriptから街を作り始めるためのメソッド
+    public void StartRanking(string id)
+    {
+        this.GetComponent<Text>().text = "call";
+        StartCoroutine(ReadFileOnline(id));
+    }
+
+    // サーバにあるJsonファイルを読み込むメソッド
+    IEnumerator ReadFileOnline(string id)
+    {
+
+        //string url = "http://kataribe-dev.naist.jp:802/public/code_city.json?id=" + id;
+        string url = "http://163.221.29.246/json/" + id + ".json";
+
+        WWW www = new WWW(url);
+        yield return www;
+
+        if (www.error == null)
+        {
+            jsonText = www.text;
+        }
+        else {
+            jsonText = SetDefaultText();
+        }
+
+
+        //Camera.main.GetComponent<CameraMove>().isControlAvailable = true;
+        this.GetComponent<Text>().text = "read";
+        MakeRankWindow();
+
+    }
+
 
 }
