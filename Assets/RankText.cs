@@ -12,6 +12,8 @@ public class RankText : MonoBehaviour {
     private string TARGET;           // jsonファイルのパスを入れる変数
     private string jsonText = "";    // jsonファイルの中身を入れる変数
     private Dictionary<string, object> jsonDictionary; // jsonファイルの中身を辞書にしたもの
+    public GameObject rankView;
+    private bool view = true;
 
     // Use this for initialization
     void Start () {
@@ -34,8 +36,9 @@ public class RankText : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
-	}
+        ControlByKeyboard();
+
+    }
 
 
     // ランキング用のテキストを作る関数
@@ -203,6 +206,15 @@ public class RankText : MonoBehaviour {
         this.GetComponent<Text>().text = "read";
         MakeRankWindow();
 
+    }
+
+    // キーボード操作
+    private void ControlByKeyboard()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            rankView.GetComponent<Canvas>().enabled = !rankView.GetComponent<Canvas>().enabled;
+        }
     }
 
 
