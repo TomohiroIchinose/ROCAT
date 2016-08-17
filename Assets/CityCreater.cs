@@ -65,7 +65,7 @@ public class CityCreater : MonoBehaviour
     void Start()
     {
         #if UNITY_EDITOR
-                StartCityCreater("2");
+                StartCityCreater("2acra");
         #else
 			    Application.ExternalCall("OnUnityReady");
         #endif
@@ -1162,12 +1162,13 @@ public class CityCreater : MonoBehaviour
     // サーバにあるJsonファイルを読み込むメソッド
     IEnumerator ReadFileOnline(string id)
     {
-
         //string url = "http://kataribe-dev.naist.jp:802/public/code_city.json?id=" + id;
         string url = "http://163.221.29.246/json/" + id + ".json";
 
         WWW www = new WWW(url);
         yield return www;
+
+        Debug.Log(www.error);
 
         if (www.error == null)
         {
@@ -1177,6 +1178,7 @@ public class CityCreater : MonoBehaviour
             jsonText = SetDefaultText();
         }
 
+        Debug.Log(jsonText);
 
         Camera.main.GetComponent<CameraMove>().isControlAvailable = true;
         CreateCity();

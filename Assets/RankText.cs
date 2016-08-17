@@ -17,7 +17,7 @@ public class RankText : MonoBehaviour {
     void Start () {
 
         #if UNITY_EDITOR
-                StartRanking("2");
+                StartRanking("2acra");
         #else
 			    Application.ExternalCall("OnUnityReady");
         #endif
