@@ -19,7 +19,9 @@ public class CameraMove : MonoBehaviour {
 	public string ta;
 	public Color preColor;
 	public Material viewMaterial;
-	private bool view_src;
+    public Material defaultBuildingMaterial;
+    public Material defaultBlockingMaterial;
+    private bool view_src;
 
     public bool isControlAvailable = false;
     private bool isMouseAvailable = true;
@@ -35,7 +37,12 @@ public class CameraMove : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		view_src = false;
-		cc = GameObject.Find ("CityCreater").GetComponent<CityCreater> ();
+
+        //viewMaterial = Resources.Load("red Material", typeof(Material)) as Material;
+        //defaultBuildingMaterial = Resources.Load("Building", typeof(Material)) as Material;
+        //defaultBlockingMaterial = Resources.Load("Block", typeof(Material)) as Material;
+
+        cc = GameObject.Find ("CityCreater").GetComponent<CityCreater> ();
 		foreach( Transform child in canvas.transform){
 			file_name = child.gameObject.GetComponent<Text>();
             //block_name = child.gameObject.GetComponent<Text>();
@@ -143,21 +150,23 @@ public class CameraMove : MonoBehaviour {
 
 				if (selectedBuilding)
 				{
-                    selectedBuilding.GetComponent<Renderer>().material.color = preColor;
+                    //selectedBuilding.GetComponent<Renderer>().material = defaultBuildingMaterial;
+                    //selectedBuilding.GetComponent<Renderer>().material.color = preColor;
                     selectedBuilding.Deselected();
                 }
 
 				selectedBuilding = building;
 				selectedBuilding.Selected();
-                preColor = selectedBuilding.GetComponent<Renderer>().material.color;
-                selectedBuilding.GetComponent<Renderer>().material.color = Color.red;
+                //preColor = selectedBuilding.GetComponent<Renderer>().material.color;
+                //selectedBuilding.GetComponent<Renderer>().material = viewMaterial;
 			}
 		}
 		else
 		{
 			if (selectedBuilding)
 			{
-                selectedBuilding.GetComponent<Renderer>().material.color = preColor;
+                //selectedBuilding.GetComponent<Renderer>().material = defaultBuildingMaterial;
+                //selectedBuilding.GetComponent<Renderer>().material.color = preColor;
                 selectedBuilding.Deselected();
                 selectedBuilding = null;
             }

@@ -10,18 +10,20 @@ public class Building : MonoBehaviour
 
 	public void Init(Color color)
 	{
-		this.originalColor = color;
-		SetMaterial(originalColor);
+        //this.originalColor = color;
+        this.originalColor = (Resources.Load("Building", typeof(Material)) as Material).color;
+        SetMaterial(originalColor);
 	}
 
 	public void Selected()
 	{
-		//SetMaterial(Building.SELECTED_COLOR);
+		SetMaterial(Building.SELECTED_COLOR);
 	}
 
 	public void Deselected()
 	{
-		//SetMaterial(originalColor);
+        //SetMaterial(originalColor);
+        SetMaterial((Resources.Load("Building", typeof(Material)) as Material).color);
 	}
 
 	public void SetMaterial(Color color)

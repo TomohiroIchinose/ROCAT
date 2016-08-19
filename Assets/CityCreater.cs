@@ -444,7 +444,7 @@ public class CityCreater : MonoBehaviour
 
                 //ƒrƒ‹‚ÌF‚ğ•Ï‚¦‚é
                 //clone.GetComponent<Building>().Init(new Color (float.Parse (oneBuilding ["color_r"].ToString ()), float.Parse (oneBuilding ["color_g"].ToString ()), float.Parse (oneBuilding ["color_b"].ToString ())));
-                clone.GetComponent<Building>().Init(new Color((float)0.5, (float)0.8, (float)1.0));
+                //clone.GetComponent<Building>().Init(new Color((float)0.5, (float)0.8, (float)1.0));
 
 
                 // SATD‚ª‚ ‚Á‚½‚É–Úˆó‚ğ“ü‚ê‚é

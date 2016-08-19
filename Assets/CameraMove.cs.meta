@@ -1,15 +1,20 @@
 fileFormatVersion: 2
 guid: 78cac85b781a64dbebd2c07905043d19
-timeCreated: 1447226085
+timeCreated: 1471609697
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - canvas: {instanceID: 0}
+  - canvas2: {instanceID: 0}
   - file_name: {instanceID: 0}
+  - block_name: {instanceID: 0}
   - cc: {instanceID: 0}
-  - preMaterial: {instanceID: 0}
-  - viewMaterial: {fileID: 2100000, guid: 74f0387a0a057d9409709cf133bda85f, type: 2}
+  - viewMaterial: {fileID: 2100000, guid: c3e1e1f5f7b6b8e4e8281d8f2eb48698, type: 2}
+  - defaultBuildingMaterial: {fileID: 2100000, guid: 5881cbd9e4cedc249b795bc9f23da4ba,
+      type: 2}
+  - defaultBlockingMaterial: {fileID: 2100000, guid: e55d772a548ee0b42a3f79a893b5c5b9,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
