@@ -143,20 +143,24 @@ public class CameraMove : MonoBehaviour {
 
 				if (selectedBuilding)
 				{
-					selectedBuilding.Deselected();
-				}
+                    selectedBuilding.GetComponent<Renderer>().material.color = preColor;
+                    selectedBuilding.Deselected();
+                }
 
 				selectedBuilding = building;
 				selectedBuilding.Selected();
+                preColor = selectedBuilding.GetComponent<Renderer>().material.color;
+                selectedBuilding.GetComponent<Renderer>().material.color = Color.red;
 			}
 		}
 		else
 		{
 			if (selectedBuilding)
 			{
-				selectedBuilding.Deselected();
-				selectedBuilding = null;
-			}
+                selectedBuilding.GetComponent<Renderer>().material.color = preColor;
+                selectedBuilding.Deselected();
+                selectedBuilding = null;
+            }
 			file_name.text = "";
 		}
 	}
