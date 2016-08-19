@@ -31,3 +31,8 @@ Thumbs.db
 # -------------[ Build ]------------------------ #
 *.html
 *.unity3d
+
+
+#--- Assets Store ---#
+/Assets/Streets/*
+/Assets/Skyscrapers/*
