@@ -122,7 +122,7 @@ public class CameraMove : MonoBehaviour {
         if (building == null) { return; }
         string path = SearchPathFromFileName(building.transform.name);
         #if UNITY_EDITOR
-                Debug.Log(path);
+                //Debug.Log(path);
         #else
 			        Application.ExternalCall("OnBuildingClick", path);
         #endif

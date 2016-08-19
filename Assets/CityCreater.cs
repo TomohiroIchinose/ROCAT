@@ -116,18 +116,23 @@ public class CityCreater : MonoBehaviour
 		//Debug.Log (new HashSet<String>(arrangedBlock.Keys).Equals(new HashSet<String>(blockDictionary.Keys)));
 		
 		foreach (String key in blockDictionary.Keys) { // ブロックのkeyごとに実行する
-			
-			SetLocation (arrangedBlock[key]); // 1.ビルの座標を決める
-			SetWidth (arrangedBlock[key], blockDictionary[key]); // 2.ブロックの幅を決める
-			blockList.Add(blockDictionary[key][0]);
-			//Debug.Log(int.Parse(blockDictionary[key][0]["width"].ToString()));
-			
-		}
-		//Debug.Log("#####");
-		SetLocation (blockList);
-		
-		//Debug.Log("TEST");
-		SetGlobalLocation (arrangedBlock, blockDictionary);
+
+            //SetLocation (arrangedBlock[key]); // 1.ビルの座標を決める
+
+            SetLocation2(arrangedBlock[key]); // 1.ビルの座標を決める
+
+            //SetWidth (arrangedBlock[key], blockDictionary[key]); // 2.ブロックの幅を決める
+
+            SetWidth2(arrangedBlock[key], blockDictionary[key]); // 2.ブロックの幅を決める
+
+            blockList.Add(blockDictionary[key][0]);
+            //Debug.Log(int.Parse(blockDictionary[key][0]["width"].ToString()));
+        }
+		//SetLocation (blockList);
+        SetLocation2(blockList);
+
+        //Debug.Log("TEST");
+        SetGlobalLocation (arrangedBlock, blockDictionary);
 		//Debug.Log("TEST");
 		BuildBuildings (arrangedBlock, blockDictionary);
 	}
@@ -180,6 +185,7 @@ public class CityCreater : MonoBehaviour
 		// 4 5 6
 		// 
 		// 以下のコードで上記の0→8の順番のように配置していく
+        // ↑SetLocation2の順の方がイメージ的には正しい？
 		
 		int count = 0;
 		float space = float.Parse(target[0]["width"].ToString()) + 20; // 基準になる間隔
@@ -217,9 +223,95 @@ public class CityCreater : MonoBehaviour
 	Finish:
 			return;
 	}
-	
-	
-	/**
+
+    /**
+	 *
+	 * targetの相対座標を決めるメソッド2
+	 * ビル間・ブロック間での座標を決める
+     * y座標は実際はz座標だったりする…
+	 * 
+	 */
+
+    void SetLocation2(List<Dictionary<String, object>> target)
+    {
+        // targetをソートする
+        target.Sort((b, a) => int.Parse(a["widthX"].ToString()) - int.Parse(b["widthX"].ToString()));
+
+        // 0 1 4
+        // 3 2 5
+        // 8 7 6
+        // 
+        // 以下のコードで上記の0→8の順番のように配置していく
+
+        int count = 0;  // ビル・ブロックの個数
+
+        int space = 50; // 固定幅
+
+        for (int i = 0; ; i++)
+        {
+            int y = i;
+            // 1.下に向かって並べていく
+            // ex) 0
+            // ex) 1→2
+            // ex) 4→6
+            for (int x = 0; x <= y; x++)
+            {
+                // i^2番目のとき
+                if(count == i * i)
+                {
+                    // 一番最初のとき
+                    if(i == 0)
+                    {
+                        target[count]["x"] = space + int.Parse(target[count]["widthX"].ToString()) / 2;
+                        target[count]["y"] = space + int.Parse(target[count]["widthY"].ToString()) / 2;
+                    }
+                    // それ以外のとき
+                    else
+                    {
+                        target[count]["x"] = space + int.Parse(target[count]["widthX"].ToString()) / 2;
+                        target[count]["y"] = space + int.Parse(target[(i - 1) * (i - 1)]["y"].ToString()) + int.Parse(target[(i - 1) * (i - 1)]["widthY"].ToString()) / 2 + int.Parse(target[count]["widthY"].ToString()) / 2;
+                    }
+                }
+                // i^2+i番目の時
+                else if(count == i * i + i)
+                {
+                    target[count]["x"] = space + int.Parse(target[(i - 1) * (i - 1) + (i - 1)]["x"].ToString()) + int.Parse(target[(i - 1) * (i - 1) + (i - 1)]["widthX"].ToString()) / 2 + int.Parse(target[count]["widthX"].ToString()) / 2; ;
+                    target[count]["y"] = int.Parse(target[i * i]["y"].ToString());
+                }
+                // それ以外
+                else
+                {
+                    target[count]["x"] = int.Parse(target[(i - 1) * (i - 1) + x]["x"].ToString());
+                    target[count]["y"] = int.Parse(target[i * i]["y"].ToString());
+                }
+
+                count++;
+                if (count == target.Count)
+                {
+                    goto Finish; // 全部終わったらFinishへ行く
+                }
+            }
+            // 2.左に向かって並べていく
+            // ex) 3
+            // ex) 7→8
+            for (y--; y >= 0; y--)
+            {
+                target[count]["x"] = int.Parse(target[i * i + i]["x"].ToString());
+                target[count]["y"] = int.Parse(target[count - (2 * i + 1)]["y"].ToString());
+                count++;
+                if (count == target.Count)
+                {
+                    goto Finish; // 全部終わったらFinishへ行く
+                }
+            }
+        }
+
+    Finish:
+        return;
+    }
+
+
+    /**
 	 *
 	 * ブロックの幅を決めるメソッド
 	 * targetの0番目のビルの幅に20を足して
@@ -229,17 +321,73 @@ public class CityCreater : MonoBehaviour
      * ex) targetが5～9個→3^2 = 9 >= 5～9 ∴0番目の3倍の幅があればOK 
 	 * 
 	 */
-	void SetWidth (List<Dictionary<String,object>> target, List<Dictionary<String, object>> block)
+    void SetWidth (List<Dictionary<String,object>> target, List<Dictionary<String, object>> block)
 	{
-		float space = float.Parse(target[0]["width"].ToString()) + 20;
+		float space = float.Parse(target[0]["widthX"].ToString()) + 20;
 		for (int i = 0; ; i++) {
 			if(i * i > target.Count)
 			{
-				block[0]["width"] = space * i;
-				break;
+				block[0]["widthX"] = space * i;
+                block[0]["widthY"] = space * i;
+                break;
 			}
 		}
 	}
+
+
+    /**
+	 *
+	 * ブロックの幅を決めるメソッド2
+	 * 
+	 */
+    void SetWidth2(List<Dictionary<String, object>> target, List<Dictionary<String, object>> block)
+    {
+        int count = 0;  // ビル・ブロックの個数
+
+        int space = 50; // 固定幅
+
+        int i;
+
+        // ビル・ブロックを並べるときと同じ方法でカウントしていく
+        for (i = 0; ; i++)
+        {
+            int y = i;
+
+            for (int x = 0; x <= y; x++)
+            {
+                count++;
+                if (count == target.Count)
+                {
+                    goto Finish; // 全部終わったらFinishへ行く
+                }
+            }
+            for (y--; y >= 0; y--)
+            {
+                count++;
+                if (count == target.Count)
+                {
+                    goto Finish; // 全部終わったらFinishへ行く
+                }
+            }
+        }
+
+    Finish:
+        // 最後のビルの番号（個数-1）がi^2+i以上の時は角のビルが基準
+        if(count - 1 >= i * i + i)
+        {
+            
+            block[0]["widthX"] = int.Parse(target[i * i + i]["x"].ToString()) + space;
+            block[0]["widthY"] = int.Parse(target[i * i + i]["y"].ToString()) + space;
+        }
+        // 最後のビルの番号がi^2+1より小さいときはそのビルと(i-1)の順の時の角のビルが基準
+        else
+        {          
+            block[0]["widthX"] = int.Parse(target[(i - 1) * (i - 1) + (i - 1)]["x"].ToString()) + space;
+            block[0]["widthY"] = int.Parse(target[count - 1]["y"].ToString()) + space;
+        }
+
+    }
+
 
     /**
 	 *
@@ -251,10 +399,9 @@ public class CityCreater : MonoBehaviour
 	{
 		foreach (String key in building.Keys) {
             // ブロックの座標を取ってくる
-            float blockX = float.Parse(block[key][0]["x"].ToString()) - float.Parse(block[key][0]["width"].ToString()) / 2;
-			float blockY = float.Parse(block[key][0]["y"].ToString()) - float.Parse(block[key][0]["width"].ToString()) / 2;
-			
-			List<Dictionary<String, object>> buildingList = building[key];
+            float blockX = float.Parse(block[key][0]["x"].ToString()) - float.Parse(block[key][0]["widthX"].ToString()) / 2;
+			float blockY = float.Parse(block[key][0]["y"].ToString()) - float.Parse(block[key][0]["widthY"].ToString()) / 2;
+            List<Dictionary<String, object>> buildingList = building[key];
 
             // ビルの座標を決めていく
 			foreach(Dictionary<String, object> oneBuilding in buildingList){
@@ -282,19 +429,23 @@ public class CityCreater : MonoBehaviour
                 // プレートでビルを作る版
                 //PilingPlate(oneBuilding);
 
+
                 // ビルを建てる
-				GameObject clone = Instantiate (this.building, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ()) / 2) + 2, float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
+                GameObject clone = Instantiate (this.building, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ()) / 2) + 2, float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
+
 
                 // ビルにおなまえを付ける
                 clone.name = oneBuilding ["name"].ToString ();
 
                 // ビルの大きさをいじる
-				clone.transform.localScale = new Vector3 (float.Parse (oneBuilding ["width"].ToString ()), float.Parse (oneBuilding ["height"].ToString ()), float.Parse (oneBuilding ["width"].ToString ()));
+                clone.transform.localScale = new Vector3 (float.Parse (oneBuilding ["widthX"].ToString ()), float.Parse (oneBuilding ["height"].ToString ()), float.Parse (oneBuilding ["widthY"].ToString ()));
                 //clone.GetComponent<Renderer>().material.color = Color.blue;
+
 
                 //ビルの色を変える
                 //clone.GetComponent<Building>().Init(new Color (float.Parse (oneBuilding ["color_r"].ToString ()), float.Parse (oneBuilding ["color_g"].ToString ()), float.Parse (oneBuilding ["color_b"].ToString ())));
                 clone.GetComponent<Building>().Init(new Color((float)0.5, (float)0.8, (float)1.0));
+
 
                 // SATDがあった時に目印を入れる
                 AddSATD(oneBuilding);
@@ -324,15 +475,17 @@ public class CityCreater : MonoBehaviour
                 }
             }
 		}
-		
-		//Debug.Log("TEST");
-		foreach (String key in block.Keys) {
+
+        // ブロックを下に置いていく
+
+        //Debug.Log("TEST");
+        foreach (String key in block.Keys) {
 			//Debug.Log(key);
 			List<Dictionary<String, object>> blockList = block [key];
 			GameObject clone = Instantiate (this.ground, new Vector3(float.Parse(blockList[0]["x"].ToString()), 1, float.Parse(blockList[0]["y"].ToString())), transform.rotation) as GameObject;
-			clone.transform.localScale = new Vector3 (float.Parse (blockList [0]["width"].ToString ()), 2, float.Parse (blockList [0]["width"].ToString ()));
+			clone.transform.localScale = new Vector3 (float.Parse (blockList [0]["widthX"].ToString ()), 2, float.Parse (blockList [0]["widthY"].ToString ()));
             clone.name = blockList[0]["name"].ToString();
-		}
+        }
 		
 	}
 
@@ -381,7 +534,7 @@ public class CityCreater : MonoBehaviour
             if (sList.Count != 0 && sList[check].ToString() == i.ToString())
             {
                 GameObject clone = Instantiate(this.plate, new Vector3(float.Parse(target["globalX"].ToString()), float.Parse(i.ToString()) + 1f, float.Parse(target["globalY"].ToString())), transform.rotation) as GameObject;
-                clone.transform.localScale = new Vector3(float.Parse(target["width"].ToString()) + 0.7f, 1, float.Parse(target["width"].ToString()) + 0.7f);
+                clone.transform.localScale = new Vector3(float.Parse(target["widthX"].ToString()) + 0.7f, 1, float.Parse(target["widthY"].ToString()) + 0.7f);
 
                 // 目印を補色にする
                 //clone.GetComponent<Renderer>().material.color = CalcComplementaryColor(new Color(float.Parse(target["color_r"].ToString()), float.Parse(target["color_g"].ToString()), float.Parse(target["color_b"].ToString())));
@@ -1168,8 +1321,6 @@ public class CityCreater : MonoBehaviour
         WWW www = new WWW(url);
         yield return www;
 
-        Debug.Log(www.error);
-
         if (www.error == null)
         {
             jsonText = www.text;
@@ -1177,8 +1328,6 @@ public class CityCreater : MonoBehaviour
         else {
             jsonText = SetDefaultText();
         }
-
-        Debug.Log(jsonText);
 
         Camera.main.GetComponent<CameraMove>().isControlAvailable = true;
         CreateCity();
