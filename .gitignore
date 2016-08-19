@@ -35,4 +35,6 @@ Thumbs.db
 
 #--- Assets Store ---#
 /Assets/Streets/*
+/Assets/Streets.meta
 /Assets/Skyscrapers/*
+/Assets/skyscrapers.meta
