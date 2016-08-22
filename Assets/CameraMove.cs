@@ -113,7 +113,7 @@ public class CameraMove : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0))
 		{
-			MouseClicked(building);
+			MouseClicked(building, block);
 		}
 
 		if (!isMouseAvailable) {return;}
@@ -124,15 +124,42 @@ public class CameraMove : MonoBehaviour {
 		transform.localEulerAngles = new Vector3(rotationY * -1, rotationX, 0);
 	}
 
-	private void MouseClicked(Building building)
+	private void MouseClicked(Building building, Block block)
 	{
-        if (building == null) { return; }
-        string path = SearchPathFromFileName(building.transform.name);
-        #if UNITY_EDITOR
-                //Debug.Log(path);
-        #else
-			        Application.ExternalCall("OnBuildingClick", path);
-        #endif
+        string path;
+        string filename;
+        string fileFullPath;
+
+        if (building == null)
+        {
+            filename = "";
+            fileFullPath = null;
+
+            if (block != null)
+            {
+                path = SearchPathFromFileNameforBlock(block.transform.name);
+                path = path.Substring(path.IndexOf(".git") + 5);
+            }
+            else
+            {
+                path = "";
+            }
+        }
+        else
+        {
+            path = SearchPathFromFileName(building.transform.name);
+            fileFullPath = path;
+            path = path.Substring(path.IndexOf(".git") + 5);
+            fileFullPath = "../" + fileFullPath.Substring(fileFullPath.IndexOf("repository"));
+            filename = building.transform.name;
+        }
+#if UNITY_EDITOR
+        //Debug.Log(path);
+#else
+			        Application.ExternalCall("OnBuildingClick", path , filename, fileFullPath);
+#endif
+
+
 
         /*
 		if (building == null) {return;}
@@ -208,7 +235,7 @@ public class CameraMove : MonoBehaviour {
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		if (Physics.Raycast(ray, out hit, 10000)) {
 			Building hitBuilding = hit.transform.GetComponent<Building>();
-            MouseClicked(hitBuilding);
+            //MouseClicked(hitBuilding);
 			return hitBuilding;
 		}
 
@@ -269,8 +296,23 @@ public class CameraMove : MonoBehaviour {
 
 	}
 
-	// 改行コード処理
-	string SetDefaultText(){
+    string SearchPathFromFileNameforBlock(string file_name)
+    {
+        string path = "";
+        IList blocks = cc.GetCity()["blocks"] as IList;
+        foreach (Dictionary<string, object> block in blocks)
+        {
+            if (block["name"].ToString() == file_name)
+            {
+                path = block["name"].ToString();
+            }
+        }
+        return path;
+
+    }
+
+    // 改行コード処理
+    string SetDefaultText(){
 		return "cant read\n";
 	}
 }
