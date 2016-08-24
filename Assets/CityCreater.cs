@@ -64,11 +64,11 @@ public class CityCreater : MonoBehaviour
 
     void Start()
     {
-        #if UNITY_EDITOR
-                StartCityCreater("2acra");
-        #else
+#if UNITY_EDITOR
+        StartCityCreater("2acra");
+#else
 			    Application.ExternalCall("OnUnityReady");
-        #endif
+#endif
     }
 
     /*
@@ -376,8 +376,8 @@ public class CityCreater : MonoBehaviour
         if(count - 1 >= i * i + i)
         {
             
-            block[0]["widthX"] = int.Parse(target[i * i + i]["x"].ToString()) + space;
-            block[0]["widthY"] = int.Parse(target[i * i + i]["y"].ToString()) + space;
+            block[0]["widthX"] = int.Parse(target[i * i + i]["x"].ToString()) + int.Parse(target[i * i + i]["widthX"].ToString()) / 2 + space;
+            block[0]["widthY"] = int.Parse(target[i * i + i]["y"].ToString()) + int.Parse(target[i * i + i]["widthY"].ToString()) / 2 + space;
         }
         // ÅŒã‚Ìƒrƒ‹‚Ì”Ô†‚ªi^2+1‚æ‚è¬‚³‚¢‚Æ‚«‚Í‚»‚Ìƒrƒ‹‚Æ(i-1)‚Ì‡‚Ì‚ÌŠp‚Ìƒrƒ‹‚ªŠî€
         else
