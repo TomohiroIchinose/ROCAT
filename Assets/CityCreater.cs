@@ -65,7 +65,8 @@ public class CityCreater : MonoBehaviour
     void Start()
     {
 #if UNITY_EDITOR
-        StartCityCreater("2acra");
+        //StartCityCreater("2acra");
+        StartCityCreater("Activiti");
 #else
 			    Application.ExternalCall("OnUnityReady");
 #endif
@@ -275,14 +276,14 @@ public class CityCreater : MonoBehaviour
                 // i^2+i番目の時
                 else if(count == i * i + i)
                 {
-                    target[count]["x"] = space + int.Parse(target[(i - 1) * (i - 1) + (i - 1)]["x"].ToString()) + int.Parse(target[(i - 1) * (i - 1) + (i - 1)]["widthX"].ToString()) / 2 + int.Parse(target[count]["widthX"].ToString()) / 2; ;
+                    target[count]["x"] = space + int.Parse(target[(i - 1) * (i - 1) + (i - 1)]["x"].ToString()) + int.Parse(target[(i - 1) * (i - 1) + (i - 1)]["widthX"].ToString()) / 2 + int.Parse(target[count]["widthX"].ToString()) / 2;
                     target[count]["y"] = int.Parse(target[i * i]["y"].ToString());
                 }
                 // それ以外
                 else
                 {
                     target[count]["x"] = int.Parse(target[(i - 1) * (i - 1) + x]["x"].ToString());
-                    target[count]["y"] = int.Parse(target[i * i]["y"].ToString());
+                    target[count]["y"] = int.Parse(target[(i - 1) * (i - 1) + x]["y"].ToString()) + int.Parse(target[(i - 1) * (i - 1) + x]["widthY"].ToString()) / 2 + int.Parse(target[count]["widthY"].ToString()) / 2 + space;
                 }
 
                 count++;
@@ -372,18 +373,18 @@ public class CityCreater : MonoBehaviour
         }
 
     Finish:
-        // 最後のビルの番号（個数-1）がi^2+i以上の時は角のビルが基準
+        // 最後のビルの番号（個数-1）がi^2+i以上の時は角のビルとi^2のビルが基準
         if(count - 1 >= i * i + i)
         {
             
             block[0]["widthX"] = int.Parse(target[i * i + i]["x"].ToString()) + int.Parse(target[i * i + i]["widthX"].ToString()) / 2 + space;
-            block[0]["widthY"] = int.Parse(target[i * i + i]["y"].ToString()) + int.Parse(target[i * i + i]["widthY"].ToString()) / 2 + space;
+            block[0]["widthY"] = int.Parse(target[i * i]["y"].ToString()) + int.Parse(target[i * i]["widthY"].ToString()) / 2 + space;
         }
-        // 最後のビルの番号がi^2+1より小さいときはそのビルと(i-1)の順の時の角のビルが基準
+        // 最後のビルの番号がi^2+1より小さいときはi^2番目ビルと(i-1)の順の時の角のビルが基準
         else
         {          
-            block[0]["widthX"] = int.Parse(target[(i - 1) * (i - 1) + (i - 1)]["x"].ToString()) + space;
-            block[0]["widthY"] = int.Parse(target[count - 1]["y"].ToString()) + space;
+            block[0]["widthX"] = int.Parse(target[(i - 1) * (i - 1) + (i - 1)]["x"].ToString()) + int.Parse(target[(i - 1) * (i - 1) + (i - 1)]["widthX"].ToString()) / 2 + space;
+            block[0]["widthY"] = int.Parse(target[i * i]["y"].ToString()) + int.Parse(target[i * i]["widthY"].ToString()) / 2 + space;
         }
 
     }
