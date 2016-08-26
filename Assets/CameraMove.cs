@@ -21,12 +21,14 @@ public class CameraMove : MonoBehaviour {
 	public Material viewMaterial;
     public Material defaultBuildingMaterial;
     public Material defaultBlockingMaterial;
+    public Material defaultMarkeringMaterial;
     private bool view_src;
 
     public bool isControlAvailable = false;
     private bool isMouseAvailable = true;
 	private Building selectedBuilding;
     private Block selectedBlock;
+    private Marker selectedMarker;
 
 	private float rotationY = 0f;
 	private const float CAMERA_SPEED = 500f;
@@ -108,12 +110,13 @@ public class CameraMove : MonoBehaviour {
 	{
 		Building building = GetRaycastHitBuilding();
         Block block = GetRaycastHitBlock();
+        Marker marker = GetRaycastHitMarker();
         HighlighMouseOverBuilding(building);
         HighlighMouseOverBlock(block);
 
         if (Input.GetMouseButtonDown(0))
 		{
-			MouseClicked(building, block);
+			MouseClicked(building, block, marker);
 		}
 
 		if (!isMouseAvailable) {return;}
@@ -124,39 +127,60 @@ public class CameraMove : MonoBehaviour {
 		transform.localEulerAngles = new Vector3(rotationY * -1, rotationX, 0);
 	}
 
-	private void MouseClicked(Building building, Block block)
+	private void MouseClicked(Building building, Block block, Marker marker)
 	{
         string path;
         string filename;
         string fileFullPath;
+        string type;
+        string satd = "";
 
-        if (building == null)
+        if (building == null && marker == null)
         {
             filename = "";
             fileFullPath = null;
 
-            if (block != null)
+            // ブロックをクリック
+            if (block != null && marker == null)
             {
+                type = "block";
                 path = SearchPathFromFileNameforBlock(block.transform.name);
                 path = path.Substring(path.IndexOf(".git") + 5);
             }
+            // 何もないトコをクリック
             else
             {
+                type = "nothing";
                 path = "";
             }
         }
+        // ビルかマーカーををクリック
         else
         {
-            path = SearchPathFromFileName(building.transform.name);
+            // ビルをクリック
+            if (building != null)
+            {
+                type = "building";
+                filename = building.transform.name;
+
+            }
+            // マーカーをクリック
+            else
+            {
+                type = "marker";
+                int slashnum = marker.transform.name.IndexOf("/");
+                satd = marker.transform.name.Substring(slashnum + 1, marker.transform.name.Length - slashnum - 1);
+                filename = marker.transform.name.Substring(0, slashnum);    
+            }
+            path = SearchPathFromFileName(filename);
             fileFullPath = path;
             path = path.Substring(path.IndexOf(".git") + 5);
             fileFullPath = "../" + fileFullPath.Substring(fileFullPath.IndexOf("repository"));
-            filename = building.transform.name;
         }
 #if UNITY_EDITOR
         //Debug.Log(path);
 #else
-			        Application.ExternalCall("OnBuildingClick", path , filename, fileFullPath);
+			        Application.ExternalCall("OnBuildingClick", path , filename, fileFullPath, type, satd);
 #endif
 
 
@@ -255,7 +279,22 @@ public class CameraMove : MonoBehaviour {
         return null;
     }
 
-	void OnGUI()
+
+    private Marker GetRaycastHitMarker()
+    {
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit, 10000))
+        {
+            Marker hitMarker = hit.transform.GetComponent<Marker>();
+            return hitMarker;
+        }
+
+        return null;
+    }
+
+
+    void OnGUI()
 	{
 		if(view_src)
 			//src_txt = GUI.TextArea (new Rect (5, 5, Screen.width-10, Screen.height-100), src_txt);

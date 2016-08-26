@@ -449,16 +449,23 @@ public class CityCreater : MonoBehaviour
 
 
                 // SATDがあった時に目印を入れる
-                AddSATD(oneBuilding);
+                //AddSATD(oneBuilding);
 
                 IList sList = oneBuilding["SATD"] as IList;
 				if(sList.Count != 0){
 
                     // 球体の目印をつくる
-                    GameObject test = Instantiate (this.checkSATD, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1 + 150), float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
-                    test.name = "SATDMarker";
+                    GameObject test = Instantiate (this.checkSATD, new Vector3 (1, 1, 1), transform.rotation) as GameObject;
+                    test.name = oneBuilding["name"].ToString() + "/";
 
-                    //test.transform.localScale = new Vector3(float.Parse(oneBuilding["width"].ToString()), float.Parse(oneBuilding["width"].ToString()), float.Parse(oneBuilding["width"].ToString()));
+                    for (int i = 0; i < sList.Count; i++)
+                    {
+                        test.name = test.name + (int.Parse(sList[i].ToString()) + 1).ToString() + ",";
+                    }
+                    test.name = test.name.Substring(0, test.name.Length - 1);
+
+                    test.transform.localScale = new Vector3(float.Parse(oneBuilding["widthX"].ToString()), float.Parse(oneBuilding["widthX"].ToString()), float.Parse(oneBuilding["widthX"].ToString()));
+                    test.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1 + float.Parse(oneBuilding["widthX"].ToString()) + 50), float.Parse(oneBuilding["globalY"].ToString()));
 
                     // プリミティブなオブジェクトで仮実装
                     //GameObject check = GameObject.CreatePrimitive(PrimitiveType.Sphere);

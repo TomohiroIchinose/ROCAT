@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 78cac85b781a64dbebd2c07905043d19
-timeCreated: 1471609697
+timeCreated: 1472203579
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
@@ -14,6 +14,8 @@ MonoImporter:
   - defaultBuildingMaterial: {fileID: 2100000, guid: 5881cbd9e4cedc249b795bc9f23da4ba,
       type: 2}
   - defaultBlockingMaterial: {fileID: 2100000, guid: e55d772a548ee0b42a3f79a893b5c5b9,
+      type: 2}
+  - defaultMarkeringMaterial: {fileID: 2100000, guid: 53126bdef2ac029468e5d74438e0c232,
       type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
