@@ -58,12 +58,15 @@ public class CityCreater : MonoBehaviour
 
     public GameObject plate;
 
+    public GameObject earth;
 	
 	public string jsonText = "";
     // Use this for initialization
 
     void Start()
     {
+        earth = Instantiate(this.plate, new Vector3(0, 0, 0), transform.rotation) as GameObject;
+
 #if UNITY_EDITOR
         //StartCityCreater("2acra");
         StartCityCreater("Activiti");
@@ -96,7 +99,7 @@ public class CityCreater : MonoBehaviour
 		this.city = Json.Deserialize (jsonText) as Dictionary<string,object>;
 		var blocks = this.city ["blocks"] as IList;
 		var buildings = this.city ["buildings"] as IList;
-		LocateBlockAndBuilding(blocks, buildings);
+        LocateBlockAndBuilding(blocks, buildings);
 		//nori_rogic_ver2 (blocks, buildings);
 		/*
 			Simple (blocks, buildings);
@@ -136,6 +139,10 @@ public class CityCreater : MonoBehaviour
         SetGlobalLocation (arrangedBlock, blockDictionary);
 		//Debug.Log("TEST");
 		BuildBuildings (arrangedBlock, blockDictionary);
+
+
+        // 地面を設定
+        SetGround(blockList);
 	}
 	
 	/**
@@ -591,6 +598,68 @@ public class CityCreater : MonoBehaviour
 
 
         return new Color(sum - original.r, sum - original.g, sum - original.b);
+    }
+
+
+    // 地面を作る関数
+    void SetGround(List<Dictionary<String, object>> target)
+    {
+        float zeroX = float.Parse(target[0]["x"].ToString());
+        float zeroY = float.Parse(target[0]["y"].ToString());
+
+        int maxX = 0;
+        int maxY = 0;
+
+        float positionX;
+        float positionY;
+        float widthX;
+        float widthY;
+
+        int space = 50;
+
+        // 一番大きいX座標とY（実際はZ）座標の番号を取ってくる
+        if (target.Count > 2)
+        {
+            for (int i = 1; i < target.Count; i++)
+            {
+                if (float.Parse(target[maxX]["x"].ToString()) < float.Parse(target[i]["x"].ToString()))
+                {
+                    maxX = i;
+                }
+
+                if (float.Parse(target[maxY]["y"].ToString()) < float.Parse(target[i]["y"].ToString()))
+                {
+                    maxY = i;
+                }
+            }
+        }
+
+        if(zeroX != float.Parse(target[maxX]["x"].ToString()))
+        {
+            positionX = zeroX / 2 + (float.Parse(target[maxX]["x"].ToString()) - zeroX) / 2;
+            widthX = (float.Parse(target[maxX]["x"].ToString()) - zeroX) + float.Parse(target[0]["widthX"].ToString()) + float.Parse(target[maxX]["widthX"].ToString()) + space;
+        }
+        else
+        {
+            positionX = zeroX;
+            widthX = float.Parse(target[0]["widthX"].ToString()) + space;
+        }
+
+        if(zeroY != float.Parse(target[maxY]["y"].ToString()))
+        {
+            positionY = zeroY / 2 + (float.Parse(target[maxY]["y"].ToString()) - zeroY) / 2;
+            widthY = (float.Parse(target[maxY]["y"].ToString()) - zeroY) + float.Parse(target[0]["widthY"].ToString()) + float.Parse(target[maxY]["widthY"].ToString()) + space;
+        }
+        else
+        {
+            positionY = zeroY;
+            widthY = float.Parse(target[0]["widthY"].ToString()) + space;
+        }
+
+
+        earth.transform.position = new Vector3(positionX, float.Parse((-0.5).ToString()), positionY);
+        earth.transform.localScale = new Vector3(widthX, 1, widthY);
+        earth.name = "Ground";
     }
 	
 	
@@ -1351,6 +1420,12 @@ public class CityCreater : MonoBehaviour
 		return this.city;
 	}
 	
+    public GameObject GetGround()
+    {
+
+        return this.earth as GameObject;
+    }
+
 	// Update is called once per frame
 	void Update ()
 	{

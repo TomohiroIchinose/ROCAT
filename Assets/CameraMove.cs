@@ -36,6 +36,8 @@ public class CameraMove : MonoBehaviour {
 	private const float MIN_ROTATION_Y = -30F;
 	private const float MAX_ROTATION_Y = 30F;
 
+    private GameObject ground;
+
 	// Use this for initialization
 	void Start () {
 		view_src = false;
@@ -57,6 +59,8 @@ public class CameraMove : MonoBehaviour {
             block_name.text = "";
         }
 
+        ground = cc.GetGround();
+
     }
 
 	void Update ()
@@ -64,37 +68,57 @@ public class CameraMove : MonoBehaviour {
         if (!isControlAvailable) { return; }
         ControlByKeyboard();
 		ControlByMouse();
-	}
+        this.transform.position = (new Vector3(Mathf.Clamp(this.transform.position.x, (ground.transform.position.x - ground.transform.localScale.x / 2), (ground.transform.position.x + ground.transform.localScale.x / 2)),
+                                               this.transform.position.y,
+                                               Mathf.Clamp(this.transform.position.z, (ground.transform.position.z - ground.transform.localScale.z / 2), (ground.transform.position.z + ground.transform.localScale.z / 2))));
+        if(this.transform.position.y <= 0)
+            this.transform.position = new Vector3(this.transform.position.x, 10, this.transform.position.z);
+    }
 
 	private void ControlByKeyboard()
 	{
 		Rigidbody rigidBody = gameObject.GetComponent<Rigidbody>();
 		Vector3 velocity = Vector3.zero;
 
+        float camera = CAMERA_SPEED;
+
+        if(Input.GetKey(KeyCode.LeftControl))
+        {
+            camera = camera * 5;
+        }
+
 		if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
 		{
-			velocity += transform.forward * CAMERA_SPEED;
+			velocity += transform.forward * camera;
 		}
 		if(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
 		{
-			velocity += transform.forward * CAMERA_SPEED * -1;
+			velocity += transform.forward * camera * -1;
 		}
 
 		if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
 		{
-			velocity += transform.right *  CAMERA_SPEED * -1;
+			velocity += transform.right * camera * -1;
 		}
 		if(Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
 		{
-			velocity += transform.right * CAMERA_SPEED;
+			velocity += transform.right * camera;
 		}
 
 		rigidBody.velocity = velocity;
 
 		if (Input.GetKey(KeyCode.Space))
 		{
-			rigidBody.velocity = transform.up * CAMERA_SPEED * (Input.GetKey(KeyCode.LeftShift) ? -1 : 1);
-		}
+            if (this.transform.position.y > 10 && Input.GetKey(KeyCode.LeftShift))
+                rigidBody.velocity = transform.up * camera * -1;
+            else if (this.transform.position.y <= 0 && Input.GetKey(KeyCode.LeftShift))
+            {
+                rigidBody.velocity = transform.up * 0;
+                this.transform.position = new Vector3(this.transform.position.x, 10, this.transform.position.z);
+            }
+            else
+                rigidBody.velocity = transform.up * camera;
+        }
 
 		if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Escape))
 		{
@@ -102,7 +126,7 @@ public class CameraMove : MonoBehaviour {
 		}
 		if (Input.GetKeyDown(KeyCode.V))
 		{
-			view_src = !view_src;
+			//view_src = !view_src;
 		}
 	}
 
