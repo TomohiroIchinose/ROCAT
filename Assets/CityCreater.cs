@@ -58,9 +58,13 @@ public class CityCreater : MonoBehaviour
 
     public GameObject plate;
 
-    public GameObject earth;
-	
-	public string jsonText = "";
+    public GameObject earth;    // 土台
+
+    public GameObject sense;    // パーティクル
+
+    private CameraMove mainCamera;  // メインカメラ
+
+    public string jsonText = "";
     // Use this for initialization
 
     void Start()
@@ -474,18 +478,26 @@ public class CityCreater : MonoBehaviour
                     test.transform.localScale = new Vector3(float.Parse(oneBuilding["widthX"].ToString()), float.Parse(oneBuilding["widthX"].ToString()), float.Parse(oneBuilding["widthX"].ToString()));
                     test.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1 + float.Parse(oneBuilding["widthX"].ToString()) + 50), float.Parse(oneBuilding["globalY"].ToString()));
 
+
+                    // パーティクルの目印を作る
+                    GameObject particle = Instantiate(this.sense, new Vector3(0, 1, 0), transform.rotation) as GameObject;
+                    particle.transform.Rotate(new Vector3((float)270, (float)0, (float)0));
+                    particle.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), (float)(5), float.Parse(oneBuilding["globalY"].ToString()));
+                    particle.name = "sence:" + oneBuilding["name"];
+
+
                     // プリミティブなオブジェクトで仮実装
                     //GameObject check = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     //check.transform.Translate(float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ())) + float.Parse (oneBuilding ["width"].ToString ()), float.Parse (oneBuilding ["globalY"].ToString ()));
                     // check.transform.localScale = new Vector3(float.Parse(oneBuilding["width"].ToString()), float.Parse(oneBuilding["width"].ToString()), float.Parse(oneBuilding["width"].ToString()));
 
-                   // text = gameObject;
-                   // text.transform.parent = transform;
-                   // textrender = text.GetComponent<MeshRenderer>();
-                   // text.transform.Translate(float.Parse(oneBuilding["globalX"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1.3), float.Parse(oneBuilding["globalY"].ToString()));
+                    // text = gameObject;
+                    // text.transform.parent = transform;
+                    // textrender = text.GetComponent<MeshRenderer>();
+                    // text.transform.Translate(float.Parse(oneBuilding["globalX"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1.3), float.Parse(oneBuilding["globalY"].ToString()));
                     //meshtext.text = "test!";
 
-                
+
 
                 }
             }
@@ -618,7 +630,7 @@ public class CityCreater : MonoBehaviour
         int space = 50;
 
         // 一番大きいX座標とY（実際はZ）座標の番号を取ってくる
-        if (target.Count > 2)
+        if (target.Count >= 2)
         {
             for (int i = 1; i < target.Count; i++)
             {
@@ -634,6 +646,7 @@ public class CityCreater : MonoBehaviour
             }
         }
 
+        // XとY（ホントはZ）の座標と幅を決めていく
         if(zeroX != float.Parse(target[maxX]["x"].ToString()))
         {
             positionX = zeroX / 2 + (float.Parse(target[maxX]["x"].ToString()) - zeroX) / 2;
@@ -660,6 +673,12 @@ public class CityCreater : MonoBehaviour
         earth.transform.position = new Vector3(positionX, float.Parse((-0.5).ToString()), positionY);
         earth.transform.localScale = new Vector3(widthX, 1, widthY);
         earth.name = "Ground";
+
+        // カメラをスタートする
+        GameObject obj = GameObject.Find("Main Camera");
+        mainCamera = obj.GetComponent<CameraMove>();
+        mainCamera.StartCamera();
+
     }
 	
 	

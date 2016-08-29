@@ -42,6 +42,8 @@ public class CameraMove : MonoBehaviour {
 	void Start () {
 		view_src = false;
 
+        this.enabled = false;
+
         //viewMaterial = Resources.Load("red Material", typeof(Material)) as Material;
         //defaultBuildingMaterial = Resources.Load("Building", typeof(Material)) as Material;
         //defaultBlockingMaterial = Resources.Load("Block", typeof(Material)) as Material;
@@ -58,8 +60,8 @@ public class CameraMove : MonoBehaviour {
             block_name = child.gameObject.GetComponent<Text>();
             block_name.text = "";
         }
-
-        ground = cc.GetGround();
+        
+        ground = cc.GetGround();      
 
     }
 
@@ -68,11 +70,21 @@ public class CameraMove : MonoBehaviour {
         if (!isControlAvailable) { return; }
         ControlByKeyboard();
 		ControlByMouse();
+
+        // 土台？からはみ出ないように調整
         this.transform.position = (new Vector3(Mathf.Clamp(this.transform.position.x, (ground.transform.position.x - ground.transform.localScale.x / 2), (ground.transform.position.x + ground.transform.localScale.x / 2)),
                                                this.transform.position.y,
                                                Mathf.Clamp(this.transform.position.z, (ground.transform.position.z - ground.transform.localScale.z / 2), (ground.transform.position.z + ground.transform.localScale.z / 2))));
         if(this.transform.position.y <= 0)
             this.transform.position = new Vector3(this.transform.position.x, 10, this.transform.position.z);
+    }
+
+    // カメラをスタートさせる
+    public void StartCamera()
+    {
+        this.transform.position = (new Vector3(ground.transform.position.x + ground.transform.localScale.x / 2 - 10, (float)50, ground.transform.position.z + +ground.transform.localScale.z / 2 - 10));
+        this.transform.LookAt(ground.transform);
+        this.enabled = true;
     }
 
 	private void ControlByKeyboard()
