@@ -62,6 +62,8 @@ public class CityCreater : MonoBehaviour
 
     public GameObject sense;    // パーティクル
 
+    public GameObject street;   // 道
+
     private CameraMove mainCamera;  // メインカメラ
 
     public string jsonText = "";
@@ -137,7 +139,7 @@ public class CityCreater : MonoBehaviour
         //Debug.Log (new HashSet<String>(arrangedBlock.Keys).Equals(new HashSet<String>(blockDictionary.Keys)));
 
         // ブロックの座標を決めるときに出てくる追加分のブロックの辞書
-        Dictionary<String, List<Dictionary<String, object>>> newBlockList = new Dictionary<String, List<Dictionary<String, object>>>();
+        Dictionary<String, List<Dictionary<String, object>>> notBuildingBlockList = new Dictionary<String, List<Dictionary<String, object>>>();
 
         foreach (String key in blockDictionary.Keys) { // ブロックのkeyごとに実行する
 
@@ -156,11 +158,12 @@ public class CityCreater : MonoBehaviour
         // ブロックの座標を決める
         //SetLocation (blockList);
         //SetLocation2(blockList);
-        newBlockList = SetBlockLocation(blockList);
+        notBuildingBlockList = SetBlockLocation(blockList);
 
-        foreach (String key in newBlockList.Keys)
+        // ビルのリストに追加しておく
+        foreach (String key in notBuildingBlockList.Keys)
         {
-            blockList.Add(newBlockList[key][0]);
+            blockList.Add(notBuildingBlockList[key][0]);
         }
 
         // ビルの実際の座標を決める
@@ -168,11 +171,15 @@ public class CityCreater : MonoBehaviour
 
 
 		// ビルとブロックを建てていく
-		BuildBuildings (arrangedBlock, blockDictionary, newBlockList);
+		BuildBuildings (arrangedBlock, blockDictionary, notBuildingBlockList);
 
 
         // 地面を設定
         SetGround(blockList);
+
+
+        // 道を作る
+        BuildStreets(blockList);
 	}
 	
 	/**
@@ -597,10 +604,10 @@ public class CityCreater : MonoBehaviour
                 //PilingPlate(oneBuilding);
 
 
-                /*
+                
 
                 // ビルを建てる
-                GameObject clone = Instantiate (this.building, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ()) / 2) + 2, float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
+                GameObject clone = Instantiate (this.building, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ()) / 2) + 3, float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
 
 
                 // ビルにおなまえを付ける
@@ -611,7 +618,7 @@ public class CityCreater : MonoBehaviour
                 //clone.GetComponent<Renderer>().material.color = Color.blue;
 
 
-                */
+                
 
                 //ビルの色を変える
                 //clone.GetComponent<Building>().Init(new Color (float.Parse (oneBuilding ["color_r"].ToString ()), float.Parse (oneBuilding ["color_g"].ToString ()), float.Parse (oneBuilding ["color_b"].ToString ())));
@@ -668,7 +675,7 @@ public class CityCreater : MonoBehaviour
         foreach (String key in block.Keys) {
 			//Debug.Log(key);
 			List<Dictionary<String, object>> blockList = block [key];
-			GameObject clone = Instantiate (this.ground, new Vector3(float.Parse(blockList[0]["x"].ToString()), 1, float.Parse(blockList[0]["y"].ToString())), transform.rotation) as GameObject;
+			GameObject clone = Instantiate (this.ground, new Vector3(float.Parse(blockList[0]["x"].ToString()), 2, float.Parse(blockList[0]["y"].ToString())), transform.rotation) as GameObject;
 			clone.transform.localScale = new Vector3 (float.Parse (blockList [0]["widthX"].ToString ()), 2, float.Parse (blockList [0]["widthY"].ToString ()));
             clone.name = blockList[0]["name"].ToString();
         }
@@ -681,7 +688,7 @@ public class CityCreater : MonoBehaviour
         {
             //Debug.Log("AddedBlock:"+key);
             List<Dictionary<String, object>> blockList = block2[key];
-            GameObject clone = Instantiate(this.ground, new Vector3(float.Parse(blockList[0]["x"].ToString()), 1, float.Parse(blockList[0]["y"].ToString())), transform.rotation) as GameObject;
+            GameObject clone = Instantiate(this.ground, new Vector3(float.Parse(blockList[0]["x"].ToString()), 2, float.Parse(blockList[0]["y"].ToString())), transform.rotation) as GameObject;
             clone.transform.localScale = new Vector3(float.Parse(blockList[0]["widthX"].ToString()), 2, float.Parse(blockList[0]["widthY"].ToString()));
             //clone.GetComponent<Renderer>().material.color = Color.green;
             clone.name = blockList[0]["name"].ToString();
@@ -863,6 +870,81 @@ public class CityCreater : MonoBehaviour
 
     }
 	
+    // 道を作っていく関数
+    void BuildStreets(List<Dictionary<String, object>> target)
+    {
+        // ブロックのリストを名前順にソートする
+        target.Sort((b, a) => string.Compare(b["name"].ToString(), a["name"].ToString()));
+
+        // 最後に見つかった前方一致するブロックの番号
+        int foundLastBlock;
+
+        // 前方一致したところ + 1から後ろのブロックの名前
+        string afterName = "";
+
+
+        // 1個上の階層のお名前
+        string upperDir = "";
+
+        int foundUpperDir;
+
+        for (int i = 0; i < target.Count; i++)
+        {
+            foundLastBlock = -1;
+            foundUpperDir = -1;
+
+            upperDir = target[i]["name"].ToString().Substring(0, target[i]["name"].ToString().LastIndexOf("/"));
+            //Debug.Log(upperDir);
+
+            for (int j = 0; j < target.Count; j++)
+            {
+                // i番目のtargetのお名前と前方一致するか
+                if (target[j]["name"].ToString().StartsWith(target[i]["name"].ToString()) == true)
+                {
+                    //Debug.Log("orig: " + target[i]["name"].ToString());
+                    //Debug.Log("after: " + target[j]["name"].ToString());
+
+                    if (j > i)
+                    {
+                        // 前方一致したところ+1から後ろのお名前を取得してみる
+                        afterName = target[j]["name"].ToString().Substring(target[i]["name"].ToString().Length + 1);
+
+                        // 前方一致した後のお名前に/がないとき
+                        if (afterName.IndexOf("/") < 0)
+                        {
+                            foundLastBlock = j;
+                        }
+                    }
+                }
+
+                if(target[j]["name"].ToString() == upperDir)
+                {
+                    foundUpperDir = j;
+                }
+            }
+
+            if (foundLastBlock >= 0)
+            {
+                // 前方一致したところ+1から後ろのお名前を取得
+                afterName = target[foundLastBlock]["name"].ToString().Substring(target[i]["name"].ToString().Length + 1);
+                //Debug.Log("*orig: " + target[i]["name"].ToString());
+                //Debug.Log("*after: " + target[foundLastBlock]["name"].ToString());
+                //Debug.Log("*cut: " + afterName);
+
+                GameObject clone = Instantiate(this.street, new Vector3(((float.Parse(target[foundLastBlock]["x"].ToString()) + float.Parse(target[i]["x"].ToString())) / 2) + 25, (float)0, float.Parse(target[i]["y"].ToString())), transform.rotation) as GameObject;
+                clone.transform.localScale = new Vector3(float.Parse(target[foundLastBlock]["x"].ToString()) - float.Parse(target[i]["x"].ToString()), 2, 50);
+                clone.name = "streetX" + i.ToString();
+
+            }
+
+            if(foundUpperDir >= 0)
+            {
+                GameObject clone = Instantiate(this.street, new Vector3(float.Parse(target[i]["x"].ToString()), (float)0.1, ((float.Parse(target[i]["y"].ToString()) + float.Parse(target[foundUpperDir]["y"].ToString())) / 2) + 25), Quaternion.Euler(0,90,0)) as GameObject;
+                clone.transform.localScale = new Vector3(float.Parse(target[i]["y"].ToString()) - float.Parse(target[foundUpperDir]["y"].ToString()) + 0, 2, 50);
+                clone.name = "streetY" + i.ToString();
+            }
+        }
+    }
 	
 	void nori_rogic_ver2 (IList blocks, IList buildings)
 	{

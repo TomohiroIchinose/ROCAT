@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 3e0d8ff058b404dc3a6549364d9fcf10
-timeCreated: 1472470095
+timeCreated: 1472818532
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
@@ -15,6 +15,7 @@ MonoImporter:
   - plate: {fileID: 112864, guid: a8a58b3ddce6b1e42941150d2a459833, type: 2}
   - earth: {instanceID: 0}
   - sense: {fileID: 174650, guid: 31a45ebd401b79b479a0909d97e7387d, type: 2}
+  - street: {fileID: 142524, guid: db20e429dd80634478c55c1271552181, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
