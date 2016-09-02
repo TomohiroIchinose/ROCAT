@@ -67,6 +67,9 @@ public class CityCreater : MonoBehaviour
     public string jsonText = "";
     // Use this for initialization
 
+    public List<String> dir = new List<String>(); // ディレクトリ一覧
+    public List<String> addedDir = new List<String>();  // 既に置かれたディレクトリの一覧
+
     void Start()
     {
         earth = Instantiate(this.plate, new Vector3(0, 0, 0), transform.rotation) as GameObject;
@@ -103,6 +106,16 @@ public class CityCreater : MonoBehaviour
 		this.city = Json.Deserialize (jsonText) as Dictionary<string,object>;
 		var blocks = this.city ["blocks"] as IList;
 		var buildings = this.city ["buildings"] as IList;
+        var directories = this.city["directories"] as IList;
+
+        // ディレクトリ一覧を作ってソートしておく
+        for(int i=0; i< directories.Count; i++)
+        {
+            dir.Add(directories[i].ToString());
+        }
+
+        dir.Sort();
+
         LocateBlockAndBuilding(blocks, buildings);
 		//nori_rogic_ver2 (blocks, buildings);
 		/*
@@ -121,9 +134,12 @@ public class CityCreater : MonoBehaviour
 		Dictionary<String,List<Dictionary<String, object>>> blockDictionary = ArrangeByKey (blocks, "name"); // 名前ごとにブロックをまとめる
 		
 		List<Dictionary<String, object>> blockList = new List<Dictionary<string, object>> ();
-		//Debug.Log (new HashSet<String>(arrangedBlock.Keys).Equals(new HashSet<String>(blockDictionary.Keys)));
-		
-		foreach (String key in blockDictionary.Keys) { // ブロックのkeyごとに実行する
+        //Debug.Log (new HashSet<String>(arrangedBlock.Keys).Equals(new HashSet<String>(blockDictionary.Keys)));
+
+        // ブロックの座標を決めるときに出てくる追加分のブロックの辞書
+        Dictionary<String, List<Dictionary<String, object>>> newBlockList = new Dictionary<String, List<Dictionary<String, object>>>();
+
+        foreach (String key in blockDictionary.Keys) { // ブロックのkeyごとに実行する
 
             //SetLocation (arrangedBlock[key]); // 1.ビルの座標を決める
 
@@ -136,13 +152,23 @@ public class CityCreater : MonoBehaviour
             blockList.Add(blockDictionary[key][0]);
             //Debug.Log(int.Parse(blockDictionary[key][0]["width"].ToString()));
         }
-		//SetLocation (blockList);
-        SetLocation2(blockList);
 
-        //Debug.Log("TEST");
+        // ブロックの座標を決める
+        //SetLocation (blockList);
+        //SetLocation2(blockList);
+        newBlockList = SetBlockLocation(blockList);
+
+        foreach (String key in newBlockList.Keys)
+        {
+            blockList.Add(newBlockList[key][0]);
+        }
+
+        // ビルの実際の座標を決める
         SetGlobalLocation (arrangedBlock, blockDictionary);
-		//Debug.Log("TEST");
-		BuildBuildings (arrangedBlock, blockDictionary);
+
+
+		// ビルとブロックを建てていく
+		BuildBuildings (arrangedBlock, blockDictionary, newBlockList);
 
 
         // 地面を設定
@@ -323,6 +349,134 @@ public class CityCreater : MonoBehaviour
     }
 
 
+
+    // ブロックの配置をディレクトリ構造が分かり易いように決めるメソッド
+    Dictionary<String, List<Dictionary<String, object>>> SetBlockLocation(List<Dictionary<String, object>> target)
+    {
+        // 1個前で置いたブロックのX座標とXの幅の情報
+        int prePositionX = 0;
+        int preWidthX = 0;
+
+        // 階層が1個上のブロックのY座標とYの幅（実際はZ座標とZの幅）の情報
+        int prePositionY = 0;
+        int preWidthY = 0;
+
+        // 固定値
+        int space = 50;
+
+        // ディレクトリがブロックのリストにない場合に設定するXとYの幅
+        int fixedX = 100;
+        int fixedY = 100;
+
+        // 1個上の階層のディレクトリ名
+        string upperDir = "";
+
+        // 返り値の辞書（今回追加したブロックのリストの辞書）
+        Dictionary<String, List<Dictionary<String, object>>> addedBlockList = new Dictionary<String, List<Dictionary<String, object>>>();
+
+        // チェック用フラグ
+        int targetFound = 0;
+        int upperFound = 0;
+
+        // ブロックのリストを名前順にソートする
+        target.Sort((b, a) => string.Compare(b["name"].ToString(), a["name"].ToString()));
+
+        /*
+        for (int x = 0; x < target.Count; x++)
+            Debug.Log("name: " + target[x]["name"]);
+        */
+
+
+        // ディレクトリを順番に見ていく
+        for (int i = 0; i < dir.Count; i++)
+        {
+            //Debug.Log(i + " : "  + dir[i]);
+
+            // まだそのディレクトリの配置が決まっていないとき
+            if(addedDir.IndexOf(dir[i]) < 0)
+            {
+                // 最初以外の時は1個上の階層を見てくる
+                if (i != 0)
+                {
+                    upperDir = dir[i].Substring(0, dir[i].LastIndexOf("/"));
+
+                    // 1個上の階層がtarget内のとき
+                    for (int k = 0; k < target.Count; k++)
+                    {
+                        if (target[k]["name"].ToString() == upperDir)
+                        {
+                            prePositionY = int.Parse(target[k]["y"].ToString());
+                            preWidthY = int.Parse(target[k]["widthY"].ToString());
+                            upperFound = 1;
+                            break;
+                        }
+                    }
+                    // 1個上の階層がtarget内に存在しない（ビルがないブロック＝このメソッドで新たに追加されたブロックのとき）
+                    if(upperFound == 0)
+                    {
+                        prePositionY = int.Parse(addedBlockList[upperDir][0]["y"].ToString());
+                        preWidthY = int.Parse(addedBlockList[upperDir][0]["widthY"].ToString());
+                    }
+
+                }
+
+                // チェック用フラグをリセット
+                targetFound = 0;
+                upperFound = 0;
+
+
+                // ブロックの辞書を調べる
+                for (int j = 0; j < target.Count; j++)
+                {
+                    // 配置を決めたディレクトリがブロックのリストにあるもの（ビルが存在しているディレクトリ）
+                    if (target[j]["name"].ToString() == dir[i])
+                    {
+                        target[j]["x"] = prePositionX + preWidthX / 2 + int.Parse(target[j]["widthX"].ToString()) / 2 + space;
+                        prePositionX = int.Parse(target[j]["x"].ToString());
+                        preWidthX = int.Parse(target[j]["widthX"].ToString());
+
+                        target[j]["y"] = prePositionY + preWidthY / 2 + int.Parse(target[j]["widthY"].ToString()) / 2 + space;
+                        prePositionY = int.Parse(target[j]["y"].ToString());
+                        preWidthY = int.Parse(target[j]["widthY"].ToString());
+
+                        targetFound = 1;
+                        break;
+                    }
+                }
+
+                // 配置を決めたディレクトリがブロックのリストにないもの（ビルが存在しないディレクトリ） 
+                if (targetFound == 0)
+                {
+                    
+                    Dictionary<String, object> newDictionary = new Dictionary<string, object>();
+                    newDictionary["name"] = dir[i];
+                    newDictionary["widthX"] = fixedX;
+                    newDictionary["widthY"] = fixedY;
+                    newDictionary["x"] = prePositionX + preWidthX / 2 + int.Parse(newDictionary["widthX"].ToString()) / 2 + space;
+                    newDictionary["y"] = prePositionY + preWidthY / 2 + int.Parse(newDictionary["widthY"].ToString()) / 2 + space;
+
+                    List<Dictionary<String, object>> addList = new List<Dictionary<string, object>>();
+                    addList.Add(newDictionary);
+
+                    // ブロックの一覧に追加する
+                    addedBlockList.Add(dir[i], addList);
+
+                    prePositionX = int.Parse(newDictionary["x"].ToString());
+                    prePositionY = int.Parse(newDictionary["y"].ToString());
+
+                    preWidthX = int.Parse(newDictionary["widthX"].ToString());
+                    preWidthY = int.Parse(newDictionary["widthY"].ToString());
+
+                }
+
+                // 既に置いたディレクトリ一覧に追加する
+                addedDir.Add(dir[i]);
+            }
+        }
+        return addedBlockList;
+    }
+
+
     /**
 	 *
 	 * ブロックの幅を決めるメソッド
@@ -429,7 +583,8 @@ public class CityCreater : MonoBehaviour
 	 * buildingオブジェクトを複製して配置していく
 	 * 
 	 */
-    void BuildBuildings(Dictionary<String,List<Dictionary<String, object>>> building, Dictionary<String,List<Dictionary<String, object>>> block){
+    void BuildBuildings(Dictionary<String,List<Dictionary<String, object>>> building, Dictionary<String,List<Dictionary<String, object>>> block, Dictionary<String, List<Dictionary<String, object>>> block2)
+    {
         //Debug.Log("TEST");
         //Debug.Log(this.checktest);
         //Debug.Log(this.building);
@@ -441,6 +596,8 @@ public class CityCreater : MonoBehaviour
                 // プレートでビルを作る版
                 //PilingPlate(oneBuilding);
 
+
+                /*
 
                 // ビルを建てる
                 GameObject clone = Instantiate (this.building, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ()) / 2) + 2, float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
@@ -454,9 +611,11 @@ public class CityCreater : MonoBehaviour
                 //clone.GetComponent<Renderer>().material.color = Color.blue;
 
 
+                */
+
                 //ビルの色を変える
                 //clone.GetComponent<Building>().Init(new Color (float.Parse (oneBuilding ["color_r"].ToString ()), float.Parse (oneBuilding ["color_g"].ToString ()), float.Parse (oneBuilding ["color_b"].ToString ())));
-                //clone.GetComponent<Building>().Init(new Color((float)0.5, (float)0.8, (float)1.0));
+                //clone.Gmponent<Building>().Init(new Color((float)0.5, (float)0.8, (float)1.0));
 
 
                 // SATDがあった時に目印を入れる
@@ -513,8 +672,22 @@ public class CityCreater : MonoBehaviour
 			clone.transform.localScale = new Vector3 (float.Parse (blockList [0]["widthX"].ToString ()), 2, float.Parse (blockList [0]["widthY"].ToString ()));
             clone.name = blockList[0]["name"].ToString();
         }
-		
-	}
+
+
+        // 追加分のブロックを下に置いていく
+
+        //Debug.Log("TEST");
+        foreach (String key in block2.Keys)
+        {
+            //Debug.Log("AddedBlock:"+key);
+            List<Dictionary<String, object>> blockList = block2[key];
+            GameObject clone = Instantiate(this.ground, new Vector3(float.Parse(blockList[0]["x"].ToString()), 1, float.Parse(blockList[0]["y"].ToString())), transform.rotation) as GameObject;
+            clone.transform.localScale = new Vector3(float.Parse(blockList[0]["widthX"].ToString()), 2, float.Parse(blockList[0]["widthY"].ToString()));
+            //clone.GetComponent<Renderer>().material.color = Color.green;
+            clone.name = blockList[0]["name"].ToString();
+        }
+
+    }
 
     // プレートを積み上げてSATDがあるトコだけ目印がついたビルを作る
     void PilingPlate(Dictionary<String, object> target)
@@ -616,11 +789,11 @@ public class CityCreater : MonoBehaviour
     // 地面を作る関数
     void SetGround(List<Dictionary<String, object>> target)
     {
-        float zeroX = float.Parse(target[0]["x"].ToString());
-        float zeroY = float.Parse(target[0]["y"].ToString());
-
         int maxX = 0;
         int maxY = 0;
+
+        int minX = 0;
+        int minY = 0;
 
         float positionX;
         float positionY;
@@ -629,43 +802,52 @@ public class CityCreater : MonoBehaviour
 
         int space = 50;
 
-        // 一番大きいX座標とY（実際はZ）座標の番号を取ってくる
+        // 座標＋幅が一番大きい & 座標―幅が小さい、X座標とY（実際はZ）座標の番号を取ってくる
         if (target.Count >= 2)
         {
             for (int i = 1; i < target.Count; i++)
             {
-                if (float.Parse(target[maxX]["x"].ToString()) < float.Parse(target[i]["x"].ToString()))
+                if (float.Parse(target[maxX]["x"].ToString()) + float.Parse(target[maxX]["widthX"].ToString()) / 2 < float.Parse(target[i]["x"].ToString()) + float.Parse(target[i]["widthX"].ToString()) / 2)
                 {
                     maxX = i;
                 }
 
-                if (float.Parse(target[maxY]["y"].ToString()) < float.Parse(target[i]["y"].ToString()))
+                if (float.Parse(target[maxY]["y"].ToString()) + float.Parse(target[maxY]["widthY"].ToString()) / 2 < float.Parse(target[i]["y"].ToString()) + float.Parse(target[i]["widthY"].ToString()) / 2)
                 {
                     maxY = i;
+                }
+
+                if(float.Parse(target[minX]["x"].ToString()) - float.Parse(target[minX]["widthX"].ToString()) / 2 > float.Parse(target[i]["x"].ToString()) - float.Parse(target[i]["widthX"].ToString()) / 2)
+                {
+                    minX = i;
+                }
+                if (float.Parse(target[minY]["y"].ToString()) - float.Parse(target[minY]["widthY"].ToString()) / 2 > float.Parse(target[i]["y"].ToString()) - float.Parse(target[i]["widthY"].ToString()) / 2)
+                {
+                    minY = i;
                 }
             }
         }
 
         // XとY（ホントはZ）の座標と幅を決めていく
-        if(zeroX != float.Parse(target[maxX]["x"].ToString()))
+        if(float.Parse(target[minX]["x"].ToString()) != float.Parse(target[maxX]["x"].ToString()))
         {
-            positionX = zeroX / 2 + (float.Parse(target[maxX]["x"].ToString()) - zeroX) / 2;
-            widthX = (float.Parse(target[maxX]["x"].ToString()) - zeroX) + float.Parse(target[0]["widthX"].ToString()) + float.Parse(target[maxX]["widthX"].ToString()) + space;
+            positionX = float.Parse(target[minX]["x"].ToString()) / 2 + (float.Parse(target[maxX]["x"].ToString()) - float.Parse(target[minX]["x"].ToString())) / 2;
+            widthX = (float.Parse(target[maxX]["x"].ToString()) - float.Parse(target[minX]["x"].ToString())) + float.Parse(target[0]["widthX"].ToString()) + float.Parse(target[maxX]["widthX"].ToString()) + space;
         }
         else
         {
-            positionX = zeroX;
+            positionX = float.Parse(target[minX]["x"].ToString());
             widthX = float.Parse(target[0]["widthX"].ToString()) + space;
         }
 
-        if(zeroY != float.Parse(target[maxY]["y"].ToString()))
+        if(float.Parse(target[minY]["y"].ToString()) != float.Parse(target[maxY]["y"].ToString()))
         {
-            positionY = zeroY / 2 + (float.Parse(target[maxY]["y"].ToString()) - zeroY) / 2;
-            widthY = (float.Parse(target[maxY]["y"].ToString()) - zeroY) + float.Parse(target[0]["widthY"].ToString()) + float.Parse(target[maxY]["widthY"].ToString()) + space;
+            positionY = float.Parse(target[minY]["y"].ToString()) / 2 + (float.Parse(target[maxY]["y"].ToString()) - float.Parse(target[minY]["y"].ToString())) / 2;
+            widthY = (float.Parse(target[maxY]["y"].ToString()) - float.Parse(target[minY]["y"].ToString())) + float.Parse(target[0]["widthY"].ToString()) + float.Parse(target[maxY]["widthY"].ToString()) + space;
         }
         else
         {
-            positionY = zeroY;
+            positionY = float.Parse(target[minY]["y"].ToString());
             widthY = float.Parse(target[0]["widthY"].ToString()) + space;
         }
 
