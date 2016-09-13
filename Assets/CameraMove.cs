@@ -181,7 +181,18 @@ public class CameraMove : MonoBehaviour {
             {
                 type = "block";
                 path = SearchPathFromFileNameforBlock(block.transform.name);
-                path = path.Substring(path.IndexOf(".git") + 5);
+
+                // ディレクトリがrootだったらrootに書き換える
+                if (path.IndexOf(".git") + 4 == path.Length)
+                {
+                    path = "root";
+                }
+                // その他は最初の.gitから後ろだけ取る
+                else
+                {
+                    path = path.Substring(path.IndexOf(".git") + 5);
+                }
+               
             }
             // 何もないトコをクリック
             else
@@ -371,17 +382,28 @@ public class CameraMove : MonoBehaviour {
 
 	}
 
-    string SearchPathFromFileNameforBlock(string file_name)
+    string SearchPathFromFileNameforBlock(string block_name)
     {
         string path = "";
         IList blocks = cc.GetCity()["blocks"] as IList;
+        IList dirs = cc.GetCity()["directories"] as IList;
         foreach (Dictionary<string, object> block in blocks)
         {
-            if (block["name"].ToString() == file_name)
+            if (block["name"].ToString() == block_name)
             {
                 path = block["name"].ToString();
             }
         }
+
+        if (path == "")
+        {
+            for(int i = 0; i < dirs.Count; i++)
+            {
+                if ((string)dirs[i] == block_name)
+                    path = (string)dirs[i];
+            }
+        }
+
         return path;
 
     }
