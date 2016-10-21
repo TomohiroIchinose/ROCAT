@@ -77,8 +77,12 @@ public class CityCreater : MonoBehaviour
         earth = Instantiate(this.plate, new Vector3(0, 0, 0), transform.rotation) as GameObject;
 
 #if UNITY_EDITOR
-        //StartCityCreater("2acra");
-        StartCityCreater("Activiti");
+        //StartCityCreater("acra");
+        //StartCityCreater("redis-py");
+        //StartCityCreater("activeadmin");
+        //StartCityCreater("Activiti");
+        //StartCityCreater("histrage");
+        StartCityCreater("lamtram");
 #else
 			    Application.ExternalCall("OnUnityReady");
 #endif
@@ -157,7 +161,7 @@ public class CityCreater : MonoBehaviour
 
         // ブロックの座標を決める
         //SetLocation (blockList);
-        //SetLocation2(blockList);
+        SetLocation2(blockList);
         notBuildingBlockList = SetBlockLocation(blockList);
 
         // ビルのリストに追加しておく

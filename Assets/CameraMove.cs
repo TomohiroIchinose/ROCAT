@@ -33,8 +33,8 @@ public class CameraMove : MonoBehaviour {
 	private float rotationY = 0f;
 	private const float CAMERA_SPEED = 500f;
 	private const float CAMERA_CONTROL_SENSITIVITY = 3F;
-	private const float MIN_ROTATION_Y = -30F;
-	private const float MAX_ROTATION_Y = 30F;
+	private const float MIN_ROTATION_Y = -90F;
+	private const float MAX_ROTATION_Y = 90F;
 
     private GameObject ground;
 
@@ -182,6 +182,9 @@ public class CameraMove : MonoBehaviour {
                 type = "block";
                 path = SearchPathFromFileNameforBlock(block.transform.name);
 
+
+                // -------------for Normal repository---------------
+                
                 // ディレクトリがrootだったらrootに書き換える
                 if (path.IndexOf(".git") + 4 == path.Length)
                 {
@@ -192,7 +195,18 @@ public class CameraMove : MonoBehaviour {
                 {
                     path = path.Substring(path.IndexOf(".git") + 5);
                 }
-               
+                
+                // -------------------------------------------------
+
+                // ---------------for Histrage---------------------
+                /*
+                path = path.Substring(23);
+                int firsts = path.IndexOf("/");
+                path = path.Substring(firsts + 1);
+                path = path.Replace('_', '/');
+                */
+                // -------------------------------------------------
+
             }
             // 何もないトコをクリック
             else
@@ -209,6 +223,7 @@ public class CameraMove : MonoBehaviour {
             {
                 type = "building";
                 filename = building.transform.name;
+                //Debug.Log(filename);
 
             }
             // マーカーをクリック
@@ -220,12 +235,34 @@ public class CameraMove : MonoBehaviour {
                 filename = marker.transform.name.Substring(0, slashnum);    
             }
             path = SearchPathFromFileName(filename);
+            //Debug.Log(path);
+
+            // --------------for Normal repository--------------
+            
             fileFullPath = path;
             path = path.Substring(path.IndexOf(".git") + 5);
             fileFullPath = "../" + fileFullPath.Substring(fileFullPath.IndexOf("repository"));
+            
+            // -------------------------------------------------
+
+            // ---------for Histrage repository-----------------
+            /*
+            fileFullPath = ".." + path.Substring(13);
+
+            int cn = path.IndexOf("[CN]");
+            path = path.Substring(0, cn - 1);
+            path = path.Substring(23);
+            int firsts = path.IndexOf("/");
+            path = path.Substring(firsts + 1);
+            path = path.Replace('_', '/');
+            path = path + "---" + filename;
+            */
+            // -------------------------------------------------
         }
 #if UNITY_EDITOR
         //Debug.Log(path);
+        //Debug.Log(filename);
+        //Debug.Log(fileFullPath);
 #else
 			        Application.ExternalCall("OnBuildingClick", path , filename, fileFullPath, type, satd);
 #endif
