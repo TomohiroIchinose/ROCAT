@@ -77,12 +77,12 @@ public class CityCreater : MonoBehaviour
         earth = Instantiate(this.plate, new Vector3(0, 0, 0), transform.rotation) as GameObject;
 
 #if UNITY_EDITOR
-        //StartCityCreater("acra");
+        StartCityCreater("acra");
         //StartCityCreater("redis-py");
         //StartCityCreater("activeadmin");
         //StartCityCreater("Activiti");
         //StartCityCreater("histrage");
-        StartCityCreater("lamtram");
+        //StartCityCreater("lamtram");
 #else
 			    Application.ExternalCall("OnUnityReady");
 #endif
@@ -638,6 +638,7 @@ public class CityCreater : MonoBehaviour
                     // ‹…‘Ì‚Ì–Úˆó‚ð‚Â‚­‚é
                     GameObject test = Instantiate (this.checkSATD, new Vector3 (1, 1, 1), transform.rotation) as GameObject;
                     test.name = oneBuilding["name"].ToString() + "/";
+                    test.tag = "enemy";
 
                     for (int i = 0; i < sList.Count; i++)
                     {

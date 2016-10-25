@@ -38,11 +38,18 @@ public class CameraMove : MonoBehaviour {
 
     private GameObject ground;
 
+
+    public Camera mapCamera;
+    public Camera sensorCamera;
+
 	// Use this for initialization
 	void Start () {
 		view_src = false;
 
         this.enabled = false;
+
+        mapCamera.enabled = true;
+        sensorCamera.enabled = false;
 
         //viewMaterial = Resources.Load("red Material", typeof(Material)) as Material;
         //defaultBuildingMaterial = Resources.Load("Building", typeof(Material)) as Material;
@@ -140,7 +147,13 @@ public class CameraMove : MonoBehaviour {
 		{
 			//view_src = !view_src;
 		}
-	}
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            mapCamera.enabled = !mapCamera.enabled;
+            sensorCamera.enabled = !sensorCamera.enabled;
+        }
+    }
 
 	private void ControlByMouse()
 	{
