@@ -72,14 +72,17 @@ public class CityCreater : MonoBehaviour
     public List<String> dir = new List<String>(); // ディレクトリ一覧
     public List<String> addedDir = new List<String>();  // 既に置かれたディレクトリの一覧
 
+    public Sensor sensor;
+
     void Start()
     {
+        sensor = GameObject.Find("Main Camera").GetComponent<Sensor>();
         earth = Instantiate(this.plate, new Vector3(0, 0, 0), transform.rotation) as GameObject;
 
 #if UNITY_EDITOR
-        StartCityCreater("acra");
+        //StartCityCreater("acra");
         //StartCityCreater("redis-py");
-        //StartCityCreater("activeadmin");
+        StartCityCreater("activeadmin");
         //StartCityCreater("Activiti");
         //StartCityCreater("histrage");
         //StartCityCreater("lamtram");
@@ -184,7 +187,10 @@ public class CityCreater : MonoBehaviour
 
         // 道を作る
         BuildStreets(blockList);
-	}
+
+        sensor.MakeSensorList();
+
+    }
 	
 	/**
 	 * 
@@ -635,7 +641,7 @@ public class CityCreater : MonoBehaviour
                 IList sList = oneBuilding["SATD"] as IList;
 				if(sList.Count != 0){
 
-                    // 球体の目印をつくる
+                    // 目印をつくる
                     GameObject test = Instantiate (this.checkSATD, new Vector3 (1, 1, 1), transform.rotation) as GameObject;
                     test.name = oneBuilding["name"].ToString() + "/";
                     test.tag = "enemy";
@@ -646,12 +652,33 @@ public class CityCreater : MonoBehaviour
                     }
                     test.name = test.name.Substring(0, test.name.Length - 1);
 
-                    test.transform.localScale = new Vector3(float.Parse(oneBuilding["widthX"].ToString()), float.Parse(oneBuilding["widthX"].ToString()), float.Parse(oneBuilding["widthX"].ToString()));
-                    test.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1 + float.Parse(oneBuilding["widthX"].ToString()) + 50), float.Parse(oneBuilding["globalY"].ToString()));
+                    if (float.Parse(oneBuilding["widthX"].ToString()) > 300)
+                    {
+                        test.transform.localScale = new Vector3(300, 300, 300);
+                        test.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1 + float.Parse(oneBuilding["widthX"].ToString()) + 100), float.Parse(oneBuilding["globalY"].ToString()));
+                    }
+                    else if(float.Parse(oneBuilding["widthX"].ToString()) > 30)
+                    {
+                        test.transform.localScale = new Vector3(float.Parse(oneBuilding["widthX"].ToString()), float.Parse(oneBuilding["widthX"].ToString()), float.Parse(oneBuilding["widthX"].ToString()));
+                        test.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1.2 + float.Parse(oneBuilding["widthX"].ToString()) + 50), float.Parse(oneBuilding["globalY"].ToString()));
+                    }
+                    else
+                    {
+                        test.transform.localScale = new Vector3(30, 30, 30);
+                        test.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1 + float.Parse(oneBuilding["widthX"].ToString()) + 50), float.Parse(oneBuilding["globalY"].ToString()));
+                    }
 
+                    test.transform.rotation = Quaternion.Euler(45,45,45);
 
                     // パーティクルの目印を作る
                     GameObject particle = Instantiate(this.sense, new Vector3(0, 1, 0), transform.rotation) as GameObject;
+                    var r = particle.GetComponent<ParticleSystem>().shape;
+                    r.radius = float.Parse(oneBuilding["widthX"].ToString()) * (float)0.85;
+                    var s = particle.GetComponent<ParticleSystem>();
+                    s.startSize = float.Parse(oneBuilding["widthX"].ToString()) / 5;
+                    s.startSpeed = float.Parse(oneBuilding["widthX"].ToString()) * 3;
+
+
                     particle.transform.Rotate(new Vector3((float)270, (float)0, (float)0));
                     particle.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), (float)(5), float.Parse(oneBuilding["globalY"].ToString()));
                     particle.name = "sence:" + oneBuilding["name"];

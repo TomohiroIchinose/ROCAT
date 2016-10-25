@@ -17,11 +17,13 @@ public class Sensor : MonoBehaviour {
     void Start () {
         sensorObjects = new List<GameObject>();
         borderObjects = new List<GameObject>();
+        
     }
 
-    void OnGUI()
+    public void MakeSensorList()
     {
         GameObject[] gos = GameObject.FindGameObjectsWithTag(tagFilter);
+        //Debug.Log(gos.Length);
         createSensorObjects(gos);
     }
 	
