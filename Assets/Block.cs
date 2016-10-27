@@ -11,7 +11,8 @@ public class Block : MonoBehaviour {
     public void Init(Color color)
     {
         //this.originalColor = color;
-        this.originalColor = (Resources.Load("Block", typeof(Material)) as Material).color;
+        //this.originalColor = (Resources.Load("Block", typeof(Material)) as Material).color;
+        this.originalColor = (Resources.Load("Sidewalk 1", typeof(Material)) as Material).color;
         SetMaterial(originalColor);
     }
 
@@ -23,7 +24,8 @@ public class Block : MonoBehaviour {
     public void Deselected()
     {
         //SetMaterial(originalColor);
-        SetMaterial((Resources.Load("Block", typeof(Material)) as Material).color);
+        //SetMaterial((Resources.Load("Block", typeof(Material)) as Material).color);
+        SetMaterial((Resources.Load("Sidewalk 1", typeof(Material)) as Material).color);
     }
 
     public void SetMaterial(Color color)

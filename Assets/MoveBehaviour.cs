@@ -12,11 +12,13 @@ public class MoveBehaviour : MonoBehaviour {
 	void Start () {
         //_move = new Vector3(0, 0, 0);
         startY = this.transform.position.y;
-        _move = GetDisplacement(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), new Vector3(this.transform.position.x, startY - this.transform.localScale.y - 10, this.transform.position.z), maxFrame);
+        //_move = GetDisplacement(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), new Vector3(this.transform.position.x, startY - this.transform.localScale.y - 10, this.transform.position.z), maxFrame);
+        _move = GetDisplacement(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), new Vector3(this.transform.position.x, this.transform.localScale.z * -10, this.transform.position.z), maxFrame);
+
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
 	    if(_frame < maxFrame)
         {
                 this.transform.position = this.transform.position + _move;
@@ -33,13 +35,15 @@ public class MoveBehaviour : MonoBehaviour {
     public void DownBuilding()
     {
         _frame = 0;
-        _move = GetDisplacement(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), new Vector3(this.transform.position.x, startY - this.transform.localScale.y + this.transform.localScale.y / 20, this.transform.position.z), maxFrame);
+        //_move = GetDisplacement(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), new Vector3(this.transform.position.x, startY - this.transform.localScale.y + this.transform.localScale.y / 20, this.transform.position.z), maxFrame);
+        _move = GetDisplacement(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), new Vector3(this.transform.position.x, this.transform.localScale.z * -7, this.transform.position.z), maxFrame);
     }
 
     public void ElaseBuilding()
     {
         _frame = 0;
-        _move = GetDisplacement(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), new Vector3(this.transform.position.x, startY - this.transform.localScale.y - 10, this.transform.position.z), maxFrame);
+        //_move = GetDisplacement(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), new Vector3(this.transform.position.x, startY - this.transform.localScale.y - 10, this.transform.position.z), maxFrame);
+        _move = GetDisplacement(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), new Vector3(this.transform.position.x, this.transform.localScale.z * -10, this.transform.position.z), maxFrame);
     }
 
 

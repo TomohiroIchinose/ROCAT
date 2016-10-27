@@ -80,10 +80,10 @@ public class CityCreater : MonoBehaviour
         earth = Instantiate(this.plate, new Vector3(0, 0, 0), transform.rotation) as GameObject;
 
 #if UNITY_EDITOR
-        //StartCityCreater("acra");
+        StartCityCreater("acra");
         //StartCityCreater("redis-py");
         //StartCityCreater("activeadmin");
-        StartCityCreater("Activiti");
+        //StartCityCreater("Activiti");
         //StartCityCreater("histrage");
         //StartCityCreater("lamtram");
 #else
@@ -832,7 +832,8 @@ public class CityCreater : MonoBehaviour
                 
 
                 // ビルを建てる
-                GameObject clone = Instantiate (this.building, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ()) / 2) + 3, float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
+                //GameObject clone = Instantiate (this.building, new Vector3 (float.Parse (oneBuilding ["globalX"].ToString ()), (float.Parse (oneBuilding ["height"].ToString ()) / 2) + 3, float.Parse (oneBuilding ["globalY"].ToString ())), transform.rotation) as GameObject;
+                GameObject clone = Instantiate(this.building, new Vector3(float.Parse(oneBuilding["globalX"].ToString()), 3, float.Parse(oneBuilding["globalY"].ToString())), Quaternion.Euler(-90, 0, 0)) as GameObject;
 
 
                 // ビルにおなまえを付ける
@@ -840,10 +841,11 @@ public class CityCreater : MonoBehaviour
 
                 // ビルの大きさをいじる
                 clone.transform.localScale = new Vector3 (float.Parse (oneBuilding ["widthX"].ToString ()), float.Parse (oneBuilding ["height"].ToString ()), float.Parse (oneBuilding ["widthY"].ToString ()));
+                clone.transform.localScale = new Vector3(float.Parse(oneBuilding["widthX"].ToString()) * (float)0.1, float.Parse(oneBuilding["widthY"].ToString()) * (float)0.1, float.Parse(oneBuilding["height"].ToString()) * (float)0.1);
                 //clone.GetComponent<Renderer>().material.color = Color.blue;
 
 
-                
+
 
                 //ビルの色を変える
                 //clone.GetComponent<Building>().Init(new Color (float.Parse (oneBuilding ["color_r"].ToString ()), float.Parse (oneBuilding ["color_g"].ToString ()), float.Parse (oneBuilding ["color_b"].ToString ())));
@@ -1110,6 +1112,10 @@ public class CityCreater : MonoBehaviour
         earth.transform.localScale = new Vector3(widthX, 1, widthY);
         earth.name = "Ground";
 
+        var a = earth.GetComponent<Renderer>().material;
+        a.mainTextureScale = new Vector2(widthX / 100, widthY / 100);
+        
+
         // カメラをスタートする
         GameObject obj = GameObject.Find("Main Camera");
         mainCamera = obj.GetComponent<CameraMove>();
@@ -1261,6 +1267,9 @@ public class CityCreater : MonoBehaviour
                 //clone.name = "streetX" + i.ToString();
                 clone.name = "streetX" + i.ToString() + ":" + target[i]["name"].ToString() + " to " + target[foundLastBlock]["name"].ToString();
 
+                var a = clone.GetComponent<Renderer>().material;
+                a.mainTextureScale = new Vector2((float.Parse(target[foundLastBlock]["x"].ToString()) - float.Parse(target[foundLastBlock]["widthX"].ToString()) / 2 - float.Parse(target[i]["x"].ToString()) + float.Parse(target[i]["widthX"].ToString()) / 2 + 50) / 100, 1);
+
             }
 
             if (foundUpperDir >= 0)
@@ -1269,7 +1278,11 @@ public class CityCreater : MonoBehaviour
                 //clone.transform.localScale = new Vector3(float.Parse(target[i]["y"].ToString()) + float.Parse(target[i]["widthY"].ToString()) / 2 - float.Parse(target[foundUpperDir]["y"].ToString()) + float.Parse(target[foundUpperDir]["widthY"].ToString()) / 2 + 0, 2, 50);
                 GameObject clone = Instantiate(this.street, new Vector3(float.Parse(target[i]["x"].ToString()) - float.Parse(target[i]["widthX"].ToString()) / 2 - 25, (float)0, float.Parse(target[i]["y"].ToString()) - 25), Quaternion.Euler(0, 90, 0)) as GameObject;
                 clone.transform.localScale = new Vector3(float.Parse(target[i]["widthY"].ToString()) + 50, 2, 50);
-                clone.name = "streetY" + i.ToString() + ":" + target[i]["name"].ToString() + " to " + target[foundUpperDir]["name"].ToString(); ;
+                clone.name = "streetY" + i.ToString() + ":" + target[i]["name"].ToString() + " to " + target[foundUpperDir]["name"].ToString();
+
+                var a = clone.GetComponent<Renderer>().material;
+                a.mainTextureScale = new Vector2((float.Parse(target[i]["widthY"].ToString()) + 50) / 100, 1);
+
             }
         }
     }
