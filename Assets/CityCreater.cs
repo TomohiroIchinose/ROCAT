@@ -82,8 +82,8 @@ public class CityCreater : MonoBehaviour
 #if UNITY_EDITOR
         //StartCityCreater("acra");
         //StartCityCreater("redis-py");
-        StartCityCreater("activeadmin");
-        //StartCityCreater("Activiti");
+        //StartCityCreater("activeadmin");
+        StartCityCreater("Activiti");
         //StartCityCreater("histrage");
         //StartCityCreater("lamtram");
 #else
@@ -165,7 +165,9 @@ public class CityCreater : MonoBehaviour
         // ブロックの座標を決める
         //SetLocation (blockList);
         SetLocation2(blockList);
-        notBuildingBlockList = SetBlockLocation(blockList);
+
+        //notBuildingBlockList = SetBlockLocation(blockList);
+        notBuildingBlockList = SetBlockLocation2(blockList);
 
         // ビルのリストに追加しておく
         foreach (String key in notBuildingBlockList.Keys)
@@ -186,7 +188,8 @@ public class CityCreater : MonoBehaviour
 
 
         // 道を作る
-        BuildStreets(blockList);
+        //BuildStreets(blockList);
+        BuildStreets2(blockList);
 
         sensor.MakeSensorList();
 
@@ -485,6 +488,218 @@ public class CityCreater : MonoBehaviour
                     preWidthY = int.Parse(newDictionary["widthY"].ToString());
 
                 }
+
+                // 既に置いたディレクトリ一覧に追加する
+                addedDir.Add(dir[i]);
+            }
+        }
+        return addedBlockList;
+    }
+
+    // ブロックの配置をディレクトリ構造が分かり易いように決めるメソッドVer.2
+    // 縦長にならないように調整した感じ
+    Dictionary<String, List<Dictionary<String, object>>> SetBlockLocation2(List<Dictionary<String, object>> target)
+    {
+        // 1個前で置いたブロックのX座標とXの幅の情報
+        int prePositionX = 0;
+        int preWidthX = 0;
+
+        // 階層が1個上のブロックのY座標とYの幅（実際はZ座標とZの幅）の情報
+        int prePositionY = 0;
+        int preWidthY = 0;
+
+        // 固定値
+        int space = 50;
+
+        // ディレクトリがブロックのリストにない場合に設定するXとYの幅
+        int fixedX = 100;
+        int fixedY = 100;
+
+        // 1個上の階層のディレクトリ名
+        string upperDir = "";
+
+        // 1個上の階層のディレクトリ名を含む最後に置いたブロック（ディレクトリ）の名前
+        //string lastDir = "";
+
+        // 返り値の辞書（今回追加したブロックのリストの辞書）
+        Dictionary<String, List<Dictionary<String, object>>> addedBlockList = new Dictionary<String, List<Dictionary<String, object>>>();
+
+        // チェック用フラグ
+        int targetFound = 0;
+        int upperFound = 0;
+        int lastFound = 0;
+
+        // ブロックのリストを名前順にソートする
+        target.Sort((b, a) => string.Compare(b["name"].ToString(), a["name"].ToString()));
+
+        /*
+        for (int x = 0; x < target.Count; x++)
+            Debug.Log("name: " + target[x]["name"]);
+        */
+
+
+        // ディレクトリを順番に見ていく
+        for (int i = 0; i < dir.Count; i++)
+        {
+            //Debug.Log(i + " : "  + dir[i]);
+
+            // まだそのディレクトリの配置が決まっていないとき
+            if (addedDir.IndexOf(dir[i]) < 0)
+            {
+                // 最初以外の時は1個上の階層を見てくる
+                if (i != 0)
+                {
+                    upperDir = dir[i].Substring(0, dir[i].LastIndexOf("/"));
+
+
+                    lastFound = 0;
+
+                    // 既に置いたブロックを調べる
+                    foreach(string dire in addedDir)
+                    {
+                        // 1個上の階層のディレクトリ名を含み、かつ1個上のディレクトリではないものがあるか
+                        if(dire.Contains(upperDir) && string.Compare(dire, upperDir) != 0)
+                        {
+                            //lastDir = dir;
+                            lastFound = 1;
+                            break;
+                        }
+                    }
+
+                    // target内（ビルがあるブロック）を見る
+                    for (int k = 0; k < target.Count; k++)
+                    {
+                        // 1個上の階層がtarget内のとき
+                        if (target[k]["name"].ToString() == upperDir)
+                        {
+                            prePositionY = int.Parse(target[k]["y"].ToString());
+                            preWidthY = int.Parse(target[k]["widthY"].ToString());
+                            upperFound = 1;
+                            //break;
+                        }
+
+                        // 1個上の階層のディレクトリ名を含み、かつ1個上のディレクトリではないものがあった場合
+                        if(lastFound == 1)
+                        {
+                            // 1個上の階層のディレクトリ名を含む、まだ置いていないtargetを見る
+                            if (target[k]["name"].ToString().Contains(upperDir) && addedDir.Contains(target[k]["name"].ToString()) != false)
+                            {
+                                // X座標＋Xの幅が大きかったら更新
+                                if (prePositionX + preWidthX < int.Parse(target[k]["x"].ToString()) + int.Parse(target[k]["widthX"].ToString()))
+                                {
+                                    prePositionX = int.Parse(target[k]["x"].ToString());
+                                    preWidthX = int.Parse(target[k]["widthX"].ToString());
+                                }
+                            }
+                        }
+                    }
+
+                    // 1個上の階層がtarget内に存在しない（ビルがないブロック＝このメソッドで新たに追加されたブロックのとき）
+                    if (upperFound == 0)
+                    {
+                        prePositionY = int.Parse(addedBlockList[upperDir][0]["y"].ToString());
+                        preWidthY = int.Parse(addedBlockList[upperDir][0]["widthY"].ToString());
+
+
+                        // 1個上の階層のディレクトリ名を含み、かつ1個上のディレクトリではないものがあった場合
+                        if (lastFound == 1)
+                        {
+                            // このメソッドで新たに追加されたブロックの辞書のキー（＝ディレクトリ名）の配列を作成
+                            string[] keyList = new string[addedBlockList.Keys.Count];
+                            addedBlockList.Keys.CopyTo(keyList, 0);
+                            foreach (string key in keyList)
+                            {
+                                // キー（＝ディレクトリ）が1個上の階層のディレクトリ名を含んでいる場合
+                                if (key.Contains(upperDir))
+                                {
+                                    // X座標＋Xの幅が大きかったら更新
+                                    if (prePositionX + preWidthX < int.Parse(addedBlockList[key][0]["x"].ToString()) + int.Parse(addedBlockList[key][0]["widthX"].ToString()))
+                                    {
+                                        prePositionX = int.Parse(addedBlockList[key][0]["x"].ToString());
+                                        preWidthX = int.Parse(addedBlockList[key][0]["widthX"].ToString());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // チェック用フラグをリセット
+                targetFound = 0;
+                upperFound = 0;
+
+                // ブロックの辞書を調べる
+                for (int j = 0; j < target.Count; j++)
+                {
+                    // 配置を決めたディレクトリがブロックのリストにあるもの（ビルが存在しているディレクトリ）
+                    if (target[j]["name"].ToString() == dir[i])
+                    {
+                        // 1個上の階層のディレクトリ名を含み、かつ1個上のディレクトリではないものがあった場合（X更新）
+                        if (lastFound == 1)
+                        {
+                            target[j]["x"] = prePositionX + preWidthX + int.Parse(target[j]["widthX"].ToString()) / 2 + space;
+                            prePositionX = int.Parse(target[j]["x"].ToString()) - int.Parse(target[j]["widthX"].ToString()) / 2;
+
+                        }
+                        // その他の場合（Xそのまま）
+                        else
+                        {
+                            target[j]["x"] = prePositionX + int.Parse(target[j]["widthX"].ToString()) / 2;
+                            //prePositionX = int.Parse(target[j]["x"].ToString()) - int.Parse(target[j]["widthX"].ToString()) / 2;
+                        }
+
+                        
+                        preWidthX = int.Parse(target[j]["widthX"].ToString());
+
+                        target[j]["y"] = prePositionY + preWidthY / 2 + int.Parse(target[j]["widthY"].ToString()) / 2 + space;
+                        prePositionY = int.Parse(target[j]["y"].ToString());
+                        preWidthY = int.Parse(target[j]["widthY"].ToString());
+
+                        targetFound = 1;
+                        break;
+                    }
+                }
+
+                // 配置を決めたディレクトリがブロックのリストにないもの（ビルが存在しないディレクトリ） 
+                if (targetFound == 0)
+                {
+                    Dictionary<String, object> newDictionary = new Dictionary<string, object>();
+                    newDictionary["name"] = dir[i];
+                    newDictionary["widthX"] = fixedX;
+                    newDictionary["widthY"] = fixedY;
+                    
+                    newDictionary["y"] = prePositionY + preWidthY / 2 + int.Parse(newDictionary["widthY"].ToString()) / 2 + space;
+
+                    // 1個上の階層のディレクトリ名を含み、かつ1個上のディレクトリではないものがあった場合（X更新）
+                    if (lastFound == 1)
+                    {
+                        newDictionary["x"] = prePositionX + preWidthX + int.Parse(newDictionary["widthX"].ToString()) / 2 + space;
+                        prePositionX = int.Parse(newDictionary["x"].ToString()) - int.Parse(newDictionary["widthX"].ToString()) / 2;
+
+                    }
+                    // その他の場合（Xそのまま）
+                    else
+                    {
+                        newDictionary["x"] = prePositionX + int.Parse(newDictionary["widthX"].ToString()) / 2;
+                        //prePositionX = int.Parse(newDictionary["x"].ToString()) - int.Parse(newDictionary["widthX"].ToString()) / 2;
+                    }
+
+                    
+
+                    List<Dictionary<String, object>> addList = new List<Dictionary<string, object>>();
+                    addList.Add(newDictionary);
+
+                    // ブロックの一覧に追加する
+                    addedBlockList.Add(dir[i], addList);
+
+                    
+                    prePositionY = int.Parse(newDictionary["y"].ToString());
+
+                    preWidthX = int.Parse(newDictionary["widthX"].ToString());
+                    preWidthY = int.Parse(newDictionary["widthY"].ToString());
+
+                }
+
 
                 // 既に置いたディレクトリ一覧に追加する
                 addedDir.Add(dir[i]);
@@ -977,8 +1192,89 @@ public class CityCreater : MonoBehaviour
             }
         }
     }
-	
-	void nori_rogic_ver2 (IList blocks, IList buildings)
+
+
+    // 道を作っていく関数2
+    // ブロックの中心じゃなくて辺に沿うようにおいていく
+    void BuildStreets2(List<Dictionary<String, object>> target)
+    {
+        // ブロックのリストを名前順にソートする
+        target.Sort((b, a) => string.Compare(b["name"].ToString(), a["name"].ToString()));
+
+        // 最後に見つかった前方一致するブロックの番号
+        int foundLastBlock;
+
+        // 前方一致したところ + 1から後ろのブロックの名前
+        string afterName = "";
+
+
+        // 1個上の階層のお名前
+        string upperDir = "";
+
+        int foundUpperDir;
+
+        for (int i = 0; i < target.Count; i++)
+        {
+            foundLastBlock = -1;
+            foundUpperDir = -1;
+
+            upperDir = target[i]["name"].ToString().Substring(0, target[i]["name"].ToString().LastIndexOf("/"));
+            //Debug.Log(upperDir);
+
+            for (int j = 0; j < target.Count; j++)
+            {
+                // i番目のtargetのお名前と前方一致するか
+                if (target[j]["name"].ToString().StartsWith(target[i]["name"].ToString()) == true)
+                {
+                    //Debug.Log("orig: " + target[i]["name"].ToString());
+                    //Debug.Log("after: " + target[j]["name"].ToString());
+
+                    if (j > i)
+                    {
+                        // 前方一致したところ+1から後ろのお名前を取得してみる
+                        afterName = target[j]["name"].ToString().Substring(target[i]["name"].ToString().Length + 1);
+
+                        // 前方一致した後のお名前に/がないとき
+                        if (afterName.IndexOf("/") < 0)
+                        {
+                            foundLastBlock = j;
+                        }
+                    }
+                }
+
+                if (target[j]["name"].ToString() == upperDir)
+                {
+                    foundUpperDir = j;
+                }
+            }
+
+            if (foundLastBlock >= 0 && float.Parse(target[foundLastBlock]["x"].ToString()) - float.Parse(target[foundLastBlock]["widthX"].ToString()) / 2 != float.Parse(target[i]["x"].ToString()) - float.Parse(target[i]["widthX"].ToString()) / 2)
+            {
+                // 前方一致したところ+1から後ろのお名前を取得
+                afterName = target[foundLastBlock]["name"].ToString().Substring(target[i]["name"].ToString().Length + 1);
+                //Debug.Log("*orig: " + target[i]["name"].ToString());
+                //Debug.Log("*after: " + target[foundLastBlock]["name"].ToString());
+                //Debug.Log("*cut: " + afterName);
+
+                GameObject clone = Instantiate(this.street, new Vector3(((float.Parse(target[foundLastBlock]["x"].ToString()) - float.Parse(target[foundLastBlock]["widthX"].ToString()) / 2 + float.Parse(target[i]["x"].ToString()) - float.Parse(target[i]["widthX"].ToString()) / 2) / 2) - 25, (float)0.1, float.Parse(target[i]["y"].ToString()) + float.Parse(target[i]["widthY"].ToString()) / 2 + 25), transform.rotation) as GameObject;
+                clone.transform.localScale = new Vector3(float.Parse(target[foundLastBlock]["x"].ToString()) - float.Parse(target[foundLastBlock]["widthX"].ToString()) / 2 - float.Parse(target[i]["x"].ToString()) + float.Parse(target[i]["widthX"].ToString()) / 2 + 50, 2, 50);
+                //clone.name = "streetX" + i.ToString();
+                clone.name = "streetX" + i.ToString() + ":" + target[i]["name"].ToString() + " to " + target[foundLastBlock]["name"].ToString();
+
+            }
+
+            if (foundUpperDir >= 0)
+            {
+                //GameObject clone = Instantiate(this.street, new Vector3(float.Parse(target[i]["x"].ToString()) - float.Parse(target[i]["widthX"].ToString()) / 2 - 25, (float)0.1, ((float.Parse(target[i]["y"].ToString()) + float.Parse(target[i]["widthY"].ToString()) / 2 + float.Parse(target[foundUpperDir]["y"].ToString()) - float.Parse(target[foundUpperDir]["widthY"].ToString()) / 2) / 2) - 0), Quaternion.Euler(0, 90, 0)) as GameObject;
+                //clone.transform.localScale = new Vector3(float.Parse(target[i]["y"].ToString()) + float.Parse(target[i]["widthY"].ToString()) / 2 - float.Parse(target[foundUpperDir]["y"].ToString()) + float.Parse(target[foundUpperDir]["widthY"].ToString()) / 2 + 0, 2, 50);
+                GameObject clone = Instantiate(this.street, new Vector3(float.Parse(target[i]["x"].ToString()) - float.Parse(target[i]["widthX"].ToString()) / 2 - 25, (float)0, float.Parse(target[i]["y"].ToString()) - 25), Quaternion.Euler(0, 90, 0)) as GameObject;
+                clone.transform.localScale = new Vector3(float.Parse(target[i]["widthY"].ToString()) + 50, 2, 50);
+                clone.name = "streetY" + i.ToString() + ":" + target[i]["name"].ToString() + " to " + target[foundUpperDir]["name"].ToString(); ;
+            }
+        }
+    }
+
+    void nori_rogic_ver2 (IList blocks, IList buildings)
 	{
 		Dictionary<string,int> block_ID_Dic = new Dictionary<string,int> ();
 		
