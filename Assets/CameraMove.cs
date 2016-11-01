@@ -139,11 +139,45 @@ public class CameraMove : MonoBehaviour {
                 rigidBody.velocity = transform.up * camera;
         }
 
+        /*
 		if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Escape))
 		{
 			isMouseAvailable = !isMouseAvailable;
 		}
-		if (Input.GetKeyDown(KeyCode.V))
+        */
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                this.transform.position = (new Vector3(ground.transform.position.x + ground.transform.localScale.x / 2 - 10, (float)200, ground.transform.position.z + ground.transform.localScale.z / 2 - 10));
+            }
+            else
+            {
+                this.transform.position = (new Vector3(ground.transform.position.x - ground.transform.localScale.x / 2 + 10, (float)200, ground.transform.position.z - ground.transform.localScale.z / 2 + 10));
+            }
+            this.transform.LookAt(ground.transform);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            // left
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                this.transform.position = (new Vector3(this.transform.position.x - 5000, this.transform.position.y, this.transform.position.z));
+                //this.transform.position += this.transform.forward * -2500;
+            }
+            // right
+            else
+            {
+                this.transform.position = (new Vector3(this.transform.position.x + 5000, this.transform.position.y, this.transform.position.z));
+                //this.transform.position += this.transform.forward * 2500;
+            }
+
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.V))
 		{
 			//view_src = !view_src;
 		}
@@ -157,7 +191,9 @@ public class CameraMove : MonoBehaviour {
 
 	private void ControlByMouse()
 	{
-		Building building = GetRaycastHitBuilding();
+        float wheel = Input.GetAxis("Mouse ScrollWheel");
+
+        Building building = GetRaycastHitBuilding();
         Block block = GetRaycastHitBlock();
         Marker marker = GetRaycastHitMarker();
         HighlighMouseOverBuilding(building);
@@ -168,13 +204,21 @@ public class CameraMove : MonoBehaviour {
 			MouseClicked(building, block, marker);
 		}
 
-		if (!isMouseAvailable) {return;}
+        //if (!isMouseAvailable) {return;}
 
-		float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * CAMERA_CONTROL_SENSITIVITY;
-		rotationY += Input.GetAxis("Mouse Y") * CAMERA_CONTROL_SENSITIVITY;
-		rotationY = Mathf.Clamp(rotationY, MIN_ROTATION_Y, MAX_ROTATION_Y);
-		transform.localEulerAngles = new Vector3(rotationY * -1, rotationX, 0);
-	}
+        if (wheel != 0)
+        {
+            this.transform.position += this.transform.forward * wheel * 400;
+        }
+
+        if (Input.GetMouseButton(2))
+        {
+            float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * CAMERA_CONTROL_SENSITIVITY;
+            rotationY += Input.GetAxis("Mouse Y") * CAMERA_CONTROL_SENSITIVITY;
+            rotationY = Mathf.Clamp(rotationY, MIN_ROTATION_Y, MAX_ROTATION_Y);
+            transform.localEulerAngles = new Vector3(rotationY * -1, rotationX, 0);
+        }
+    }
 
 	private void MouseClicked(Building building, Block block, Marker marker)
 	{
