@@ -84,10 +84,10 @@ public class CityCreater : MonoBehaviour
         //StartCityCreater("redis-py");
         //StartCityCreater("android-swipelistview");
         //StartCityCreater("activeadmin");
-        StartCityCreater("Activiti");
+        //StartCityCreater("Activiti");
         //StartCityCreater("histrage");
         //StartCityCreater("lamtram");
-        //StartCityCreater("test");
+        StartCityCreater("test");
 #else
 			    Application.ExternalCall("OnUnityReady");
 #endif
@@ -884,7 +884,7 @@ public class CityCreater : MonoBehaviour
 
 
                         particle.transform.Rotate(new Vector3((float)270, (float)0, (float)0));
-                        particle.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), float.Parse(sList[i].ToString()) * (float)0.8845 + 3, float.Parse(oneBuilding["globalY"].ToString()));
+                        particle.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), (float.Parse(oneBuilding["height"].ToString()) - float.Parse(sList[i].ToString())) * (float)0.8845 + 3, float.Parse(oneBuilding["globalY"].ToString()));
                         particle.name = "sence:" + oneBuilding["name"] + (int.Parse(sList[i].ToString())).ToString();
                     }
                     test.name = test.name.Substring(0, test.name.Length - 1);
