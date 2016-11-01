@@ -52,3 +52,8 @@ Thumbs.db
 
 /Assets/prefabs/QooQoo's Low poly Building 001.prefab
 /Assets/prefabs/QooQoo's Low poly Building 001.prefab.meta
+
+/Assets/Textures/*
+/Assets/Textures.meta
+/Assets/prefabs/ExplosionEffect.prefab
+/Assets/prefabs/ExplosionEffect.prefab.meta

@@ -82,11 +82,12 @@ public class CityCreater : MonoBehaviour
 #if UNITY_EDITOR
         //StartCityCreater("acra");
         //StartCityCreater("redis-py");
-        StartCityCreater("android-swipelistview");
+        //StartCityCreater("android-swipelistview");
         //StartCityCreater("activeadmin");
-        //StartCityCreater("Activiti");
+        StartCityCreater("Activiti");
         //StartCityCreater("histrage");
         //StartCityCreater("lamtram");
+        //StartCityCreater("test");
 #else
 			    Application.ExternalCall("OnUnityReady");
 #endif
@@ -847,7 +848,6 @@ public class CityCreater : MonoBehaviour
 
 
 
-
                 //ビルの色を変える
                 //clone.GetComponent<Building>().Init(new Color (float.Parse (oneBuilding ["color_r"].ToString ()), float.Parse (oneBuilding ["color_g"].ToString ()), float.Parse (oneBuilding ["color_b"].ToString ())));
                 //clone.Gmponent<Building>().Init(new Color((float)0.5, (float)0.8, (float)1.0));
@@ -867,6 +867,25 @@ public class CityCreater : MonoBehaviour
                     for (int i = 0; i < sList.Count; i++)
                     {
                         test.name = test.name + (int.Parse(sList[i].ToString()) + 1).ToString() + ",";
+
+                        // パーティクルの目印を作る
+                        GameObject particle = Instantiate(this.sense, new Vector3(0, 1, 0), transform.rotation) as GameObject;
+                        var r = particle.GetComponent<ParticleSystem>().shape;
+                        r.radius = float.Parse(oneBuilding["widthX"].ToString()) * (float)0.7;
+
+                        var s = particle.GetComponent<ParticleSystem>();
+                        s.startSize = float.Parse(oneBuilding["widthX"].ToString()) * (float)0.6 + 5;
+                        if(s.startSize < 20)
+                        {
+                            s.startSize = 20;
+                        }
+
+                        s.startSpeed = float.Parse(oneBuilding["widthX"].ToString()) * (float)0.5;
+
+
+                        particle.transform.Rotate(new Vector3((float)270, (float)0, (float)0));
+                        particle.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), float.Parse(sList[i].ToString()) * (float)0.8845 + 3, float.Parse(oneBuilding["globalY"].ToString()));
+                        particle.name = "sence:" + oneBuilding["name"] + (int.Parse(sList[i].ToString())).ToString();
                     }
                     test.name = test.name.Substring(0, test.name.Length - 1);
 
@@ -875,32 +894,33 @@ public class CityCreater : MonoBehaviour
                         test.transform.localScale = new Vector3(300, 300, 300);
                         test.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1 + float.Parse(oneBuilding["widthX"].ToString()) + 100), float.Parse(oneBuilding["globalY"].ToString()));
                     }
-                    else if(float.Parse(oneBuilding["widthX"].ToString()) > 30)
+                    else if(float.Parse(oneBuilding["widthX"].ToString()) > 50)
                     {
                         test.transform.localScale = new Vector3(float.Parse(oneBuilding["widthX"].ToString()), float.Parse(oneBuilding["widthX"].ToString()), float.Parse(oneBuilding["widthX"].ToString()));
                         test.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1.2 + float.Parse(oneBuilding["widthX"].ToString()) + 50), float.Parse(oneBuilding["globalY"].ToString()));
                     }
                     else
                     {
-                        test.transform.localScale = new Vector3(30, 30, 30);
+                        test.transform.localScale = new Vector3(50, 50, 50);
                         test.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1 + float.Parse(oneBuilding["widthX"].ToString()) + 50), float.Parse(oneBuilding["globalY"].ToString()));
                     }
 
                     test.transform.rotation = Quaternion.Euler(45,45,45);
 
+                    /*
                     // パーティクルの目印を作る
                     GameObject particle = Instantiate(this.sense, new Vector3(0, 1, 0), transform.rotation) as GameObject;
                     var r = particle.GetComponent<ParticleSystem>().shape;
                     r.radius = float.Parse(oneBuilding["widthX"].ToString()) * (float)0.85;
                     var s = particle.GetComponent<ParticleSystem>();
-                    s.startSize = float.Parse(oneBuilding["widthX"].ToString()) / 5;
-                    s.startSpeed = float.Parse(oneBuilding["widthX"].ToString()) * 3;
+                    s.startSize = float.Parse(oneBuilding["widthX"].ToString()) / 4;
+                    s.startSpeed = float.Parse(oneBuilding["widthX"].ToString()) * (float)2.5;
 
 
                     particle.transform.Rotate(new Vector3((float)270, (float)0, (float)0));
                     particle.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), (float)(5), float.Parse(oneBuilding["globalY"].ToString()));
                     particle.name = "sence:" + oneBuilding["name"];
-
+                    */
 
                     // プリミティブなオブジェクトで仮実装
                     //GameObject check = GameObject.CreatePrimitive(PrimitiveType.Sphere);
