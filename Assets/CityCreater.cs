@@ -80,8 +80,9 @@ public class CityCreater : MonoBehaviour
         earth = Instantiate(this.plate, new Vector3(0, 0, 0), transform.rotation) as GameObject;
 
 #if UNITY_EDITOR
-        StartCityCreater("acra");
+        //StartCityCreater("acra");
         //StartCityCreater("redis-py");
+        StartCityCreater("android-swipelistview");
         //StartCityCreater("activeadmin");
         //StartCityCreater("Activiti");
         //StartCityCreater("histrage");
@@ -840,7 +841,7 @@ public class CityCreater : MonoBehaviour
                 clone.name = oneBuilding ["name"].ToString ();
 
                 // ƒrƒ‹‚Ì‘å‚«‚³‚ð‚¢‚¶‚é
-                clone.transform.localScale = new Vector3 (float.Parse (oneBuilding ["widthX"].ToString ()), float.Parse (oneBuilding ["height"].ToString ()), float.Parse (oneBuilding ["widthY"].ToString ()));
+                //clone.transform.localScale = new Vector3 (float.Parse (oneBuilding ["widthX"].ToString ()), float.Parse (oneBuilding ["height"].ToString ()), float.Parse (oneBuilding ["widthY"].ToString ()));
                 clone.transform.localScale = new Vector3(float.Parse(oneBuilding["widthX"].ToString()) * (float)0.1, float.Parse(oneBuilding["widthY"].ToString()) * (float)0.1, float.Parse(oneBuilding["height"].ToString()) * (float)0.1);
                 //clone.GetComponent<Renderer>().material.color = Color.blue;
 
@@ -2017,7 +2018,8 @@ public class CityCreater : MonoBehaviour
     IEnumerator ReadFileOnline(string id)
     {
         //string url = "http://kataribe-dev.naist.jp:802/public/code_city.json?id=" + id;
-        string url = "http://163.221.29.246/json/" + id + ".json";
+        //string url = "http://163.221.29.246/json/" + id + ".json";
+        string url = "http://163.221.29.171/json/" + id + ".json";
 
         WWW www = new WWW(url);
         yield return www;
@@ -2025,6 +2027,7 @@ public class CityCreater : MonoBehaviour
         if (www.error == null)
         {
             jsonText = www.text;
+
         }
         else {
             jsonText = SetDefaultText();
