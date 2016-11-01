@@ -82,10 +82,10 @@ public class CityCreater : MonoBehaviour
 #if UNITY_EDITOR
         //StartCityCreater("acra");
         //StartCityCreater("redis-py");
-        StartCityCreater("android-swipelistview");
+        //StartCityCreater("android-swipelistview");
         //StartCityCreater("activeadmin");
         //StartCityCreater("Activiti");
-        //StartCityCreater("histrage");
+        StartCityCreater("histrage");
         //StartCityCreater("lamtram");
 #else
 			    Application.ExternalCall("OnUnityReady");
@@ -168,13 +168,15 @@ public class CityCreater : MonoBehaviour
         SetLocation2(blockList);
 
         //notBuildingBlockList = SetBlockLocation(blockList);
-        notBuildingBlockList = SetBlockLocation2(blockList);
+        //notBuildingBlockList = SetBlockLocation2(blockList);
 
         // ビルのリストに追加しておく
+        /*
         foreach (String key in notBuildingBlockList.Keys)
         {
             blockList.Add(notBuildingBlockList[key][0]);
         }
+        */
 
         // ビルの実際の座標を決める
         SetGlobalLocation (arrangedBlock, blockDictionary);
@@ -190,7 +192,7 @@ public class CityCreater : MonoBehaviour
 
         // 道を作る
         //BuildStreets(blockList);
-        BuildStreets2(blockList);
+        //BuildStreets2(blockList);
 
         sensor.MakeSensorList();
 
@@ -842,7 +844,7 @@ public class CityCreater : MonoBehaviour
 
                 // ビルの大きさをいじる
                 //clone.transform.localScale = new Vector3 (float.Parse (oneBuilding ["widthX"].ToString ()), float.Parse (oneBuilding ["height"].ToString ()), float.Parse (oneBuilding ["widthY"].ToString ()));
-                clone.transform.localScale = new Vector3(float.Parse(oneBuilding["widthX"].ToString()) * (float)0.1, float.Parse(oneBuilding["widthY"].ToString()) * (float)0.1, float.Parse(oneBuilding["height"].ToString()) * (float)0.1);
+                clone.transform.localScale = new Vector3(float.Parse(oneBuilding["widthX"].ToString()) * (float)0.25, float.Parse(oneBuilding["widthY"].ToString()) * (float)0.25, float.Parse(oneBuilding["height"].ToString()) * (float)0.2);
                 //clone.GetComponent<Renderer>().material.color = Color.blue;
 
 

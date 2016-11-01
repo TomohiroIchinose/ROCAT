@@ -31,7 +31,7 @@ public class CameraMove : MonoBehaviour {
     private Marker selectedMarker;
 
 	private float rotationY = 0f;
-	private const float CAMERA_SPEED = 500f;
+	private const float CAMERA_SPEED = 250f;
 	private const float CAMERA_CONTROL_SENSITIVITY = 3F;
 	private const float MIN_ROTATION_Y = -90F;
 	private const float MAX_ROTATION_Y = 90F;
@@ -103,7 +103,7 @@ public class CameraMove : MonoBehaviour {
 
         if(Input.GetKey(KeyCode.LeftControl))
         {
-            camera = camera * 5;
+            camera = camera * 10;
         }
 
 		if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
@@ -199,6 +199,7 @@ public class CameraMove : MonoBehaviour {
                 // -------------for Normal repository---------------
                 
                 // ディレクトリがrootだったらrootに書き換える
+                /*
                 if (path.IndexOf(".git") + 4 == path.Length)
                 {
                     path = "root";
@@ -208,16 +209,16 @@ public class CameraMove : MonoBehaviour {
                 {
                     path = path.Substring(path.IndexOf(".git") + 5);
                 }
-                
+                */
                 // -------------------------------------------------
 
                 // ---------------for Histrage---------------------
-                /*
+                
                 path = path.Substring(23);
                 int firsts = path.IndexOf("/");
                 path = path.Substring(firsts + 1);
                 path = path.Replace('_', '/');
-                */
+                
                 // -------------------------------------------------
 
             }
@@ -252,14 +253,14 @@ public class CameraMove : MonoBehaviour {
 
             // --------------for Normal repository--------------
             
-            fileFullPath = path;
-            path = path.Substring(path.IndexOf(".git") + 5);
-            fileFullPath = "../" + fileFullPath.Substring(fileFullPath.IndexOf("repository"));
+            //fileFullPath = path;
+            //path = path.Substring(path.IndexOf(".git") + 5);
+            //fileFullPath = "../" + fileFullPath.Substring(fileFullPath.IndexOf("repository"));
             
             // -------------------------------------------------
 
             // ---------for Histrage repository-----------------
-            /*
+            
             fileFullPath = ".." + path.Substring(13);
 
             int cn = path.IndexOf("[CN]");
@@ -269,7 +270,7 @@ public class CameraMove : MonoBehaviour {
             path = path.Substring(firsts + 1);
             path = path.Replace('_', '/');
             path = path + "---" + filename;
-            */
+            
             // -------------------------------------------------
         }
 #if UNITY_EDITOR
