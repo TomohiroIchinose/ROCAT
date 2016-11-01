@@ -85,7 +85,7 @@ public class CityCreater : MonoBehaviour
         //StartCityCreater("android-swipelistview");
         //StartCityCreater("activeadmin");
         //StartCityCreater("Activiti");
-        StartCityCreater("histrage");
+        StartCityCreater("historage");
         //StartCityCreater("lamtram");
 #else
 			    Application.ExternalCall("OnUnityReady");
