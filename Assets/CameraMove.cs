@@ -164,14 +164,14 @@ public class CameraMove : MonoBehaviour {
             // left
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                this.transform.position = (new Vector3(this.transform.position.x - 5000, this.transform.position.y, this.transform.position.z));
-                //this.transform.position += this.transform.forward * -2500;
+                //this.transform.position = (new Vector3(this.transform.position.x - 5000, this.transform.position.y, this.transform.position.z));
+                this.transform.position += this.transform.forward * -2500;
             }
             // right
             else
             {
-                this.transform.position = (new Vector3(this.transform.position.x + 5000, this.transform.position.y, this.transform.position.z));
-                //this.transform.position += this.transform.forward * 2500;
+                //this.transform.position = (new Vector3(this.transform.position.x + 5000, this.transform.position.y, this.transform.position.z));
+                this.transform.position += this.transform.forward * 2500;
             }
 
         }
