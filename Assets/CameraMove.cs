@@ -89,7 +89,7 @@ public class CameraMove : MonoBehaviour {
     // カメラをスタートさせる
     public void StartCamera()
     {
-        this.transform.position = (new Vector3(ground.transform.position.x - ground.transform.localScale.x / 2 + 10, (float)200, ground.transform.position.z - ground.transform.localScale.z / 2 + 10));
+        this.transform.position = (new Vector3(ground.transform.position.x - ground.transform.localScale.x / 2 + 10, (float)100, ground.transform.position.z - ground.transform.localScale.z / 2 + 10));
         this.transform.LookAt(ground.transform);
         this.enabled = true;
     }
@@ -148,11 +148,11 @@ public class CameraMove : MonoBehaviour {
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                this.transform.position = (new Vector3(ground.transform.position.x + ground.transform.localScale.x / 2 - 10, (float)200, ground.transform.position.z + ground.transform.localScale.z / 2 - 10));
+                this.transform.position = (new Vector3(ground.transform.position.x + ground.transform.localScale.x / 2 - 10, (float)100, ground.transform.position.z + ground.transform.localScale.z / 2 - 10));
             }
             else
             {
-                this.transform.position = (new Vector3(ground.transform.position.x - ground.transform.localScale.x / 2 + 10, (float)200, ground.transform.position.z - ground.transform.localScale.z / 2 + 10));
+                this.transform.position = (new Vector3(ground.transform.position.x - ground.transform.localScale.x / 2 + 10, (float)100, ground.transform.position.z - ground.transform.localScale.z / 2 + 10));
             }
                 
             this.transform.LookAt(ground.transform);
@@ -174,14 +174,14 @@ public class CameraMove : MonoBehaviour {
             // left
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                this.transform.position = (new Vector3(this.transform.position.x - 5000, this.transform.position.y, this.transform.position.z));
-                //this.transform.position += this.transform.forward * -2500;
+                //this.transform.position = (new Vector3(this.transform.position.x - 5000, this.transform.position.y, this.transform.position.z));
+                this.transform.position += this.transform.forward * -2500;
             }
             // right
             else
             {
-                this.transform.position = (new Vector3(this.transform.position.x + 5000, this.transform.position.y, this.transform.position.z));
-                //this.transform.position += this.transform.forward * 2500;
+                //this.transform.position = (new Vector3(this.transform.position.x + 5000, this.transform.position.y, this.transform.position.z));
+                this.transform.position += this.transform.forward * 2500;
             }
 
         }

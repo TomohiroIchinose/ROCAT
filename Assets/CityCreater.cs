@@ -87,7 +87,8 @@ public class CityCreater : MonoBehaviour
         //StartCityCreater("Activiti");
         //StartCityCreater("histrage");
         //StartCityCreater("lamtram");
-        StartCityCreater("test");
+        //StartCityCreater("test");
+        StartCityCreater("travatar");
 #else
 			    Application.ExternalCall("OnUnityReady");
 #endif
@@ -586,8 +587,8 @@ public class CityCreater : MonoBehaviour
                             // 1個上の階層のディレクトリ名を含む、まだ置いていないtargetを見る
                             if (target[k]["name"].ToString().Contains(upperDir) && addedDir.Contains(target[k]["name"].ToString()) != false)
                             {
-                                // X座標＋Xの幅が大きかったら更新
-                                if (prePositionX + preWidthX < int.Parse(target[k]["x"].ToString()) + int.Parse(target[k]["widthX"].ToString()))
+                                // X座標＋Xの幅/2が大きかったら更新
+                                if (prePositionX + preWidthX / 2 < int.Parse(target[k]["x"].ToString()) + int.Parse(target[k]["widthX"].ToString()) / 2)
                                 {
                                     prePositionX = int.Parse(target[k]["x"].ToString());
                                     preWidthX = int.Parse(target[k]["widthX"].ToString());
@@ -614,12 +615,30 @@ public class CityCreater : MonoBehaviour
                                 // キー（＝ディレクトリ）が1個上の階層のディレクトリ名を含んでいる場合
                                 if (key.Contains(upperDir))
                                 {
-                                    // X座標＋Xの幅が大きかったら更新
-                                    if (prePositionX + preWidthX < int.Parse(addedBlockList[key][0]["x"].ToString()) + int.Parse(addedBlockList[key][0]["widthX"].ToString()))
+                                    // X座標＋Xの幅/2が大きかったら更新
+                                    if (prePositionX + preWidthX / 2 < int.Parse(addedBlockList[key][0]["x"].ToString()) + int.Parse(addedBlockList[key][0]["widthX"].ToString()) / 2)
                                     {
                                         prePositionX = int.Parse(addedBlockList[key][0]["x"].ToString());
                                         preWidthX = int.Parse(addedBlockList[key][0]["widthX"].ToString());
                                     }
+                                }
+                            }
+                        }
+                    }
+                    // 1個上の階層がtarget内に存在するけどビルがないブロックのリストに1個上の階層の名前を含むブロックがある場合
+                    else
+                    {
+                        // 新たに追加したブロックのリストのキーを順番に見ていく
+                        foreach(string key in addedBlockList.Keys)
+                        {
+                            // キーに1個上の階層のディレクトリ名が含まれているとき
+                            if(key.Contains(upperDir))
+                            {
+                                // X座標＋Xの幅/2が大きかったら更新
+                                if (prePositionX + preWidthX / 2 < int.Parse(addedBlockList[key][0]["x"].ToString()) + int.Parse(addedBlockList[key][0]["widthX"].ToString()) / 2)
+                                {
+                                    prePositionX = int.Parse(addedBlockList[key][0]["x"].ToString());
+                                    preWidthX = int.Parse(addedBlockList[key][0]["widthX"].ToString());
                                 }
                             }
                         }
@@ -639,7 +658,7 @@ public class CityCreater : MonoBehaviour
                         // 1個上の階層のディレクトリ名を含み、かつ1個上のディレクトリではないものがあった場合（X更新）
                         if (lastFound == 1)
                         {
-                            target[j]["x"] = prePositionX + preWidthX + int.Parse(target[j]["widthX"].ToString()) / 2 + space;
+                            target[j]["x"] = prePositionX + preWidthX / 2 + int.Parse(target[j]["widthX"].ToString()) / 2 + space + 100;
                             prePositionX = int.Parse(target[j]["x"].ToString()) - int.Parse(target[j]["widthX"].ToString()) / 2;
 
                         }
@@ -675,7 +694,7 @@ public class CityCreater : MonoBehaviour
                     // 1個上の階層のディレクトリ名を含み、かつ1個上のディレクトリではないものがあった場合（X更新）
                     if (lastFound == 1)
                     {
-                        newDictionary["x"] = prePositionX + preWidthX + int.Parse(newDictionary["widthX"].ToString()) / 2 + space;
+                        newDictionary["x"] = prePositionX + preWidthX / 2 + int.Parse(newDictionary["widthX"].ToString()) / 2 + space + 100;
                         prePositionX = int.Parse(newDictionary["x"].ToString()) - int.Parse(newDictionary["widthX"].ToString()) / 2;
 
                     }
@@ -1077,7 +1096,7 @@ public class CityCreater : MonoBehaviour
         float widthX;
         float widthY;
 
-        int space = 50;
+        int space = 500;
 
         // 座標＋幅が一番大きい & 座標―幅が小さい、X座標とY（実際はZ）座標の番号を取ってくる
         if (target.Count >= 2)
@@ -1108,8 +1127,9 @@ public class CityCreater : MonoBehaviour
         // XとY（ホントはZ）の座標と幅を決めていく
         if(float.Parse(target[minX]["x"].ToString()) != float.Parse(target[maxX]["x"].ToString()))
         {
-            positionX = float.Parse(target[minX]["x"].ToString()) / 2 + (float.Parse(target[maxX]["x"].ToString()) - float.Parse(target[minX]["x"].ToString())) / 2;
-            widthX = (float.Parse(target[maxX]["x"].ToString()) - float.Parse(target[minX]["x"].ToString())) + float.Parse(target[0]["widthX"].ToString()) + float.Parse(target[maxX]["widthX"].ToString()) + space;
+            //positionX = float.Parse(target[minX]["x"].ToString()) / 2 + (float.Parse(target[maxX]["x"].ToString()) - float.Parse(target[minX]["x"].ToString())) / 2;
+            positionX = (float.Parse(target[maxX]["x"].ToString()) + float.Parse(target[maxX]["widthX"].ToString()) / 2) - ((float.Parse(target[maxX]["x"].ToString()) + float.Parse(target[maxX]["widthX"].ToString()) / 2) - (float.Parse(target[minX]["x"].ToString()) - float.Parse(target[minX]["widthX"].ToString()) / 2)) / 2;
+            widthX = (float.Parse(target[maxX]["x"].ToString()) - float.Parse(target[minX]["x"].ToString())) + float.Parse(target[minX]["widthX"].ToString()) / 2 + float.Parse(target[maxX]["widthX"].ToString()) / 2 + space;
         }
         else
         {
@@ -1119,8 +1139,9 @@ public class CityCreater : MonoBehaviour
 
         if(float.Parse(target[minY]["y"].ToString()) != float.Parse(target[maxY]["y"].ToString()))
         {
-            positionY = float.Parse(target[minY]["y"].ToString()) / 2 + (float.Parse(target[maxY]["y"].ToString()) - float.Parse(target[minY]["y"].ToString())) / 2;
-            widthY = (float.Parse(target[maxY]["y"].ToString()) - float.Parse(target[minY]["y"].ToString())) + float.Parse(target[0]["widthY"].ToString()) + float.Parse(target[maxY]["widthY"].ToString()) + space;
+            //positionY = float.Parse(target[minY]["y"].ToString()) / 2 + (float.Parse(target[maxY]["y"].ToString()) - float.Parse(target[minY]["y"].ToString())) / 2;
+            positionY = (float.Parse(target[maxY]["y"].ToString()) + float.Parse(target[maxY]["widthY"].ToString()) / 2) - ((float.Parse(target[maxY]["y"].ToString()) + float.Parse(target[maxY]["widthY"].ToString()) / 2) - (float.Parse(target[minY]["y"].ToString()) - float.Parse(target[minY]["widthY"].ToString()) / 2)) / 2;
+            widthY = (float.Parse(target[maxY]["y"].ToString()) - float.Parse(target[minY]["y"].ToString())) + float.Parse(target[minY]["widthY"].ToString()) / 2 + float.Parse(target[maxY]["widthY"].ToString()) / 2 + space;
         }
         else
         {
@@ -1258,11 +1279,11 @@ public class CityCreater : MonoBehaviour
 
                     if (j > i)
                     {
-                        // 前方一致したところ+1から後ろのお名前を取得してみる
-                        afterName = target[j]["name"].ToString().Substring(target[i]["name"].ToString().Length + 1);
+                        // 前方一致したところから後ろのお名前を取得してみる
+                        afterName = target[j]["name"].ToString().Substring(target[i]["name"].ToString().Length);
 
-                        // 前方一致した後のお名前に/がないとき
-                        if (afterName.IndexOf("/") < 0)
+                        // 前方一致した後のお名前の先頭が'/'で、それ以外に'/'がないとき
+                        if (afterName.Substring(0,1) == "/" && CountChar(afterName, '/') == 1)
                         {
                             foundLastBlock = j;
                         }
@@ -1307,6 +1328,14 @@ public class CityCreater : MonoBehaviour
             }
         }
     }
+
+
+    // 文字の出現回数をカウント
+    public static int CountChar(string s, char c)
+    {
+        return s.Length - s.Replace(c.ToString(), "").Length;
+    }
+
 
     void nori_rogic_ver2 (IList blocks, IList buildings)
 	{
