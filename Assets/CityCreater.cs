@@ -81,14 +81,14 @@ public class CityCreater : MonoBehaviour
 
 #if UNITY_EDITOR
         //StartCityCreater("acra");
-        //StartCityCreater("redis-py");
+        StartCityCreater("redis-py");
         //StartCityCreater("android-swipelistview");
         //StartCityCreater("activeadmin");
         //StartCityCreater("Activiti");
         //StartCityCreater("histrage");
         //StartCityCreater("lamtram");
         //StartCityCreater("test");
-        StartCityCreater("travatar");
+        //StartCityCreater("travatar");
 #else
 			    Application.ExternalCall("OnUnityReady");
 #endif
@@ -858,7 +858,7 @@ public class CityCreater : MonoBehaviour
 
 
                 // ƒrƒ‹‚É‚¨‚È‚Ü‚¦‚ð•t‚¯‚é
-                clone.name = oneBuilding ["name"].ToString ();
+                clone.name = oneBuilding ["name"].ToString() + "/";
 
                 // ƒrƒ‹‚Ì‘å‚«‚³‚ð‚¢‚¶‚é
                 //clone.transform.localScale = new Vector3 (float.Parse (oneBuilding ["widthX"].ToString ()), float.Parse (oneBuilding ["height"].ToString ()), float.Parse (oneBuilding ["widthY"].ToString ()));
@@ -907,6 +907,8 @@ public class CityCreater : MonoBehaviour
                         particle.name = "sence:" + oneBuilding["name"] + (int.Parse(sList[i].ToString())).ToString();
                     }
                     test.name = test.name.Substring(0, test.name.Length - 1);
+
+                    clone.name = test.name;
 
                     if (float.Parse(oneBuilding["widthX"].ToString()) > 300)
                     {

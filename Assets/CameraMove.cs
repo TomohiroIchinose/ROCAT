@@ -301,7 +301,14 @@ public class CameraMove : MonoBehaviour {
             if (building != null)
             {
                 type = "building";
-                filename = building.transform.name;
+                int slashnum =building.transform.name.IndexOf("/");
+                filename = building.transform.name.Substring(0, slashnum);
+
+                if (slashnum + 1 != building.transform.name.Length)
+                {
+                    satd = building.transform.name.Substring(slashnum + 1, building.transform.name.Length - slashnum - 1);
+                }
+                //Debug.Log(satd);
                 //Debug.Log(filename);
 
             }
