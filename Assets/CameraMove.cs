@@ -139,7 +139,7 @@ public class CameraMove : MonoBehaviour {
                 rigidBody.velocity = transform.up * camera;
         }
         
-		if (Input.GetKeyDown(KeyCode.Q))
+		if (Input.GetKeyDown(KeyCode.E))
 		{
 			isMouseAvailable = !isMouseAvailable;
 		}
@@ -169,7 +169,23 @@ public class CameraMove : MonoBehaviour {
             sensorCamera.enabled = !sensorCamera.enabled;
         }
 
-        if(Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            this.transform.position += this.transform.forward * -3000;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            this.transform.position += this.transform.forward * 3000;
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            this.transform.rotation = this.transform.rotation * Quaternion.Euler(0, 180, 0);
+        }
+
+        /*
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             // left
             if (Input.GetKey(KeyCode.LeftShift))
@@ -185,6 +201,7 @@ public class CameraMove : MonoBehaviour {
             }
 
         }
+        */
     }
 
 	private void ControlByMouse()
@@ -206,7 +223,7 @@ public class CameraMove : MonoBehaviour {
 
         if(wheel != 0)
         {
-            this.transform.position += this.transform.forward * wheel * 400;
+            this.transform.position += this.transform.forward * wheel * 1500;
         }
 
         if ((isMouseAvailable && Input.GetMouseButton(2)) || !isMouseAvailable)

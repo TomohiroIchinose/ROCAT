@@ -13,6 +13,10 @@ public class Sensor : MonoBehaviour {
 
     public string tagFilter = "enemy";
 
+    GameObject[] gos;
+    List<GameObject> cpGos = new List<GameObject>();
+    public GameObject mainCamera;
+
     // Use this for initialization
     void Start () {
         sensorObjects = new List<GameObject>();
@@ -22,7 +26,9 @@ public class Sensor : MonoBehaviour {
 
     public void MakeSensorList()
     {
-        GameObject[] gos = GameObject.FindGameObjectsWithTag(tagFilter);
+        gos = GameObject.FindGameObjectsWithTag(tagFilter);
+        cpGos.AddRange(gos);
+        cpGos.Sort((b, a) => (int)b.transform.position.x - (int)a.transform.position.x);
         //Debug.Log(gos.Length);
         createSensorObjects(gos);
     }
@@ -44,7 +50,22 @@ public class Sensor : MonoBehaviour {
                 sensorObjects[i].layer = LayerMask.NameToLayer("Sensor");
             }
         }
-	}
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                Vector2 warp = calcDistance(new Vector2(mainCamera.transform.position.x, mainCamera.transform.position.z), false);
+                mainCamera.transform.position = new Vector3(warp.x, mainCamera.transform.position.y, warp.y);
+            }
+            else
+            {
+                Vector2 warp = calcDistance(new Vector2(mainCamera.transform.position.x, mainCamera.transform.position.z), true);
+                mainCamera.transform.position = new Vector3(warp.x, mainCamera.transform.position.y, warp.y);
+            }
+        }
+
+    }
 
     void createSensorObjects(GameObject[] target)
     {
@@ -71,5 +92,54 @@ public class Sensor : MonoBehaviour {
             borderObjects.Add(j);
         }
         */
+    }
+
+    Vector2 calcDistance(Vector2 camera, bool direction)
+    {
+        Vector2 targetEnemy = new Vector2();
+
+
+        int targetNum = 0;
+
+        float distance = -1;
+
+        // 一番近いEnemy = SATDを探す
+        for(int i = 0; i < cpGos.Count; i++)
+        {
+            if(Vector2.Distance(camera, new Vector2(cpGos[i].transform.position.x, cpGos[i].transform.position.z)) < distance || distance == -1)
+            {
+                distance = Vector2.Distance(camera, new Vector2(cpGos[i].transform.position.x, cpGos[i].transform.position.z));
+                targetEnemy = new Vector2(cpGos[i].transform.position.x, cpGos[i].transform.position.z);
+                targetNum = i;
+            }
+        }
+
+        if (distance == 0)
+        {
+            if (direction == true)
+            {
+                if (targetNum + 1 >= gos.Length)
+                {
+                    targetEnemy = new Vector2(cpGos[0].transform.position.x, cpGos[0].transform.position.z);
+                }
+                else
+                {
+                    targetEnemy = new Vector2(cpGos[targetNum + 1].transform.position.x, cpGos[targetNum + 1].transform.position.z);
+                }
+            }
+            else
+            {
+                if (targetNum - 1 < 0)
+                {
+                    targetEnemy = new Vector2(cpGos[cpGos.Count - 1].transform.position.x, cpGos[cpGos.Count - 1].transform.position.z);
+                }
+                else
+                {
+                    targetEnemy = new Vector2(cpGos[targetNum - 1].transform.position.x, cpGos[targetNum - 1].transform.position.z);
+                }
+            }
+        }
+
+        return targetEnemy;
     }
 }
