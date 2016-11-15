@@ -56,12 +56,12 @@ public class Sensor : MonoBehaviour {
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 Vector2 warp = calcDistance(new Vector2(mainCamera.transform.position.x, mainCamera.transform.position.z), false);
-                mainCamera.transform.position = new Vector3(warp.x, mainCamera.transform.position.y, warp.y);
+                mainCamera.transform.position = new Vector3(warp.x, 40, warp.y);
             }
             else
             {
                 Vector2 warp = calcDistance(new Vector2(mainCamera.transform.position.x, mainCamera.transform.position.z), true);
-                mainCamera.transform.position = new Vector3(warp.x, mainCamera.transform.position.y, warp.y);
+                mainCamera.transform.position = new Vector3(warp.x, 40, warp.y);
             }
         }
 
