@@ -2,4 +2,4 @@
 Splatoonもどきなんてなかったんや
 
 バッジテスト
-[![badge](https://img.shields.io/badge/HEIZO-Ver1.0.0-orange.svg)](http://rocat.naist.jp/)
+  [![badge](https://img.shields.io/badge/HEIZO-Ver1.0.0-orange.svg)](http://rocat.naist.jp/)
