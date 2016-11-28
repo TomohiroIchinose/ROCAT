@@ -81,7 +81,7 @@ public class CityCreater : MonoBehaviour
 
 #if UNITY_EDITOR
         //StartCityCreater("acra");
-        StartCityCreater("redis-py");
+        //StartCityCreater("redis-py");
         //StartCityCreater("android-swipelistview");
         //StartCityCreater("activeadmin");
         //StartCityCreater("Activiti");
@@ -89,6 +89,7 @@ public class CityCreater : MonoBehaviour
         //StartCityCreater("lamtram");
         //StartCityCreater("test");
         //StartCityCreater("travatar");
+        StartCityCreater("tensorflow");
 #else
 			    Application.ExternalCall("OnUnityReady");
 #endif
@@ -858,7 +859,19 @@ public class CityCreater : MonoBehaviour
 
 
                 // ƒrƒ‹‚É‚¨‚È‚Ü‚¦‚ð•t‚¯‚é
-                clone.name = oneBuilding ["name"].ToString() + "/";
+                /*
+                if(oneBuilding["name"].ToString().Contains("("))
+                {
+                    clone.name = oneBuilding["name"].ToString().Substring(0, oneBuilding["name"].ToString().IndexOf("(")) + "/";
+                }
+                else
+                {
+                    clone.name = oneBuilding["name"].ToString() + "/";
+                }
+                */
+
+                clone.name = oneBuilding["name"].ToString() + "/";
+
 
                 // ƒrƒ‹‚Ì‘å‚«‚³‚ð‚¢‚¶‚é
                 //clone.transform.localScale = new Vector3 (float.Parse (oneBuilding ["widthX"].ToString ()), float.Parse (oneBuilding ["height"].ToString ()), float.Parse (oneBuilding ["widthY"].ToString ()));
@@ -880,7 +893,7 @@ public class CityCreater : MonoBehaviour
 
                     // –Úˆó‚ð‚Â‚­‚é
                     GameObject test = Instantiate (this.checkSATD, new Vector3 (1, 1, 1), transform.rotation) as GameObject;
-                    test.name = oneBuilding["name"].ToString() + "/";
+                    test.name = clone.name;
                     test.tag = "enemy";
 
                     for (int i = 0; i < sList.Count; i++)

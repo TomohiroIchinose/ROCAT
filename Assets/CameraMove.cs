@@ -301,7 +301,7 @@ public class CameraMove : MonoBehaviour {
             if (building != null)
             {
                 type = "building";
-                int slashnum =building.transform.name.IndexOf("/");
+                int slashnum =building.transform.name.LastIndexOf("/");
                 filename = building.transform.name.Substring(0, slashnum);
 
                 if (slashnum + 1 != building.transform.name.Length)
@@ -316,7 +316,7 @@ public class CameraMove : MonoBehaviour {
             else
             {
                 type = "marker";
-                int slashnum = marker.transform.name.IndexOf("/");
+                int slashnum = marker.transform.name.LastIndexOf("/");
                 satd = marker.transform.name.Substring(slashnum + 1, marker.transform.name.Length - slashnum - 1);
                 filename = marker.transform.name.Substring(0, slashnum);    
             }
@@ -328,7 +328,13 @@ public class CameraMove : MonoBehaviour {
             fileFullPath = path;
             path = path.Substring(path.IndexOf(".git") + 5);
             fileFullPath = "../" + fileFullPath.Substring(fileFullPath.IndexOf("repository"));
-            
+
+            // 同名ファイルが複数あるタイプのおなまえを修正する
+            if (filename.Contains("("))
+            {
+                filename = filename.Substring(0, filename.IndexOf("("));
+            }
+
             // -------------------------------------------------
 
             // ---------for Histrage repository-----------------
