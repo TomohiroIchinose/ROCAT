@@ -929,9 +929,9 @@ public class CityCreater : MonoBehaviour
                         test.transform.localScale = new Vector3(3000, 3000, 3000);
                         test.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1 + 3000), float.Parse(oneBuilding["globalY"].ToString()));
                     }
-                    else if (float.Parse(oneBuilding["widthX"].ToString()) > 300)
+                    else if (float.Parse(oneBuilding["widthX"].ToString()) > 500)
                     {
-                        test.transform.localScale = new Vector3(300, 300, 300);
+                        test.transform.localScale = new Vector3(500, 500, 500);
                         test.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1 + float.Parse(oneBuilding["widthX"].ToString()) + 100), float.Parse(oneBuilding["globalY"].ToString()));
                     }
                     else if(float.Parse(oneBuilding["widthX"].ToString()) > 50)
