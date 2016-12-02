@@ -15,12 +15,12 @@ public class MoveDistance : MonoBehaviour {
 	void Update () {
         MoveBehaviour move = GetComponent<MoveBehaviour>();
         // 近いと生えてくる
-        if (Vector2.Distance(new Vector2(this.transform.position.x,this.transform.position.z), new Vector2(mainCamera.transform.position.x, mainCamera.transform.position.z)) < 1500)
+        if (Vector2.Distance(new Vector2(this.transform.position.x,this.transform.position.z), new Vector2(mainCamera.transform.position.x, mainCamera.transform.position.z)) < 2000)
         {
             move.UpBuilding();
         }
         // ちょっと近いと少しだけ見える
-        else if(Vector2.Distance(new Vector2(this.transform.position.x, this.transform.position.z), new Vector2(mainCamera.transform.position.x, mainCamera.transform.position.z)) < 3000)
+        else if(Vector2.Distance(new Vector2(this.transform.position.x, this.transform.position.z), new Vector2(mainCamera.transform.position.x, mainCamera.transform.position.z)) < 8000)
         {
             move.DownBuilding();
         }
