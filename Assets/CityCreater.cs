@@ -88,7 +88,8 @@ public class CityCreater : MonoBehaviour
         //StartCityCreater("histrage");
         //StartCityCreater("lamtram");
         //StartCityCreater("test");
-        StartCityCreater("travatar");
+        //StartCityCreater("travatar");
+        StartCityCreater("cdec");
         //StartCityCreater("tensorflow");
 #else
 			    Application.ExternalCall("OnUnityReady");
@@ -923,7 +924,7 @@ public class CityCreater : MonoBehaviour
 
                     clone.name = test.name;
 
-                    if (float.Parse(oneBuilding["widthX"].ToString()) > 5000)
+                    if (float.Parse(oneBuilding["widthX"].ToString()) > 3000)
                     {
                         test.transform.localScale = new Vector3(3000, 3000, 3000);
                         test.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1 + 3000), float.Parse(oneBuilding["globalY"].ToString()));
