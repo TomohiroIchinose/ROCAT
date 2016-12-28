@@ -17,6 +17,8 @@ public class Sensor : MonoBehaviour {
     List<GameObject> cpGos = new List<GameObject>();
     public GameObject mainCamera;
 
+    public float sizeX = 0;
+
     // Use this for initialization
     void Start () {
         sensorObjects = new List<GameObject>();
@@ -56,12 +58,14 @@ public class Sensor : MonoBehaviour {
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 Vector2 warp = calcDistance(new Vector2(mainCamera.transform.position.x, mainCamera.transform.position.z), false);
-                mainCamera.transform.position = new Vector3(warp.x, 40, warp.y);
+                mainCamera.transform.position = new Vector3(warp.x, 50, warp.y);
+                mainCamera.transform.rotation = Quaternion.Euler(0, 90, 0);
             }
             else
             {
                 Vector2 warp = calcDistance(new Vector2(mainCamera.transform.position.x, mainCamera.transform.position.z), true);
-                mainCamera.transform.position = new Vector3(warp.x, 40, warp.y);
+                mainCamera.transform.position = new Vector3(warp.x, 50, warp.y);
+                mainCamera.transform.rotation = Quaternion.Euler(0, 90, 0);
             }
         }
 
@@ -121,10 +125,12 @@ public class Sensor : MonoBehaviour {
                 if (targetNum + 1 >= gos.Length)
                 {
                     targetEnemy = new Vector2(cpGos[0].transform.position.x, cpGos[0].transform.position.z);
+                    sizeX = cpGos[0].transform.localScale.x;
                 }
                 else
                 {
                     targetEnemy = new Vector2(cpGos[targetNum + 1].transform.position.x, cpGos[targetNum + 1].transform.position.z);
+                    sizeX = cpGos[targetNum + 1].transform.localScale.x;
                 }
             }
             else
@@ -132,10 +138,12 @@ public class Sensor : MonoBehaviour {
                 if (targetNum - 1 < 0)
                 {
                     targetEnemy = new Vector2(cpGos[cpGos.Count - 1].transform.position.x, cpGos[cpGos.Count - 1].transform.position.z);
+                    sizeX = cpGos[cpGos.Count - 1].transform.localScale.x;
                 }
                 else
                 {
                     targetEnemy = new Vector2(cpGos[targetNum - 1].transform.position.x, cpGos[targetNum - 1].transform.position.z);
+                    sizeX = cpGos[targetNum - 1].transform.localScale.x;
                 }
             }
         }

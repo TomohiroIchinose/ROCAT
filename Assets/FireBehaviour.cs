@@ -16,7 +16,7 @@ public class FireBehaviour : MonoBehaviour {
 
         //Debug.Log(this.name + ":" + Vector2.Distance(new Vector2(this.transform.position.x, this.transform.position.z), new Vector2(mainCamera.transform.position.x, mainCamera.transform.position.z)));
 
-        if (Vector2.Distance(new Vector2(this.transform.position.x, this.transform.position.z), new Vector2(mainCamera.transform.position.x, mainCamera.transform.position.z)) < 1500)
+        if (Vector2.Distance(new Vector2(this.transform.position.x, this.transform.position.z), new Vector2(mainCamera.transform.position.x, mainCamera.transform.position.z)) < 2500)
         {
             //Debug.Log(this.name + ":ちかい");
             this.GetComponent<Renderer>().enabled = true;

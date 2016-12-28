@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 78cac85b781a64dbebd2c07905043d19
-timeCreated: 1472466685
+timeCreated: 1482914554
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
@@ -9,6 +9,8 @@ MonoImporter:
   - canvas2: {instanceID: 0}
   - file_name: {instanceID: 0}
   - block_name: {instanceID: 0}
+  - file_back: {instanceID: 0}
+  - block_back: {instanceID: 0}
   - cc: {instanceID: 0}
   - viewMaterial: {fileID: 2100000, guid: c3e1e1f5f7b6b8e4e8281d8f2eb48698, type: 2}
   - defaultBuildingMaterial: {fileID: 2100000, guid: 5881cbd9e4cedc249b795bc9f23da4ba,
@@ -17,6 +19,10 @@ MonoImporter:
       type: 2}
   - defaultMarkeringMaterial: {fileID: 2100000, guid: 53126bdef2ac029468e5d74438e0c232,
       type: 2}
+  - mapCamera: {instanceID: 0}
+  - sensorCamera: {instanceID: 0}
+  - list: {fileID: 22349710, guid: bc91b22086ef72e4584587eceeb667e7, type: 2}
+  - satdlist: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

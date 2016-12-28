@@ -987,7 +987,7 @@ public class CityCreater : MonoBehaviour
 			List<Dictionary<String, object>> blockList = block [key];
 			GameObject clone = Instantiate (this.ground, new Vector3(float.Parse(blockList[0]["x"].ToString()), 2, float.Parse(blockList[0]["y"].ToString())), transform.rotation) as GameObject;
 			clone.transform.localScale = new Vector3 (float.Parse (blockList [0]["widthX"].ToString ()), 2, float.Parse (blockList [0]["widthY"].ToString ()));
-            clone.name = blockList[0]["name"].ToString();
+            clone.name = blockList[0]["name"].ToString().Substring(1);
         }
 
 
@@ -1001,7 +1001,7 @@ public class CityCreater : MonoBehaviour
             GameObject clone = Instantiate(this.ground, new Vector3(float.Parse(blockList[0]["x"].ToString()), 2, float.Parse(blockList[0]["y"].ToString())), transform.rotation) as GameObject;
             clone.transform.localScale = new Vector3(float.Parse(blockList[0]["widthX"].ToString()), 2, float.Parse(blockList[0]["widthY"].ToString()));
             //clone.GetComponent<Renderer>().material.color = Color.green;
-            clone.name = blockList[0]["name"].ToString();
+            clone.name = blockList[0]["name"].ToString().Substring(1);
         }
 
     }
@@ -2089,7 +2089,8 @@ public class CityCreater : MonoBehaviour
     {
         //string url = "http://kataribe-dev.naist.jp:802/public/code_city.json?id=" + id;
         //string url = "http://163.221.29.246/json/" + id + ".json";
-        string url = "http://163.221.29.171/json/" + id + ".json";
+        //string url = "http://163.221.29.171/json/" + id + ".json";
+        string url = "http://rocat.naist.jp/json/" + id + ".json";
 
         WWW www = new WWW(url);
         yield return www;
@@ -2119,13 +2120,12 @@ public class CityCreater : MonoBehaviour
 	
     public GameObject GetGround()
     {
-
         return this.earth as GameObject;
     }
 
-	// Update is called once per frame
-	void Update ()
-	{
-		
-	}
+    public string GetJsonText()
+    {
+        return this.jsonText;
+    }
+
 }

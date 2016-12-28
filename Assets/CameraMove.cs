@@ -14,6 +14,8 @@ public class CameraMove : MonoBehaviour {
     public Canvas canvas2;
 	public Text file_name;
     public Text block_name;
+    public Image file_back;
+    public Image block_back;
 	private string src_txt = "";
 	public CityCreater cc;
 	public string ta;
@@ -42,6 +44,9 @@ public class CameraMove : MonoBehaviour {
     public Camera mapCamera;
     public Camera sensorCamera;
 
+    public Canvas list;
+    public Image satdlist;
+
 	// Use this for initialization
 	void Start () {
 		view_src = false;
@@ -56,18 +61,36 @@ public class CameraMove : MonoBehaviour {
         //defaultBlockingMaterial = Resources.Load("Block", typeof(Material)) as Material;
 
         cc = GameObject.Find ("CityCreater").GetComponent<CityCreater> ();
+        list = GameObject.Find("List").GetComponent<Canvas>();
+
+        file_name = canvas.transform.GetComponentInChildren<Text>();
+        file_back = canvas.transform.GetComponentInChildren<Image>();
+        file_name.text = "";
+        file_back.color = new Color(file_back.color.r, file_back.color.g, file_back.color.b, 0);
+
+        block_name = canvas2.transform.GetComponentInChildren<Text>();
+        block_back = canvas2.transform.GetComponentInChildren<Image>();
+        block_name.text = "";
+        block_back.color = new Color(block_back.color.r, block_back.color.g, block_back.color.b, 0);
+
+        satdlist = list.transform.GetComponentInChildren<Image>();
+
+        list.enabled = false;
+
+        /*
 		foreach( Transform child in canvas.transform){
 			file_name = child.gameObject.GetComponent<Text>();
             //block_name = child.gameObject.GetComponent<Text>();
             file_name.text = "";
             //block_name.text = "";
 		}
+        
         foreach (Transform child in canvas2.transform)
         {
             block_name = child.gameObject.GetComponent<Text>();
             block_name.text = "";
         }
-        
+        */
         ground = cc.GetGround();      
 
     }
@@ -184,6 +207,13 @@ public class CameraMove : MonoBehaviour {
             this.transform.rotation = this.transform.rotation * Quaternion.Euler(0, 180, 0);
         }
 
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            list.enabled = !list.enabled;
+        }
+
+
         /*
         if (Input.GetKeyDown(KeyCode.Tab))
         {
@@ -226,7 +256,7 @@ public class CameraMove : MonoBehaviour {
             this.transform.position += this.transform.forward * wheel * 1500;
         }
 
-        if ((isMouseAvailable && Input.GetMouseButton(2)) || !isMouseAvailable)
+        if ((isMouseAvailable && Input.GetMouseButton(1)) || !isMouseAvailable)
         {
             float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * CAMERA_CONTROL_SENSITIVITY;
             rotationY += Input.GetAxis("Mouse Y") * CAMERA_CONTROL_SENSITIVITY;
@@ -240,7 +270,7 @@ public class CameraMove : MonoBehaviour {
             this.transform.position += this.transform.forward * 2000;
         }
         */
-	}
+    }
 
 	private void MouseClicked(Building building, Block block, Marker marker)
 	{
@@ -259,7 +289,7 @@ public class CameraMove : MonoBehaviour {
             if (block != null && marker == null)
             {
                 type = "block";
-                path = SearchPathFromFileNameforBlock(block.transform.name);
+                path = SearchPathFromFileNameforBlock("/" + block.transform.name);
 
 
                 // -------------for Normal repository---------------
@@ -374,8 +404,9 @@ public class CameraMove : MonoBehaviour {
 		{
 			if (selectedBuilding == null || selectedBuilding != building){
 				file_name.text = building.transform.name;
+                file_back.color = new Color(file_back.color.r, file_back.color.g, file_back.color.b, 0.7f);
 
-				if (selectedBuilding)
+                if (selectedBuilding)
 				{
                     //selectedBuilding.GetComponent<Renderer>().material = defaultBuildingMaterial;
                     //selectedBuilding.GetComponent<Renderer>().material.color = preColor;
@@ -398,6 +429,7 @@ public class CameraMove : MonoBehaviour {
                 selectedBuilding = null;
             }
 			file_name.text = "";
+            file_back.color = new Color(file_back.color.r, file_back.color.g, file_back.color.b, 0);
 		}
 	}
 
@@ -407,7 +439,15 @@ public class CameraMove : MonoBehaviour {
         {
             if (selectedBlock == null || selectedBlock != block)
             {
-                block_name.text = block.transform.name;
+                if (block.transform.name.IndexOf(".git") + 4 == block.transform.name.Length)
+                {
+                    block_name.text = "root";
+                }
+                else
+                {
+                    block_name.text = block.transform.name.Substring(block.transform.name.IndexOf(".git") + 5);
+                }
+                block_back.color = new Color(block_back.color.r, block_back.color.g, block_back.color.b, 0.7f);
 
                 if (selectedBlock)
                 {
@@ -426,6 +466,7 @@ public class CameraMove : MonoBehaviour {
                 selectedBlock = null;
             }
             block_name.text = "";
+            block_back.color = new Color(block_back.color.r, block_back.color.g, block_back.color.b, 0);
         }
     }
 
@@ -541,4 +582,13 @@ public class CameraMove : MonoBehaviour {
     string SetDefaultText(){
 		return "cant read\n";
 	}
+
+    public void SATDListClick(string dir_name)
+    {
+        //Debug.Log(dir_name);
+        GameObject search_block = GameObject.Find(dir_name);
+        //Debug.Log(search_block.name);
+        this.transform.position = new Vector3(search_block.transform.position.x - search_block.transform.localScale.x, 1000, search_block.transform.position.z);
+        this.transform.LookAt(search_block.transform);
+    }
 }
