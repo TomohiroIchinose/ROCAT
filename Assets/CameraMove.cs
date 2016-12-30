@@ -637,5 +637,7 @@ public class CameraMove : MonoBehaviour {
         //Debug.Log(search_block.name);
         this.transform.position = new Vector3(search_block.transform.position.x - search_block.transform.localScale.x * 15, search_block.transform.localScale.y * 10 + 200, search_block.transform.position.z);
         this.transform.LookAt(search_block.transform);
+
+        MouseClicked(search_block.GetComponent<Building>(), null, null);
     }
 }
