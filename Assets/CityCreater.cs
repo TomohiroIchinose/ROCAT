@@ -871,7 +871,7 @@ public class CityCreater : MonoBehaviour
                 }
                 */
 
-                clone.name = oneBuilding["name"].ToString() + "/";
+                clone.name = (oneBuilding["path"].ToString() + ":").Substring(1);
 
 
                 // ƒrƒ‹‚Ì‘å‚«‚³‚ð‚¢‚¶‚é
@@ -923,6 +923,8 @@ public class CityCreater : MonoBehaviour
                     test.name = test.name.Substring(0, test.name.Length - 1);
 
                     clone.name = test.name;
+
+                    test.name = "marker_" + test.name;
 
                     if (float.Parse(oneBuilding["widthX"].ToString()) > 3000)
                     {

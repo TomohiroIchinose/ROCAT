@@ -90,7 +90,17 @@ public class ItemListManager : MonoBehaviour {
 
                     // クリック時のイベントを付加
                     string fullDir = arrangedList[i]["name"].ToString();
-                    node.onClick.AddListener(() => ClickButton(fullDir));
+
+                    IList satdList = arrangedList[i]["SATD"] as IList;
+                    string satdListString = ":";
+
+                    for (int j = 0; j < satdList.Count; j++)
+                    {
+                        satdListString = satdListString + (int.Parse(satdList[j].ToString()) + 1).ToString() + ",";
+                    }
+                    satdListString = satdListString.Substring(0, satdListString.Length - 1);
+
+                    node.onClick.AddListener(() => ClickButton(fullDir + satdListString));
                 }
             }
             check = true;
@@ -101,8 +111,11 @@ public class ItemListManager : MonoBehaviour {
     private void ClickButton(string filename)
     {
         // ディレクトリ名を渡す
-        cm.SATDListClick(filename.Substring(1, filename.LastIndexOf("/")));
+        //cm.SATDListClick(filename.Substring(1, filename.LastIndexOf("/")));
+
+        // フルパスを渡す
+        cm.SATDListClick(filename.Substring(1));
     }
-	
+
 
 }

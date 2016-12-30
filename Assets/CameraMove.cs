@@ -119,7 +119,11 @@ public class CameraMove : MonoBehaviour {
 
 	private void ControlByKeyboard()
 	{
-		Rigidbody rigidBody = gameObject.GetComponent<Rigidbody>();
+        Building building = GetRaycastHitBuilding();
+        Block block = GetRaycastHitBlock();
+        Marker marker = GetRaycastHitMarker();
+
+        Rigidbody rigidBody = gameObject.GetComponent<Rigidbody>();
 		Vector3 velocity = Vector3.zero;
 
         float camera = CAMERA_SPEED;
@@ -211,6 +215,37 @@ public class CameraMove : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.F))
         {
             list.enabled = !list.enabled;
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            this.transform.rotation = this.transform.rotation * Quaternion.Euler(0, -10, 0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            this.transform.rotation = this.transform.rotation * Quaternion.Euler(0, 10, 0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            this.transform.rotation = this.transform.rotation * Quaternion.Euler(-10, 0, 0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            this.transform.rotation = this.transform.rotation * Quaternion.Euler(10, 0, 0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Comma))
+        {
+            this.transform.rotation = this.transform.rotation * Quaternion.Euler(-this.transform.localEulerAngles.x, 0, -this.transform.localEulerAngles.z);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            MouseClicked(building, block, marker);
         }
 
 
@@ -331,12 +366,17 @@ public class CameraMove : MonoBehaviour {
             if (building != null)
             {
                 type = "building";
-                int slashnum =building.transform.name.LastIndexOf("/");
-                filename = building.transform.name.Substring(0, slashnum);
+                
+                filename = (building.transform.name.Substring(building.transform.name.LastIndexOf("/") + 1));
+
+                int slashnum = filename.LastIndexOf(":");
+                filename = filename.Substring(0, slashnum);
 
                 if (slashnum + 1 != building.transform.name.Length)
                 {
-                    satd = building.transform.name.Substring(slashnum + 1, building.transform.name.Length - slashnum - 1);
+                    satd = building.transform.name.Substring(building.transform.name.LastIndexOf("/") + 1).Substring(slashnum + 1, building.transform.name.Substring(building.transform.name.LastIndexOf("/") + 1).Length - slashnum - 1);
+                    //Debug.Log(satd);
+                    //satd = building.transform.name.Substring(slashnum + 1, building.transform.name.Length - slashnum - 1);
                 }
                 //Debug.Log(satd);
                 //Debug.Log(filename);
@@ -346,9 +386,16 @@ public class CameraMove : MonoBehaviour {
             else
             {
                 type = "marker";
-                int slashnum = marker.transform.name.LastIndexOf("/");
-                satd = marker.transform.name.Substring(slashnum + 1, marker.transform.name.Length - slashnum - 1);
-                filename = marker.transform.name.Substring(0, slashnum);    
+
+                filename = (marker.transform.name.Substring(marker.transform.name.LastIndexOf("/") + 1));
+
+                int slashnum = filename.LastIndexOf(":");
+                filename = filename.Substring(0, slashnum);
+
+                satd = marker.transform.name.Substring(marker.transform.name.LastIndexOf("/") + 1).Substring(slashnum + 1, marker.transform.name.Substring(marker.transform.name.LastIndexOf("/") + 1).Length - slashnum - 1);
+                //Debug.Log(satd);
+                //satd = marker.transform.name.Substring(slashnum + 1, marker.transform.name.Length - slashnum - 1);
+
             }
             path = SearchPathFromFileName(filename);
             //Debug.Log(path);
@@ -403,7 +450,7 @@ public class CameraMove : MonoBehaviour {
 		if (building != null)
 		{
 			if (selectedBuilding == null || selectedBuilding != building){
-				file_name.text = building.transform.name;
+				file_name.text = building.transform.name.Substring(building.transform.name.LastIndexOf("/") + 1);
                 file_back.color = new Color(file_back.color.r, file_back.color.g, file_back.color.b, 0.7f);
 
                 if (selectedBuilding)
@@ -588,7 +635,7 @@ public class CameraMove : MonoBehaviour {
         //Debug.Log(dir_name);
         GameObject search_block = GameObject.Find(dir_name);
         //Debug.Log(search_block.name);
-        this.transform.position = new Vector3(search_block.transform.position.x - search_block.transform.localScale.x, 1000, search_block.transform.position.z);
+        this.transform.position = new Vector3(search_block.transform.position.x - search_block.transform.localScale.x * 15, search_block.transform.localScale.y * 10 + 200, search_block.transform.position.z);
         this.transform.LookAt(search_block.transform);
     }
 }
