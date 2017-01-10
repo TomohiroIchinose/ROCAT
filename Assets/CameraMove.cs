@@ -33,13 +33,13 @@ public class CameraMove : MonoBehaviour {
     private Marker selectedMarker;
 
 	private float rotationY = 0f;
-	private const float CAMERA_SPEED = 500f;
+	private const float CAMERA_SPEED = 1000f;
 	private const float CAMERA_CONTROL_SENSITIVITY = 3F;
 	private const float MIN_ROTATION_Y = -90F;
 	private const float MAX_ROTATION_Y = 90F;
 
     private GameObject ground;
-
+    private float mostheight;
 
     public Camera mapCamera;
     public Camera sensorCamera;
@@ -91,7 +91,8 @@ public class CameraMove : MonoBehaviour {
             block_name.text = "";
         }
         */
-        ground = cc.GetGround();      
+        ground = cc.GetGround();
+            
 
     }
 
@@ -107,6 +108,9 @@ public class CameraMove : MonoBehaviour {
                                                Mathf.Clamp(this.transform.position.z, (ground.transform.position.z - ground.transform.localScale.z / 2), (ground.transform.position.z + ground.transform.localScale.z / 2))));
         if(this.transform.position.y <= 0)
             this.transform.position = new Vector3(this.transform.position.x, 10, this.transform.position.z);
+
+        if (this.transform.position.y >= mostheight + 1000)
+            this.transform.position = new Vector3(this.transform.position.x, mostheight + 1000, this.transform.position.z);
     }
 
     // カメラをスタートさせる
@@ -114,6 +118,7 @@ public class CameraMove : MonoBehaviour {
     {
         this.transform.position = (new Vector3(ground.transform.position.x - ground.transform.localScale.x / 2 + 10, (float)100, ground.transform.position.z - ground.transform.localScale.z / 2 + 10));
         this.transform.LookAt(ground.transform);
+        mostheight = MostHeighestBuilding();
         this.enabled = true;
     }
 
@@ -279,19 +284,21 @@ public class CameraMove : MonoBehaviour {
         HighlighMouseOverBuilding(building);
         HighlighMouseOverBlock(block);
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
 		{
 			MouseClicked(building, block, marker);
 		}
 
         // if (!isMouseAvailable) {return;}
 
+        
         if(wheel != 0)
         {
-            this.transform.position += this.transform.forward * wheel * 1500;
+            this.transform.position += this.transform.forward * wheel * ground.transform.localScale.x / 50;
         }
+        
 
-        if ((isMouseAvailable && Input.GetMouseButton(1)) || !isMouseAvailable)
+        if ((isMouseAvailable && Input.GetMouseButton(0)) || !isMouseAvailable)
         {
             float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * CAMERA_CONTROL_SENSITIVITY;
             rotationY += Input.GetAxis("Mouse Y") * CAMERA_CONTROL_SENSITIVITY;
@@ -639,5 +646,20 @@ public class CameraMove : MonoBehaviour {
         this.transform.LookAt(search_block.transform);
 
         MouseClicked(search_block.GetComponent<Building>(), null, null);
+    }
+
+    float MostHeighestBuilding()
+    {
+        float max = 0;
+        IList buildings = cc.GetCity()["buildings"] as IList;
+        foreach (Dictionary<string, object> building in buildings)
+        {
+            if (float.Parse(building["height"].ToString()) >= max)
+            {
+                max = float.Parse(building["height"].ToString());
+            }
+        }
+        
+        return max;
     }
 }

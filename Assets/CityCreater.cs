@@ -89,8 +89,9 @@ public class CityCreater : MonoBehaviour
         //StartCityCreater("lamtram");
         //StartCityCreater("test");
         //StartCityCreater("travatar");
-        StartCityCreater("cdec");
+        //StartCityCreater("cdec");
         //StartCityCreater("tensorflow");
+        StartCityCreater("dynet");
 #else
 			    Application.ExternalCall("OnUnityReady");
 #endif
@@ -157,11 +158,14 @@ public class CityCreater : MonoBehaviour
 
             //SetLocation (arrangedBlock[key]); // 1.ビルの座標を決める
 
-            SetLocation2(arrangedBlock[key]); // 1.ビルの座標を決める
+            //SetLocation2(arrangedBlock[key]); // 1.ビルの座標を決める
+
+            SetLocation2_1(arrangedBlock[key]); // 1.ビルの座標を決める fixed
 
             //SetWidth (arrangedBlock[key], blockDictionary[key]); // 2.ブロックの幅を決める
 
-            SetWidth2(arrangedBlock[key], blockDictionary[key]); // 2.ブロックの幅を決める
+            //SetWidth2(arrangedBlock[key], blockDictionary[key]); // 2.ブロックの幅を決める
+            SetWidth2_1(arrangedBlock[key], blockDictionary[key]); // 2.ブロックの幅を決める
 
             blockList.Add(blockDictionary[key][0]);
             //Debug.Log(int.Parse(blockDictionary[key][0]["width"].ToString()));
@@ -372,6 +376,88 @@ public class CityCreater : MonoBehaviour
     Finish:
         return;
     }
+
+
+
+    void SetLocation2_1(List<Dictionary<String, object>> target)
+    {
+        // targetをソートする
+        target.Sort((b, a) => int.Parse(a["widthX"].ToString()) - int.Parse(b["widthX"].ToString()));
+
+        // 0 1 4
+        // 3 2 5
+        // 8 7 6
+        // 
+        // 以下のコードで上記の0→8の順番のように配置していく
+
+        int count = 0;  // ビル・ブロックの個数
+
+        int space = 30; // 固定幅
+
+        for (int i = 0; ; i++)
+        {
+            int y = i;
+            // 1.下に向かって並べていく
+            // ex) 0
+            // ex) 1→2
+            // ex) 4→6
+            for (int x = 0; x <= y; x++)
+            {
+                // i^2番目のとき
+                if (count == i * i)
+                {
+                    // 一番最初のとき
+                    if (i == 0)
+                    {
+                        target[count]["x"] = space + 100;
+                        target[count]["y"] = space + 100;
+                    }
+                    // それ以外のとき
+                    else
+                    {
+                        target[count]["x"] = space + 100;
+                        target[count]["y"] = space + int.Parse(target[(i - 1) * (i - 1)]["y"].ToString()) + 100 + 100;
+                    }
+                }
+                // i^2+i番目の時
+                else if (count == i * i + i)
+                {
+                    target[count]["x"] = space + int.Parse(target[(i - 1) * (i - 1) + (i - 1)]["x"].ToString()) + 100 + 100;
+                    target[count]["y"] = int.Parse(target[i * i]["y"].ToString());
+                }
+                // それ以外
+                else
+                {
+                    target[count]["x"] = int.Parse(target[(i - 1) * (i - 1) + x]["x"].ToString());
+                    target[count]["y"] = int.Parse(target[(i - 1) * (i - 1) + x]["y"].ToString()) + 100 + 100 + space;
+                }
+
+                count++;
+                if (count == target.Count)
+                {
+                    goto Finish; // 全部終わったらFinishへ行く
+                }
+            }
+            // 2.左に向かって並べていく
+            // ex) 3
+            // ex) 7→8
+            for (y--; y >= 0; y--)
+            {
+                target[count]["x"] = int.Parse(target[i * i + i]["x"].ToString());
+                target[count]["y"] = int.Parse(target[count - (2 * i + 1)]["y"].ToString());
+                count++;
+                if (count == target.Count)
+                {
+                    goto Finish; // 全部終わったらFinishへ行く
+                }
+            }
+        }
+
+    Finish:
+        return;
+    }
+
+
 
 
 
@@ -810,6 +896,56 @@ public class CityCreater : MonoBehaviour
     }
 
 
+    void SetWidth2_1(List<Dictionary<String, object>> target, List<Dictionary<String, object>> block)
+    {
+        int count = 0;  // ビル・ブロックの個数
+
+        int space = 50; // 固定幅
+
+        int i;
+
+        // ビル・ブロックを並べるときと同じ方法でカウントしていく
+        for (i = 0; ; i++)
+        {
+            int y = i;
+
+            for (int x = 0; x <= y; x++)
+            {
+                count++;
+                if (count == target.Count)
+                {
+                    goto Finish; // 全部終わったらFinishへ行く
+                }
+            }
+            for (y--; y >= 0; y--)
+            {
+                count++;
+                if (count == target.Count)
+                {
+                    goto Finish; // 全部終わったらFinishへ行く
+                }
+            }
+        }
+
+    Finish:
+        // 最後のビルの番号（個数-1）がi^2+i以上の時は角のビルとi^2のビルが基準
+        if (count - 1 >= i * i + i)
+        {
+
+            block[0]["widthX"] = int.Parse(target[i * i + i]["x"].ToString()) + 100 + space;
+            block[0]["widthY"] = int.Parse(target[i * i]["y"].ToString()) + 100 + space;
+        }
+        // 最後のビルの番号がi^2+1より小さいときはi^2番目ビルと(i-1)の順の時の角のビルが基準
+        else
+        {
+            block[0]["widthX"] = int.Parse(target[(i - 1) * (i - 1) + (i - 1)]["x"].ToString()) + 100 + space;
+            block[0]["widthY"] = int.Parse(target[i * i]["y"].ToString()) + 100 + space;
+        }
+
+    }
+
+
+
     /**
 	 *
 	 * ビルの座標を決めていくメソッド
@@ -876,7 +1012,9 @@ public class CityCreater : MonoBehaviour
 
                 // ビルの大きさをいじる
                 //clone.transform.localScale = new Vector3 (float.Parse (oneBuilding ["widthX"].ToString ()), float.Parse (oneBuilding ["height"].ToString ()), float.Parse (oneBuilding ["widthY"].ToString ()));
-                clone.transform.localScale = new Vector3(float.Parse(oneBuilding["widthX"].ToString()) * (float)0.1, float.Parse(oneBuilding["widthY"].ToString()) * (float)0.1, float.Parse(oneBuilding["height"].ToString()) * (float)0.1);
+                //clone.transform.localScale = new Vector3(float.Parse(oneBuilding["widthX"].ToString()) * (float)0.1, float.Parse(oneBuilding["widthY"].ToString()) * (float)0.1, float.Parse(oneBuilding["height"].ToString()) * (float)0.1);
+                clone.transform.localScale = new Vector3(10, 10, float.Parse(oneBuilding["height"].ToString()) * (float)0.1);
+
                 //clone.GetComponent<Renderer>().material.color = Color.blue;
 
 
@@ -904,16 +1042,24 @@ public class CityCreater : MonoBehaviour
                         // パーティクルの目印を作る
                         GameObject particle = Instantiate(this.sense, new Vector3(0, 1, 0), transform.rotation) as GameObject;
                         var r = particle.GetComponent<ParticleSystem>().shape;
-                        r.radius = float.Parse(oneBuilding["widthX"].ToString()) * (float)0.7;
+                        //r.radius = float.Parse(oneBuilding["widthX"].ToString()) * (float)0.7;
+                        r.radius = 70;
 
                         var s = particle.GetComponent<ParticleSystem>();
-                        s.startSize = float.Parse(oneBuilding["widthX"].ToString()) * (float)0.6 + 5;
-                        if(s.startSize < 20)
+                        //s.startSize = float.Parse(oneBuilding["widthX"].ToString()) * (float)0.6 + 5;
+
+                        s.startSize = 40;
+                        if (s.startSize < 20)
                         {
                             s.startSize = 20;
                         }
+                        else if (s.startSize > 100)
+                        {
+                            s.startSize = 100;
+                        }
 
-                        s.startSpeed = float.Parse(oneBuilding["widthX"].ToString()) * (float)0.5;
+                        //s.startSpeed = float.Parse(oneBuilding["widthX"].ToString()) * (float)0.5;
+                        s.startSpeed = 50;
 
 
                         particle.transform.Rotate(new Vector3((float)270, (float)0, (float)0));
@@ -926,6 +1072,9 @@ public class CityCreater : MonoBehaviour
 
                     test.name = "marker_" + test.name;
 
+                    test.transform.localScale = new Vector3(70, 70, 70);
+                    test.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1 + 50), float.Parse(oneBuilding["globalY"].ToString()));
+                    /*
                     if (float.Parse(oneBuilding["widthX"].ToString()) > 3000)
                     {
                         test.transform.localScale = new Vector3(3000, 3000, 3000);
@@ -946,6 +1095,7 @@ public class CityCreater : MonoBehaviour
                         test.transform.localScale = new Vector3(50, 50, 50);
                         test.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), (float)(double.Parse(oneBuilding["height"].ToString()) * 1 + float.Parse(oneBuilding["widthX"].ToString()) + 50), float.Parse(oneBuilding["globalY"].ToString()));
                     }
+                    */
 
                     test.transform.rotation = Quaternion.Euler(45,45,45);
 
