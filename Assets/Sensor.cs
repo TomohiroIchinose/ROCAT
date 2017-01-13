@@ -11,7 +11,7 @@ public class Sensor : MonoBehaviour {
     public float switchDistance;
     public Transform helpTransform;
 
-    public string tagFilter = "enemy";
+    public string tagFilter = "SATDBuilding";
 
     GameObject[] gos;
     List<GameObject> cpGos = new List<GameObject>();
@@ -52,22 +52,23 @@ public class Sensor : MonoBehaviour {
                 sensorObjects[i].layer = LayerMask.NameToLayer("Sensor");
             }
         }
-
+        /*
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 Vector2 warp = calcDistance(new Vector2(mainCamera.transform.position.x, mainCamera.transform.position.z), false);
-                mainCamera.transform.position = new Vector3(warp.x, 50, warp.y);
+                mainCamera.transform.position = new Vector3(warp.x - 100, 50, warp.y);
                 mainCamera.transform.rotation = Quaternion.Euler(0, 90, 0);
             }
             else
             {
                 Vector2 warp = calcDistance(new Vector2(mainCamera.transform.position.x, mainCamera.transform.position.z), true);
-                mainCamera.transform.position = new Vector3(warp.x, 50, warp.y);
+                mainCamera.transform.position = new Vector3(warp.x - 100, 100, warp.y);
                 mainCamera.transform.rotation = Quaternion.Euler(0, 90, 0);
             }
         }
+        */
 
     }
 
@@ -117,8 +118,8 @@ public class Sensor : MonoBehaviour {
                 targetNum = i;
             }
         }
-
-        if (distance == 0)
+        // Debug.Log(distance);
+        if (distance == 100)
         {
             if (direction == true)
             {

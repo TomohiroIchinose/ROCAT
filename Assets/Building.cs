@@ -25,7 +25,10 @@ public class Building : MonoBehaviour
 	{
         //SetMaterial(originalColor);
         //SetMaterial((Resources.Load("Building", typeof(Material)) as Material).color);
-        SetMaterial((Resources.Load("Building_001_5", typeof(Material)) as Material).color);
+        if (this.tag == "NormalBuilding")
+            SetMaterial((Resources.Load("Building_001_5", typeof(Material)) as Material).color);
+        else
+            SetMaterial(Building.SATD_COLOR);
     }
 
 	public void SetMaterial(Color color)
@@ -48,8 +51,9 @@ public class Building : MonoBehaviour
 #region Static
 	private static Dictionary<Color, Material> materialDict = new Dictionary<Color, Material>();
 	private static readonly Color SELECTED_COLOR = Color.red;
+    private static readonly Color SATD_COLOR = Color.blue;
 
-	public static bool HasMaterial(Color color)
+    public static bool HasMaterial(Color color)
 	{
 		return materialDict.ContainsKey(color);
 	}

@@ -13,6 +13,6 @@ public class RaderCameraMove : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = (new Vector3(mainCamera.transform.position.x, (mainCamera.transform.position.y) + 1800, mainCamera.transform.position.z));
+        this.transform.position = (new Vector3(mainCamera.transform.position.x, 1500, mainCamera.transform.position.z));
     }
 }

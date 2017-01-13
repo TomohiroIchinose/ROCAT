@@ -47,13 +47,21 @@ public class CameraMove : MonoBehaviour {
     public Canvas list;
     public Image satdlist;
 
-	// Use this for initialization
-	void Start () {
+    public Canvas info;
+    public Text infoText;
+    public Text nameText;
+
+    public Dictionary<String, List<Dictionary<String, object>>> firstBlockDictionary;
+    public List<String> firstBlockDicitonalyKeys;
+    public int keyNum;
+
+    // Use this for initialization
+    void Start () {
 		view_src = false;
 
         this.enabled = false;
 
-        mapCamera.enabled = true;
+        mapCamera.enabled = false;
         sensorCamera.enabled = false;
 
         //viewMaterial = Resources.Load("red Material", typeof(Material)) as Material;
@@ -77,6 +85,11 @@ public class CameraMove : MonoBehaviour {
 
         list.enabled = false;
 
+        info.enabled = false;
+        //infoText = info.transform.GetComponentInChildren<Text>();
+        infoText = info.transform.FindChild("Image/InfoText").gameObject.GetComponentInChildren<Text>();
+        nameText = info.transform.FindChild("Image/NameText").gameObject.GetComponentInChildren<Text>();
+
         /*
 		foreach( Transform child in canvas.transform){
 			file_name = child.gameObject.GetComponent<Text>();
@@ -92,8 +105,7 @@ public class CameraMove : MonoBehaviour {
         }
         */
         ground = cc.GetGround();
-            
-
+        
     }
 
 	void Update ()
@@ -106,7 +118,8 @@ public class CameraMove : MonoBehaviour {
         this.transform.position = (new Vector3(Mathf.Clamp(this.transform.position.x, (ground.transform.position.x - ground.transform.localScale.x / 2), (ground.transform.position.x + ground.transform.localScale.x / 2)),
                                                this.transform.position.y,
                                                Mathf.Clamp(this.transform.position.z, (ground.transform.position.z - ground.transform.localScale.z / 2), (ground.transform.position.z + ground.transform.localScale.z / 2))));
-        if(this.transform.position.y <= 0)
+
+        if (this.transform.position.y <= 0)
             this.transform.position = new Vector3(this.transform.position.x, 10, this.transform.position.z);
 
         if (this.transform.position.y >= mostheight + 1000)
@@ -116,13 +129,25 @@ public class CameraMove : MonoBehaviour {
     // カメラをスタートさせる
     public void StartCamera()
     {
-        this.transform.position = (new Vector3(ground.transform.position.x - ground.transform.localScale.x / 2 + 10, (float)100, ground.transform.position.z - ground.transform.localScale.z / 2 + 10));
-        this.transform.LookAt(ground.transform);
+        //this.transform.position = (new Vector3(ground.transform.position.x - ground.transform.localScale.x / 2 + 10, (float)100, ground.transform.position.z - ground.transform.localScale.z / 2 + 10));
+        this.transform.localPosition = new Vector3(0, 100, 0);
+        //this.transform.LookAt(ground.transform);
+
         mostheight = MostHeighestBuilding();
         this.enabled = true;
+        mapCamera.enabled = true;
+
+        firstBlockDictionary = cc.GetFirstBlockList();
+        foreach (String key in firstBlockDictionary.Keys)
+        {  
+            firstBlockDicitonalyKeys.Add(key);
+        }
+
+        keyNum = 0;
+
     }
 
-	private void ControlByKeyboard()
+    private void ControlByKeyboard()
 	{
         Building building = GetRaycastHitBuilding();
         Block block = GetRaycastHitBlock();
@@ -178,6 +203,7 @@ public class CameraMove : MonoBehaviour {
         
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            /*
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 this.transform.position = (new Vector3(ground.transform.position.x + ground.transform.localScale.x / 2 - 10, (float)100, ground.transform.position.z + ground.transform.localScale.z / 2 - 10));
@@ -186,8 +212,13 @@ public class CameraMove : MonoBehaviour {
             {
                 this.transform.position = (new Vector3(ground.transform.position.x - ground.transform.localScale.x / 2 + 10, (float)100, ground.transform.position.z - ground.transform.localScale.z / 2 + 10));
             }
+            
                 
             this.transform.LookAt(ground.transform);
+            */
+            this.transform.localPosition = new Vector3(0, 100, 0);
+            this.transform.localRotation = new Quaternion(0,0,0,0);
+            keyNum = 0;
         }
 
             if (Input.GetKeyDown(KeyCode.V))
@@ -254,39 +285,43 @@ public class CameraMove : MonoBehaviour {
         }
 
 
-        /*
+        
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             // left
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                //this.transform.position = (new Vector3(this.transform.position.x - 5000, this.transform.position.y, this.transform.position.z));
-                this.transform.position += this.transform.forward * -2500;
+                keyNum--;
+                if (keyNum == -1)
+                    keyNum = firstBlockDictionary.Count - 1;
             }
             // right
             else
             {
-                //this.transform.position = (new Vector3(this.transform.position.x + 5000, this.transform.position.y, this.transform.position.z));
-                this.transform.position += this.transform.forward * 2500;
+                keyNum++;
+                if (keyNum == firstBlockDictionary.Count)
+                    keyNum = 0;
             }
-
+            this.transform.localPosition = new Vector3(float.Parse(firstBlockDictionary[firstBlockDicitonalyKeys[keyNum]][0]["x"].ToString()), 200, float.Parse(firstBlockDictionary[firstBlockDicitonalyKeys[keyNum]][0]["z"].ToString()) - float.Parse(firstBlockDictionary[firstBlockDicitonalyKeys[keyNum]][0]["radius"].ToString()) - 300);
+            this.transform.LookAt(new Vector3(float.Parse(firstBlockDictionary[firstBlockDicitonalyKeys[keyNum]][0]["x"].ToString()), 0, float.Parse(firstBlockDictionary[firstBlockDicitonalyKeys[keyNum]][0]["z"].ToString())));
         }
-        */
+        
     }
 
 	private void ControlByMouse()
 	{
         float wheel = Input.GetAxis("Mouse ScrollWheel");
 
-		Building building = GetRaycastHitBuilding();
         Block block = GetRaycastHitBlock();
+        Building building = GetRaycastHitBuilding();
+        
         Marker marker = GetRaycastHitMarker();
         HighlighMouseOverBuilding(building);
         HighlighMouseOverBlock(block);
 
         if (Input.GetMouseButtonDown(1))
 		{
-			MouseClicked(building, block, marker);
+            RightMouseClicked(building);
 		}
 
         // if (!isMouseAvailable) {return;}
@@ -294,16 +329,24 @@ public class CameraMove : MonoBehaviour {
         
         if(wheel != 0)
         {
-            this.transform.position += this.transform.forward * wheel * ground.transform.localScale.x / 50;
+            this.transform.position += this.transform.forward * wheel * ground.transform.localScale.x / 30;
         }
         
 
-        if ((isMouseAvailable && Input.GetMouseButton(0)) || !isMouseAvailable)
+        if ((isMouseAvailable && Input.GetMouseButtonDown(0)) || !isMouseAvailable)
+        {
+            MouseClicked(building, block, marker);
+            RightMouseClicked(building);
+
+        }
+
+        if (Input.GetMouseButton(0))
         {
             float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * CAMERA_CONTROL_SENSITIVITY;
             rotationY += Input.GetAxis("Mouse Y") * CAMERA_CONTROL_SENSITIVITY;
             rotationY = Mathf.Clamp(rotationY, MIN_ROTATION_Y, MAX_ROTATION_Y);
             transform.localEulerAngles = new Vector3(rotationY * -1, rotationX, 0);
+            
         }
 
         /*
@@ -312,6 +355,33 @@ public class CameraMove : MonoBehaviour {
             this.transform.position += this.transform.forward * 2000;
         }
         */
+    }
+
+    private void RightMouseClicked(Building building)
+    {
+        if(building != null)
+        {
+            //Debug.Log(building.GetComponent<BuildingData>().filename);
+
+            nameText.text = building.GetComponent<BuildingData>().pathname;
+
+            infoText.text = "LOC:" + building.GetComponent<BuildingData>().loc.ToString() +
+                            "\n#Comment:" + building.GetComponent<BuildingData>().comment.ToString() +
+                            "\n\n#SATD:" + building.GetComponent<BuildingData>().satd.Count.ToString() +
+                            "\nSATD lines:\n";
+
+            for (int i = 0; i < building.GetComponent<BuildingData>().satd.Count; i++)
+                infoText.text = infoText.text + building.GetComponent<BuildingData>().satd[i] + " ";
+
+            if (!info.enabled)
+                info.enabled = true;
+        }
+        else
+        {
+            infoText.text = "null";
+            if (info.enabled)
+                info.enabled = false;
+        }
     }
 
 	private void MouseClicked(Building building, Block block, Marker marker)

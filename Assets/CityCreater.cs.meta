@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 3e0d8ff058b404dc3a6549364d9fcf10
-timeCreated: 1472818532
+timeCreated: 1484140398
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
@@ -16,6 +16,9 @@ MonoImporter:
   - earth: {instanceID: 0}
   - sense: {fileID: 174650, guid: 31a45ebd401b79b479a0909d97e7387d, type: 2}
   - street: {fileID: 142524, guid: db20e429dd80634478c55c1271552181, type: 2}
+  - DirNamePlate: {fileID: 151916, guid: 6b67dfa6464a07e40904c2d87bf4a16d, type: 2}
+  - FileNamePlate: {fileID: 175670, guid: a5e847ecbb058ae449d81641eef9de34, type: 2}
+  - sensor: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
