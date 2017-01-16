@@ -333,14 +333,14 @@ public class CameraMove : MonoBehaviour {
         }
         
 
-        if ((isMouseAvailable && Input.GetMouseButtonDown(0)) || !isMouseAvailable)
+        if (Input.GetMouseButtonDown(0))
         {
             MouseClicked(building, block, marker);
             RightMouseClicked(building);
 
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && isMouseAvailable || !isMouseAvailable)
         {
             float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * CAMERA_CONTROL_SENSITIVITY;
             rotationY += Input.GetAxis("Mouse Y") * CAMERA_CONTROL_SENSITIVITY;
@@ -474,13 +474,16 @@ public class CameraMove : MonoBehaviour {
                 //satd = marker.transform.name.Substring(slashnum + 1, marker.transform.name.Length - slashnum - 1);
 
             }
-            path = SearchPathFromFileName(filename);
+            //path = SearchPathFromFileName(filename);
             //Debug.Log(path);
 
             // --------------for Normal repository--------------
-            
-            fileFullPath = path;
-            path = path.Substring(path.IndexOf(".git") + 5);
+
+            //fileFullPath = path;
+            fileFullPath = building.GetComponent<BuildingData>().fullpath;
+            //Debug.Log(fileFullPath);
+            //path = path.Substring(path.IndexOf(".git") + 5);
+            path = building.GetComponent<BuildingData>().pathname;
             fileFullPath = "../" + fileFullPath.Substring(fileFullPath.IndexOf("repository"));
 
             // 同名ファイルが複数あるタイプのおなまえを修正する

@@ -101,9 +101,10 @@ public class CityCreater : MonoBehaviour
         //StartCityCreater("lamtram");
         //StartCityCreater("test");
         //StartCityCreater("travatar");
-        StartCityCreater("cdec");
+        //StartCityCreater("cdec");
         //StartCityCreater("tensorflow");
         //StartCityCreater("dynet");
+        StartCityCreater("discourse");
 #else
 			    Application.ExternalCall("OnUnityReady");
 #endif
@@ -411,6 +412,10 @@ public class CityCreater : MonoBehaviour
     // ビルを正方形っぽく並べる
     int SetBuildingLocation(List<Dictionary<String, object>> target)
     {
+        //target.Sort((b, a) => string.Compare(b["block"].ToString(), a["block"].ToString()));
+        // ブロック名で比較して同じだったらファイル名で比較してソート
+        target.Sort((b, a) => string.Compare(b["block"].ToString(), a["block"].ToString()) != 0 ? string.Compare(b["block"].ToString(), a["block"].ToString()) : string.Compare(b["name"].ToString(), a["name"].ToString()));
+
         int edgeNum = 0;
         for (int i = 0; ; i++)
         {
