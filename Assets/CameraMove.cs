@@ -33,7 +33,7 @@ public class CameraMove : MonoBehaviour {
     private Marker selectedMarker;
 
 	private float rotationY = 0f;
-	private const float CAMERA_SPEED = 1000f;
+	private const float CAMERA_SPEED = 2000f;
 	private const float CAMERA_CONTROL_SENSITIVITY = 3F;
 	private const float MIN_ROTATION_Y = -90F;
 	private const float MAX_ROTATION_Y = 90F;
@@ -54,6 +54,9 @@ public class CameraMove : MonoBehaviour {
     public Dictionary<String, List<Dictionary<String, object>>> firstBlockDictionary;
     public List<String> firstBlockDicitonalyKeys;
     public int keyNum;
+
+
+    private float _lastTimeClick;
 
     // Use this for initialization
     void Start () {
@@ -105,7 +108,9 @@ public class CameraMove : MonoBehaviour {
         }
         */
         ground = cc.GetGround();
-        
+
+        mapCamera.enabled = true;
+
     }
 
 	void Update ()
@@ -115,10 +120,12 @@ public class CameraMove : MonoBehaviour {
 		ControlByMouse();
 
         // 土台？からはみ出ないように調整
-        this.transform.position = (new Vector3(Mathf.Clamp(this.transform.position.x, (ground.transform.position.x - ground.transform.localScale.x / 2), (ground.transform.position.x + ground.transform.localScale.x / 2)),
-                                               this.transform.position.y,
-                                               Mathf.Clamp(this.transform.position.z, (ground.transform.position.z - ground.transform.localScale.z / 2), (ground.transform.position.z + ground.transform.localScale.z / 2))));
-
+        if (ground != null)
+        {
+            this.transform.position = (new Vector3(Mathf.Clamp(this.transform.position.x, (ground.transform.position.x - ground.transform.localScale.x / 2), (ground.transform.position.x + ground.transform.localScale.x / 2)),
+                                                   this.transform.position.y,
+                                                   Mathf.Clamp(this.transform.position.z, (ground.transform.position.z - ground.transform.localScale.z / 2), (ground.transform.position.z + ground.transform.localScale.z / 2))));
+        }
         if (this.transform.position.y <= 0)
             this.transform.position = new Vector3(this.transform.position.x, 10, this.transform.position.z);
 
@@ -135,15 +142,19 @@ public class CameraMove : MonoBehaviour {
 
         mostheight = MostHeighestBuilding();
         this.enabled = true;
-        mapCamera.enabled = true;
 
+
+        //firstBlockDictionary.Clear();
         firstBlockDictionary = cc.GetFirstBlockList();
+        firstBlockDicitonalyKeys.Clear();
         foreach (String key in firstBlockDictionary.Keys)
         {  
             firstBlockDicitonalyKeys.Add(key);
         }
-
+        
         keyNum = 0;
+
+        ground = cc.GetGround();
 
     }
 
@@ -321,7 +332,13 @@ public class CameraMove : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(1))
 		{
-            RightMouseClicked(building);
+            //RightMouseClicked(building);
+            if(block != null)
+            {
+                //Debug.Log("###Remake###");
+                cc.RemakeCity("/" + block.name, false);
+            }
+                
 		}
 
         // if (!isMouseAvailable) {return;}
@@ -329,7 +346,7 @@ public class CameraMove : MonoBehaviour {
         
         if(wheel != 0)
         {
-            this.transform.position += this.transform.forward * wheel * ground.transform.localScale.x / 30;
+            this.transform.position += this.transform.forward * wheel * ground.transform.localScale.x / 20;
         }
         
 
@@ -568,7 +585,7 @@ public class CameraMove : MonoBehaviour {
             {
                 if (block.transform.name.IndexOf(".git") + 4 == block.transform.name.Length)
                 {
-                    block_name.text = "root";
+                    block_name.text = "(root)";
                 }
                 else
                 {
@@ -713,12 +730,31 @@ public class CameraMove : MonoBehaviour {
     public void SATDListClick(string dir_name)
     {
         //Debug.Log(dir_name);
-        GameObject search_block = GameObject.Find(dir_name);
-        //Debug.Log(search_block.name);
-        this.transform.position = new Vector3(search_block.transform.position.x - search_block.transform.localScale.x * 15, search_block.transform.localScale.y * 10 + 200, search_block.transform.position.z);
-        this.transform.LookAt(search_block.transform);
+        //Debug.Log(dir_name.Substring(0, dir_name.LastIndexOf("/")).Substring(0, dir_name.Substring(0, dir_name.LastIndexOf("/")).LastIndexOf("/")));
 
-        MouseClicked(search_block.GetComponent<Building>(), null, null);
+        if (dir_name.Substring(0, dir_name.LastIndexOf("/")).Substring(0, dir_name.Substring(0, dir_name.LastIndexOf("/")).LastIndexOf("/")).Length < cc.GetRootName().Length)
+        {
+            //Debug.Log("/" + cc.GetRootName());
+            cc.RemakeCity(cc.GetRootName(), true);
+        }
+            
+        else
+        {
+            //Debug.Log("/" + dir_name.Substring(0, dir_name.LastIndexOf("/")).Substring(0, dir_name.Substring(0, dir_name.LastIndexOf("/")).LastIndexOf("/")));
+            cc.RemakeCity("/" + dir_name.Substring(0, dir_name.LastIndexOf("/")).Substring(0, dir_name.Substring(0, dir_name.LastIndexOf("/")).LastIndexOf("/")), true);
+        }
+
+        GameObject search_block = GameObject.Find(dir_name);
+        if (search_block != null)
+        {
+            //Debug.Log(search_block.name);
+            this.transform.position = new Vector3(search_block.transform.position.x - search_block.transform.localScale.x * 15, search_block.transform.localScale.y * 10 + 200, search_block.transform.position.z);
+            this.transform.LookAt(search_block.transform);
+
+            MouseClicked(search_block.GetComponent<Building>(), null, null);
+            RightMouseClicked(search_block.GetComponent<Building>());
+            list.enabled = !list.enabled;
+        }
     }
 
     float MostHeighestBuilding()

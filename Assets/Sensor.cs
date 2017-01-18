@@ -28,6 +28,7 @@ public class Sensor : MonoBehaviour {
 
     public void MakeSensorList()
     {
+        cpGos = new List<GameObject>();
         gos = GameObject.FindGameObjectsWithTag(tagFilter);
         cpGos.AddRange(gos);
         cpGos.Sort((b, a) => (int)b.transform.position.x - (int)a.transform.position.x);
@@ -39,17 +40,21 @@ public class Sensor : MonoBehaviour {
 	void Update () {
         for (int i = 0; i < sensorObjects.Count; i++)
         {
-            if (Vector3.Distance(sensorObjects[i].transform.position, transform.position) > switchDistance)
+            if (sensorObjects[i] != null)
             {
-                helpTransform.LookAt(sensorObjects[i].transform);
-                borderObjects[i].transform.position = transform.position + switchDistance * helpTransform.forward;
-                borderObjects[i].layer = LayerMask.NameToLayer("Sensor");
-                sensorObjects[i].layer = LayerMask.NameToLayer("Invisible");
-            }
-            else
-            {
-                borderObjects[i].layer = LayerMask.NameToLayer("Invisible");
-                sensorObjects[i].layer = LayerMask.NameToLayer("Sensor");
+
+                if (Vector3.Distance(sensorObjects[i].transform.position, transform.position) > switchDistance)
+                {
+                    helpTransform.LookAt(sensorObjects[i].transform);
+                    borderObjects[i].transform.position = transform.position + switchDistance * helpTransform.forward;
+                    borderObjects[i].layer = LayerMask.NameToLayer("Sensor");
+                    sensorObjects[i].layer = LayerMask.NameToLayer("Invisible");
+                }
+                else
+                {
+                    borderObjects[i].layer = LayerMask.NameToLayer("Invisible");
+                    sensorObjects[i].layer = LayerMask.NameToLayer("Sensor");
+                }
             }
         }
         /*
@@ -82,9 +87,13 @@ public class Sensor : MonoBehaviour {
 
             GameObject k = Instantiate(sensorPrefab, o.transform.position, Quaternion.identity) as GameObject;
             sensorObjects.Add(k);
+            k.name = "Radar:" + o.name;
+            k.tag = "enemy";
 
             GameObject j = Instantiate(sensorPrefab, o.transform.position, Quaternion.identity) as GameObject;
             borderObjects.Add(j);
+            j.name = "Border:" + o.name;
+            j.tag = "enemy";
         }
 
         /*

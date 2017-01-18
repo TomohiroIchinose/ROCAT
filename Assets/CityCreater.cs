@@ -85,6 +85,25 @@ public class CityCreater : MonoBehaviour
     public GameObject CircleBlock;
 
     public Dictionary<String, List<Dictionary<String, object>>> firstBlockDictionary;
+    public Dictionary<String, List<Dictionary<String, object>>> firstBlockDictionary2;
+
+    public Dictionary<String, List<Dictionary<String, object>>> allDirectory = new Dictionary<string, List<Dictionary<string, object>>>();
+
+    Dictionary<String, List<Dictionary<String, object>>> arrangedBuildings;
+    public String currentRoot;
+
+
+    public float Size = 0;               // 広さ(建物の数に比例)
+    public float Repulsion = 0;          // すべてのクラス同士の斥力
+    public float Attraction_Link = 0;    // 呼び出し関係にあるクラス同士の引力
+    public float Attraction_Package = 0; // 同じパッケージに存在するクラス同士の引力
+    public float MinDistance = 0;        // 建物同士の距離が一定以下である場合、引き離すようにする
+    public float T = 0;                  // 温度パラメータ(1回の移動で動く距離を制限する)
+    public int N = 0;                    // 計算回数(ループ回数)
+    public int Seed = 0;                 // 乱数シード
+
+    public float Radius = 0;
+
 
     void Start()
     {
@@ -103,8 +122,9 @@ public class CityCreater : MonoBehaviour
         //StartCityCreater("travatar");
         //StartCityCreater("cdec");
         //StartCityCreater("tensorflow");
-        //StartCityCreater("dynet");
-        StartCityCreater("discourse");
+        StartCityCreater("dynet");
+        //StartCityCreater("discourse");
+        //StartCityCreater("crawlers");
 #else
 			    Application.ExternalCall("OnUnityReady");
 #endif
@@ -126,7 +146,7 @@ public class CityCreater : MonoBehaviour
 		CreateCity ();
 	} 
     */
-
+    
 
 
     void CreateCity ()
@@ -146,6 +166,15 @@ public class CityCreater : MonoBehaviour
         }
 
         dir.Sort();
+
+        // ディレクトリ一覧を辞書化
+        foreach(String name in dir)
+        {
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            data.Add("name", name);
+            allDirectory[name] = new List<Dictionary<String, object>>();
+            allDirectory[name].Add(data);
+        }
 
         // rootディレクトリの名前を取得しておく
         foreach (Dictionary<string, object> content in rootDir)
@@ -173,33 +202,243 @@ public class CityCreater : MonoBehaviour
             }
         }
 
-        LocateBlockAndBuilding(blocks, buildings, firstDir, rootDir);
+        // ブロックごとにビルをまとめる *一時的にココでしてみる
+        arrangedBuildings = ArrangeByKey(buildings, "block");
+
+        LocateBlockAndBuilding2(allDirectory, arrangedBuildings, rootDirName);
+        //LocateBlockAndBuilding2(allDirectory, arrangedBuildings, "/var/www/html/repository/clab/dynet.git");
+
+        //LocateBlockAndBuilding(blocks, buildings, firstDir, rootDir);
 		//nori_rogic_ver2 (blocks, buildings);
 		/*
 			Simple (blocks, buildings);
 			 */
 	}
 	
-	/**
+
+    void LocateBlockAndBuilding2(Dictionary<string, List<Dictionary<string, object>>> blocks, Dictionary<String, List<Dictionary<String, object>>> buildings, String root)
+    {
+        // 現在のrootディレクトリを更新
+        currentRoot = root;
+        
+        // rootに指定したディレクトリ下にあるディレクトリの一覧を作成する
+        List<String> firstDirList = SearchFirstDirectory(root, dir);
+
+        // rootに指定したディレクトリ用の辞書を作る
+        List<String> tempRootList = new List<string>();
+        tempRootList.Add(root);
+        Dictionary<String, List<Dictionary<String, object>>> rootBlockDictionary = SearchDirectoryDictionary(blocks, tempRootList);
+
+        // rootに指定したディレクトリ直下のディレクトリの辞書を作る
+        firstBlockDictionary2 = SearchDirectoryDictionary(blocks, firstDirList);
+
+
+        // ビルを並べてブロックのサイズを決める
+        int edge = 0;
+        // rootブロックの処理
+        if (buildings.ContainsKey(root))
+        {
+            edge = SetBuildingLocation(buildings[root]);
+        }
+
+        if (edge != 0)
+            rootBlockDictionary[root][0]["radius"] = (edge) * Mathf.Sqrt(2) / 2 * 100;
+        else
+            rootBlockDictionary[root][0]["radius"] = 100;
+
+
+        // 1階層目ブロックの処理
+        foreach (String key in firstBlockDictionary2.Keys)
+        {
+            //Debug.Log("***"+key);
+            edge = 0;
+
+            // ビルを配置して1辺の個数を求める
+            if (buildings.ContainsKey(key))
+            {
+                edge = SetBuildingLocation(buildings[key]);
+            }
+            //Debug.Log(edge);
+
+            // 円の半径を決める
+            if (edge != 0)
+                firstBlockDictionary2[key][0]["radius"] = (edge) * Mathf.Sqrt(2) / 2 * 100;
+            else
+                firstBlockDictionary2[key][0]["radius"] = 50;
+        }
+
+        // ブロックの配置を決める
+        SetBlockCircleLocation2(rootBlockDictionary, firstBlockDictionary2, root);
+
+        // 今あるオブジェクトをdestroyしていく
+        ObjectDestroyer("Block");
+        ObjectDestroyer("SATDBuilding");
+        ObjectDestroyer("NormalBuilding");
+        ObjectDestroyer("Fire");
+        ObjectDestroyer("Street");
+        //ObjectDestroyer("Ground");
+        ObjectDestroyer("enemy");
+        ObjectDestroyer("Plate");
+
+
+        SetGlobalCircleLocation2(buildings, rootBlockDictionary, firstBlockDictionary2, root);
+
+
+        // ビルとブロックを建てる
+
+        GameObject rootCircle = Instantiate(this.CircleBlock, new Vector3(float.Parse(rootBlockDictionary[root][0]["x"].ToString()), 3, float.Parse(rootBlockDictionary[root][0]["z"].ToString())), transform.rotation) as GameObject;
+        rootCircle.transform.localScale = new Vector3(float.Parse(rootBlockDictionary[root][0]["radius"].ToString()) * 2, (float)2, float.Parse(rootBlockDictionary[root][0]["radius"].ToString()) * 2);
+        //rootCircle.name = "Circle " + rootDirName;
+        rootCircle.name = root.Substring(1);
+        rootCircle.tag = "Block";
+
+        // メタ情報
+        var rootData = rootCircle.GetComponent<BlockData>();
+        rootData.pathname = root.Substring(1);
+        rootData.blockname = "root";
+
+        /*
+        // お名前カンバン
+        //GameObject rootDirText = Instantiate(this.DirNamePlate, new Vector3(float.Parse(rootBlockDictionary[root][0]["x"].ToString()), 200, float.Parse(rootBlockDictionary[root][0]["z"].ToString())), transform.rotation) as GameObject;
+        //rootDirText.GetComponent<DirName>().SetNameText(rootData.blockname);
+        //rootDirText.GetComponent<DirName>().SetBackSize();
+        //rootDirText.tag = "Plate";
+        */
+
+        // ブロックを置く
+        foreach (String key in firstBlockDictionary2.Keys)
+        {
+            GameObject firstCircle = Instantiate(this.CircleBlock, new Vector3(float.Parse(firstBlockDictionary2[key][0]["x"].ToString()), 3, float.Parse(firstBlockDictionary2[key][0]["z"].ToString())), transform.rotation) as GameObject;
+            firstCircle.transform.localScale = new Vector3(float.Parse(firstBlockDictionary2[key][0]["radius"].ToString()) * 2, (float)2, float.Parse(firstBlockDictionary2[key][0]["radius"].ToString()) * 2);
+
+            //firstCircle.name = "Circle " + key;
+            firstCircle.name = key.Substring(1);
+            firstCircle.tag = "Block";
+
+            // メタ情報
+            var circleData = firstCircle.GetComponent<BlockData>();
+            circleData.pathname = key.Substring(1);
+            circleData.blockname = key.Substring(key.ToString().LastIndexOf("/") + 1);
+
+            // お名前カンバン
+            GameObject dirtext = Instantiate(this.DirNamePlate, new Vector3(float.Parse(firstBlockDictionary2[key][0]["x"].ToString()), 200, float.Parse(firstBlockDictionary2[key][0]["z"].ToString())), transform.rotation) as GameObject;
+            dirtext.GetComponent<DirName>().SetNameText(circleData.blockname);
+            dirtext.GetComponent<DirName>().SetBackSize();
+            dirtext.tag = "Plate";
+        }
+
+
+        // ビルを建てる
+        foreach (String key in buildings.Keys)
+        {
+
+            if (key == root || firstDirList.Contains(key))
+            {
+                List<Dictionary<String, object>> buildingList = buildings[key];
+                foreach (Dictionary<String, object> oneBuilding in buildingList)
+                {
+                    //Debug.Log(oneBuilding["name"]);
+                    //GameObject temp = Instantiate(this.checkSATD, new Vector3(float.Parse(oneBuilding["globalX"].ToString()), 2 + float.Parse(oneBuilding["height"].ToString()) / 2, float.Parse(oneBuilding["globalZ"].ToString())), transform.rotation) as GameObject;
+                    GameObject buildingObj = Instantiate(this.building, new Vector3(float.Parse(oneBuilding["globalX"].ToString()), 4, float.Parse(oneBuilding["globalZ"].ToString())), Quaternion.Euler(-90, 0, 0)) as GameObject;
+                    //buildingObj.transform.localScale = new Vector3(50, float.Parse(oneBuilding["height"].ToString()), 50);
+                    buildingObj.transform.localScale = new Vector3(5, 5, float.Parse(oneBuilding["height"].ToString()) * (float)0.1);
+                    //buildingObj.name = "CircleBuilding" + oneBuilding["name"];
+
+                    buildingObj.name = (oneBuilding["path"].ToString() + ":").Substring(1);
+                    buildingObj.tag = "NormalBuilding";
+                    buildingObj.layer = LayerMask.NameToLayer("Building");
+
+                    // メタ情報
+                    var buildingData = buildingObj.GetComponent<BuildingData>();
+                    buildingData.filename = oneBuilding["name"].ToString();
+                    buildingData.fullpath = oneBuilding["path"].ToString();
+                    buildingData.pathname = buildingData.fullpath.Substring(rootDirName.Length);
+                    buildingData.loc = int.Parse(oneBuilding["height"].ToString()) - 1;
+                    buildingData.comment = (int.Parse(oneBuilding["widthX"].ToString()) - 1) / 10;
+                   
+
+                    IList sList = oneBuilding["SATD"] as IList;
+                    if (sList.Count != 0)
+                    {
+
+                        // SATDあるビルだけお名前カンバン
+                        GameObject filetext = Instantiate(this.FileNamePlate, new Vector3(float.Parse(oneBuilding["globalX"].ToString()), float.Parse(oneBuilding["height"].ToString()) / 2, float.Parse(oneBuilding["globalZ"].ToString())), Quaternion.Euler(-90, 0, 0)) as GameObject;
+                        filetext.GetComponent<FileName>().SetNameText(buildingData.filename);
+                        filetext.GetComponent<FileName>().SetBackSize();
+                        filetext.tag = "Plate";
+
+                        buildingObj.tag = "SATDBuilding";
+                        buildingObj.GetComponent<Building>().SetMaterial(Color.blue);
+
+                        for (int i = 0; i < sList.Count; i++)
+                        {
+                            buildingData.satd.Add(int.Parse(sList[i].ToString()) + 1);
+
+                            buildingObj.name = buildingObj.name + (int.Parse(sList[i].ToString()) + 1).ToString() + ",";
+
+                            // パーティクルの目印を作る
+                            GameObject particle = Instantiate(this.sense, new Vector3(0, 1, 0), transform.rotation) as GameObject;
+                            var r = particle.GetComponent<ParticleSystem>().shape;
+                            r.radius = 50;
+
+                            var s = particle.GetComponent<ParticleSystem>();
+
+                            s.startSize = 20;
+
+                            s.startSpeed = 50;
+
+
+                            particle.transform.Rotate(new Vector3((float)270, (float)0, (float)0));
+                            particle.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), (float.Parse(oneBuilding["height"].ToString()) - float.Parse(sList[i].ToString())) * (float)0.8845 + 3, float.Parse(oneBuilding["globalZ"].ToString()));
+                            particle.name = "sence:" + oneBuilding["name"] + (int.Parse(sList[i].ToString())).ToString();
+                            particle.layer = LayerMask.NameToLayer("Building");
+                            particle.tag = "Fire";
+                        }
+                        buildingObj.name = buildingObj.name.Substring(0, buildingObj.name.Length - 1);
+                    }
+                }
+            }
+        }
+
+
+
+        // 道を作る
+        BuildCircleStreet2(rootBlockDictionary, firstBlockDictionary2, root);
+
+        // 地面を作ってカメラをリスタート
+        SetCircleGround2(rootBlockDictionary, firstBlockDictionary2, root);
+
+        // レーダー更新
+        sensor.MakeSensorList();
+    }
+
+    void ObjectDestroyer(String tagName)
+    {
+        GameObject[] tagobjs = GameObject.FindGameObjectsWithTag(tagName);
+
+        foreach(GameObject obj in tagobjs)
+        {
+            GameObject.DestroyImmediate(obj);
+        }
+    }
+
+
+    /**
 	 *
      * ブロックの位置を決めるメソッド
 	 *
 	 */
-	void LocateBlockAndBuilding (IList blocks, IList buildings, IList firstBlocks, IList rootBlock)
+    void LocateBlockAndBuilding (IList blocks, IList buildings, IList firstBlocks, IList rootBlock)
 	{
+
+        Dictionary<String, List<Dictionary<String, object>>> arrangedBlock = ArrangeByKey(buildings, "block"); // ブロックごとにビルをまとめる
+        //Dictionary<String, List<Dictionary<String, object>>> blockDictionary = ArrangeByKey(blocks, "name"); // 名前ごとにブロックをまとめる
+        SearchFirstDirectory(rootDirName, dir);
+
+
         // root直下または1階層目のディレクトリごとにビルをまとめる
         Dictionary<String, List<Dictionary<String, object>>> arrangedRootAndFirst = ArrangeByKey2(buildings, rootAndFirstDirNameList);
-        /*
-        foreach (String key in arrangedRootAndFirst.Keys)
-        {
-            Debug.Log(key);
-            foreach(Dictionary<String, object> a in arrangedRootAndFirst[key])
-            {
-                Debug.Log(a["name"].ToString());
-            }
-        }
-        */
-
+        
         // rootブロックの辞書
         Dictionary<String, List<Dictionary<String, object>>> rootBlockDictionary = ArrangeByKey(rootBlock, "name");
         //Debug.Log(rootBlockDictionary[rootDirName][0]["name"]);
@@ -248,6 +487,38 @@ public class CityCreater : MonoBehaviour
             else
                 firstBlockDictionary[key][0]["radius"] = 50;
         }
+
+
+        /*
+        firstBlockDictionary2 = ArrangeByKey3(firstBlocks, "name");
+
+        // 1階層目ブロックの処理
+        foreach (String key in firstBlockDictionary2.Keys)
+        {
+            //Debug.Log(key);
+            int edge1 = 0;
+
+            // ビルを配置して1辺の個数を求める
+            if (!noBuildingDirNameList.Contains(key) && arrangedRootAndFirst.ContainsKey(key))
+            {
+                edge1 = SetBuildingLocation(arrangedRootAndFirst[key]);
+            }
+            //Debug.Log(edge);
+
+            // 円の半径を決める
+            if (edge1 != 0)
+                firstBlockDictionary2[key][0]["radius"] = 50;
+            else
+                firstBlockDictionary2[key][0]["radius"] = 50;
+        }
+
+        SetBlockCircleByForceDirectedGraph(rootBlockDictionary, firstBlockDictionary2);
+        BuildCircle2(firstBlockDictionary2);
+        */
+        
+
+        // ブロックの半径でソート（ブロックのお名前を並び替える）
+        firstDirNameList = SortFirstBlockName(firstDirNameList, firstBlockDictionary);
 
         // ブロックを円上においていく座標を決める
         SetBlockCircleLocation(rootBlockDictionary, firstBlockDictionary);
@@ -329,7 +600,182 @@ public class CityCreater : MonoBehaviour
         */
 
     }
-	
+
+    // rootに指定したディレクトリ下にあるディレクトリを探す
+    List<String> SearchFirstDirectory(String root, List<String> dirs)
+    {
+        List<String> result = new List<string>();
+
+        //Debug.Log("#" + root);
+
+        foreach(String name in dirs)
+        {
+            if(name.Contains(root + "/") && CountChar(name.Substring(root.Length), '/') == 1)
+            {
+                result.Add(name);
+                //Debug.Log(name);
+            }
+        }
+
+
+        return result;
+    }
+
+    // リストにある名前と一致するディレクトリの辞書を返す
+    Dictionary<String, List<Dictionary<String, object>>> SearchDirectoryDictionary(Dictionary<string, List<Dictionary<string, object>>> target, List<String> names)
+    {
+        Dictionary<String, List<Dictionary<String, object>>> result = new Dictionary<string, List<Dictionary<String, object>>>();
+
+        foreach(String name in names)
+        {
+            //Debug.Log("$"+ name);
+            foreach (String key in target.Keys)
+            {
+                if(target[key][0]["name"].ToString() == name)
+                {
+                    if (result.ContainsKey(key))
+                    {
+                        // 既に辞書に存在する場合はaddだけする
+                        result[name].Add(target[key][0]);
+                    }
+                    else
+                    {
+                        // 初めて出てきたらnewして辞書にaddする
+                        result[name] = new List<Dictionary<String, object>>();
+                        result[name].Add(target[key][0]);
+                    }
+                }
+            }
+        }
+        /*
+        foreach(String key in result.Keys)
+        {
+            Debug.Log(result[key][0]["name"]);
+        }
+        */
+        return result;
+    }
+
+
+    void SetBlockCircleByForceDirectedGraph(Dictionary<String, List<Dictionary<String, object>>> root, Dictionary<String, List<Dictionary<String, object>>> other)
+    {
+
+        //root[rootDirName][0]["x"] = 0;
+        //root[rootDirName][0]["z"] = 0;
+
+        // ランダムに配置する
+        {
+            UnityEngine.Random.seed = Seed;
+
+            foreach(String key in other.Keys)
+            {
+                float angle = UnityEngine.Random.Range(0, Mathf.PI * 2);
+                float distance = UnityEngine.Random.Range(0, Radius);
+                other[key][0]["x"] = distance * Mathf.Cos(angle);
+                other[key][0]["z"] = distance * Mathf.Sin(angle);
+            }
+        }
+
+        // ノードと速度の辞書
+        Dictionary<String, Vector3> velocityDictionary = new Dictionary<String, Vector3>();
+        foreach(String key in other.Keys)
+        {
+            velocityDictionary.Add(key, Vector3.zero);
+        }
+
+        // 各係数を求める
+        float k = Mathf.Sqrt(Radius * Radius * Mathf.PI / other.Count);
+        float k_Repulsion = Repulsion * k;
+        float k_Attraction_Link = Attraction_Link * k;
+        float k_Attraction_Package = Attraction_Package * k;
+
+        for (int n = 0; n < N; n++)
+        {
+            // 温度パラメータ
+            float tmp = Radius * T * (N - n) / N;
+            
+            // 速度をリセット
+            foreach (String key in other.Keys)
+            {
+                velocityDictionary[key] = Vector3.zero;
+            }
+
+            // すべてのノードの速度を更新する
+            foreach (String key in other.Keys)
+            {
+                foreach (String otherBlock in other.Keys)
+                {
+                    if (key != otherBlock)
+                    {
+                        // key から otherBlockへのベクトル
+                        Vector3 node2other = new Vector3(float.Parse(other[otherBlock][0]["x"].ToString()) - float.Parse(other[key][0]["x"].ToString()), 0, float.Parse(other[otherBlock][0]["z"].ToString()) - float.Parse(other[key][0]["z"].ToString()));
+
+                        // すべてのノードから受ける斥力
+                        velocityDictionary[key] -= k_Repulsion * k_Repulsion / node2other.magnitude * node2other.normalized;
+
+                        // リンクを持つノード同士の引力
+                        if (IsLinkedNode(other[key], other[otherBlock]))
+                        {
+                            velocityDictionary[key] += node2other.magnitude * node2other.magnitude / k_Attraction_Link * node2other.normalized;
+                        }
+
+                        // 同じパッケージ内のノード同士の引力
+                        if (other[otherBlock][0]["name"].ToString().Substring(0, other[otherBlock][0]["name"].ToString().LastIndexOf("/")) == (other[key][0]["name"].ToString().Substring(0, other[key][0]["name"].ToString().LastIndexOf("/"))))
+                        {
+                            velocityDictionary[key] += node2other.magnitude * node2other.magnitude / k_Attraction_Package * node2other.normalized;
+                        }
+
+                        // 近すぎるノード同士の斥力
+                        if (node2other.magnitude < MinDistance)
+                        {
+                            velocityDictionary[key] -= (MinDistance - node2other.magnitude) * node2other.normalized;
+                        }
+
+                    }
+                }
+                // 温度パラメータにより速度を制限する
+                if (tmp < velocityDictionary[key].magnitude)
+                {
+                    velocityDictionary[key] = velocityDictionary[key].normalized * tmp;
+                }
+            }
+
+            // すべてのノードを移動する
+            foreach (String key in other.Keys)
+            {
+                other[key][0]["x"] = float.Parse(other[key][0]["x"].ToString()) + velocityDictionary[key].x;
+                other[key][0]["z"] = float.Parse(other[key][0]["z"].ToString()) + velocityDictionary[key].z;
+                //Debug.Log(key + ", " + other[key][0]["x"] + ", " + other[key][0]["z"]);
+            }            
+        }
+    }
+
+    bool IsLinkedNode(List<Dictionary<String, object>> a, List<Dictionary<String, object>> b)
+    {
+        if (a[0]["name"].ToString() == b[0]["name"].ToString().Substring(0, b[0]["name"].ToString().LastIndexOf("/")) || b[0]["name"].ToString() == a[0]["name"].ToString().Substring(0, a[0]["name"].ToString().LastIndexOf("/")))
+            return true;
+        else
+            return false;
+    }
+
+
+    List<String> SortFirstBlockName(List<String> nameList, Dictionary<String, List<Dictionary<String, object>>> blockList)
+    {
+        for(int i = 0; i < nameList.Count; i++)
+        {
+            for(int j = nameList.Count - 1; j > i; j--)
+            {
+                if(float.Parse(blockList[nameList[j]][0]["radius"].ToString()) > float.Parse(blockList[nameList[j - 1]][0]["radius"].ToString()))
+                {
+                    String temp = nameList[j];
+                    nameList[j] = nameList[j - 1];
+                    nameList[j - 1] = temp;
+                }
+            }
+        }
+        return nameList;
+    }
+
 	/**
 	 * 
      * keyの値ごとにtargetをまとめるメソッド
@@ -405,6 +851,47 @@ public class CityCreater : MonoBehaviour
                 }
             }      
         }
+        return arrangedTarget;
+    }
+
+
+    Dictionary<String, List<Dictionary<String, object>>> ArrangeByKey3(IList target, String key)
+    {
+        Dictionary<String, List<Dictionary<String, object>>> arrangedTarget = new Dictionary<string, List<Dictionary<String, object>>>();
+
+        foreach (Dictionary<string, object> contents in target)
+        {
+            String contentsName = contents[key].ToString();
+            if (arrangedTarget.ContainsKey(contentsName))
+            {
+                // 既に辞書に存在する場合はaddだけする
+                arrangedTarget[contentsName].Add(contents);
+            }
+            else
+            {
+                // 初めて出てきたらnewして辞書にaddする
+                arrangedTarget[contentsName] = new List<Dictionary<String, object>>();
+                arrangedTarget[contentsName].Add(contents);
+            }
+        }
+
+        // ファイルのないディレクトリを追加していく
+        foreach (String oneDir in dir)
+        {
+
+            if (!arrangedTarget.ContainsKey(oneDir))
+            {
+                Dictionary<String, object> oneBlock = new Dictionary<string, object>();
+                List<Dictionary<String, object>> oneList = new List<Dictionary<string, object>>();
+
+                oneBlock.Add("name", oneDir);
+                oneList.Add(oneBlock);
+
+                arrangedTarget.Add(oneDir, oneList);
+            }
+            
+        }
+
         return arrangedTarget;
     }
 
@@ -1044,6 +1531,8 @@ public class CityCreater : MonoBehaviour
     // 円上にブロックを置くための座標を決める
     void SetBlockCircleLocation(Dictionary<String, List<Dictionary<String, object>>> root, Dictionary<String, List<Dictionary<String, object>>> first)
     {
+        //firstDirNameList
+
         // 中央にrootを置く
         root[rootDirName][0]["x"] = 0;
         root[rootDirName][0]["z"] = 0;
@@ -1063,7 +1552,7 @@ public class CityCreater : MonoBehaviour
         }
 
         // 直径にブロック数/10をかける
-        double circle_r = max * 2 * first.Count / 10;
+        double circle_r = max * 2 * first.Count / 50;
 
         // 1階層目の座標を決めていく
         int radnumber = 0;
@@ -1071,6 +1560,54 @@ public class CityCreater : MonoBehaviour
         {
             first[key][0]["x"] = Mathf.Cos((float)rad * radnumber) * (float.Parse(first[key][0]["radius"].ToString()) * 2 * first.Count / 5 + float.Parse(root[rootDirName][0]["radius"].ToString()) * 2);
             first[key][0]["z"] = Mathf.Sin((float)rad * radnumber) * (float.Parse(first[key][0]["radius"].ToString()) * 2 * first.Count / 5 + float.Parse(root[rootDirName][0]["radius"].ToString()) * 2);
+
+            //first[key][0]["x"] = Mathf.Cos((float)rad * radnumber) * (float.Parse(first[key][0]["radius"].ToString()) * float.Parse(first[key][0]["radius"].ToString()) / 1000 + float.Parse(root[rootDirName][0]["radius"].ToString()) * 2 + float.Parse(first[key][0]["radius"].ToString()) * 2);
+            //first[key][0]["z"] = Mathf.Sin((float)rad * radnumber) * (float.Parse(first[key][0]["radius"].ToString()) * float.Parse(first[key][0]["radius"].ToString()) / 1000 + float.Parse(root[rootDirName][0]["radius"].ToString()) * 2 + float.Parse(first[key][0]["radius"].ToString()) * 2);
+
+            //Debug.Log(first[key][0]["x"] + "," + first[key][0]["z"]);
+            radnumber++;
+        }
+
+    }
+
+    void SetBlockCircleLocation2(Dictionary<String, List<Dictionary<String, object>>> root, Dictionary<String, List<Dictionary<String, object>>> first, String rootName)
+    {
+        //firstDirNameList
+
+        // 中央にrootを置く
+        root[rootName][0]["x"] = 0;
+        root[rootName][0]["z"] = 0;
+
+
+        // 角度
+        float deg = 360 / (float)first.Count;
+        double rad = deg * Mathf.PI / 180.0;
+
+        float max = 0;
+
+        // 一番大きい半径を取得する
+        foreach (String key in first.Keys)
+        {
+            if (float.Parse(first[key][0]["radius"].ToString()) >= max)
+                max = float.Parse(first[key][0]["radius"].ToString());
+        }
+        //Debug.Log(max);
+        // 直径にブロック数/10をかける
+        double circle_r = max * 2 * first.Count / 10;
+
+        // 1階層目の座標を決めていく
+        int radnumber = 0;
+        foreach (String key in first.Keys)
+        {
+            //first[key][0]["x"] = Mathf.Cos((float)rad * radnumber) * (float.Parse(first[key][0]["radius"].ToString()) * 2 * first.Count / 5 + float.Parse(root[rootName][0]["radius"].ToString()) * 2);
+            //first[key][0]["z"] = Mathf.Sin((float)rad * radnumber) * (float.Parse(first[key][0]["radius"].ToString()) * 2 * first.Count / 5 + float.Parse(root[rootName][0]["radius"].ToString()) * 2);
+
+            first[key][0]["x"] = Mathf.Cos((float)rad * radnumber) * (circle_r + float.Parse(root[rootName][0]["radius"].ToString()) + float.Parse(first[key][0]["radius"].ToString()));
+            first[key][0]["z"] = Mathf.Sin((float)rad * radnumber) * (circle_r + float.Parse(root[rootName][0]["radius"].ToString()) + float.Parse(first[key][0]["radius"].ToString()));
+
+            //first[key][0]["x"] = Mathf.Cos((float)rad * radnumber) * (float.Parse(first[key][0]["radius"].ToString()) * float.Parse(first[key][0]["radius"].ToString()) / 1000 + float.Parse(root[rootDirName][0]["radius"].ToString()) * 2 + float.Parse(first[key][0]["radius"].ToString()) * 2);
+            //first[key][0]["z"] = Mathf.Sin((float)rad * radnumber) * (float.Parse(first[key][0]["radius"].ToString()) * float.Parse(first[key][0]["radius"].ToString()) / 1000 + float.Parse(root[rootDirName][0]["radius"].ToString()) * 2 + float.Parse(first[key][0]["radius"].ToString()) * 2);
+
             //Debug.Log(first[key][0]["x"] + "," + first[key][0]["z"]);
             radnumber++;
         }
@@ -1273,6 +1810,58 @@ public class CityCreater : MonoBehaviour
             }
         }
     }
+
+
+    void SetGlobalCircleLocation2(Dictionary<String, List<Dictionary<String, object>>> building, Dictionary<String, List<Dictionary<String, object>>> rootBlock, Dictionary<String, List<Dictionary<String, object>>> firstBlock, String root)
+    {
+        foreach (String key in building.Keys)
+        {
+            float blockX = 0;
+            float blockZ = 0;
+            float radius = 0;
+
+            if (key == root)
+            {
+                blockX = float.Parse(rootBlock[root][0]["x"].ToString());
+                blockZ = float.Parse(rootBlock[root][0]["z"].ToString());
+                radius = float.Parse(rootBlock[root][0]["radius"].ToString());
+            }
+            else if(firstBlock.ContainsKey(key))
+            {
+                blockX = float.Parse(firstBlock[key][0]["x"].ToString());
+                blockZ = float.Parse(firstBlock[key][0]["z"].ToString());
+                radius = float.Parse(firstBlock[key][0]["radius"].ToString());
+            }
+
+            List<Dictionary<String, object>> buildingList = building[key];
+
+            foreach (Dictionary<String, object> oneBuilding in buildingList)
+            {
+                if(firstBlock.ContainsKey(key) || key == root)
+                {
+                    oneBuilding["globalX"] = float.Parse(blockX.ToString()) - Mathf.Sqrt(2) / 2 * radius + 50 + float.Parse(oneBuilding["x"].ToString());
+                    oneBuilding["globalZ"] = float.Parse(blockZ.ToString()) - Mathf.Sqrt(2) / 2 * radius + 50 + float.Parse(oneBuilding["z"].ToString());
+                }
+                
+            }
+
+        }
+
+        if (!noBuildingDirNameList.Contains(root))
+        {
+            float rootX = float.Parse(rootBlock[root][0]["x"].ToString());
+            float rootZ = float.Parse(rootBlock[root][0]["z"].ToString());
+        }
+
+        foreach (String key in firstBlock.Keys)
+        {
+            if (!noBuildingDirNameList.Contains(key))
+            {
+
+            }
+        }
+    }
+
 
     /**
 	 *
@@ -1637,6 +2226,7 @@ public class CityCreater : MonoBehaviour
 
                 buildingObj.name = (oneBuilding["path"].ToString() + ":").Substring(1);
                 buildingObj.tag = "NormalBuilding";
+                buildingObj.layer = LayerMask.NameToLayer("Building");
 
                 // メタ情報
                 var buildingData = buildingObj.GetComponent<BuildingData>();
@@ -1686,6 +2276,7 @@ public class CityCreater : MonoBehaviour
                         particle.transform.Rotate(new Vector3((float)270, (float)0, (float)0));
                         particle.transform.position = new Vector3(float.Parse(oneBuilding["globalX"].ToString()), (float.Parse(oneBuilding["height"].ToString()) - float.Parse(sList[i].ToString())) * (float)0.8845 + 3, float.Parse(oneBuilding["globalZ"].ToString()));
                         particle.name = "sence:" + oneBuilding["name"] + (int.Parse(sList[i].ToString())).ToString();
+                        particle.layer = LayerMask.NameToLayer("Building");
                     }
                     buildingObj.name = buildingObj.name.Substring(0, buildingObj.name.Length - 1);
                 }
@@ -1693,9 +2284,21 @@ public class CityCreater : MonoBehaviour
         }
     }
 
+    void BuildCircle2(Dictionary<String, List<Dictionary<String, object>>> block)
+    {
+        foreach(String key in block.Keys)
+        {
+            GameObject firstCircle = Instantiate(this.CircleBlock, new Vector3(float.Parse(block[key][0]["x"].ToString()), -1000, float.Parse(block[key][0]["z"].ToString())), transform.rotation) as GameObject;
+            firstCircle.transform.localScale = new Vector3(float.Parse(block[key][0]["radius"].ToString()) * 2, (float)2, float.Parse(block[key][0]["radius"].ToString()) * 2);
+
+            //firstCircle.name = "Circle " + key;
+            firstCircle.name = "Force##" + key.Substring(1);
+        }
+    }
+
 
     // 補色を計算する関数
-    Color CalcComplementaryColor(Color original)
+   Color CalcComplementaryColor(Color original)
     {
 
         float max = original.r;
@@ -1892,6 +2495,7 @@ public class CityCreater : MonoBehaviour
         earth.transform.localPosition = new Vector3((maxX + minX) / 2, 0, (maxZ + minZ) / 2);
 
         earth.name = "CircleGround";
+        earth.tag = "Ground";
 
         //var a = earth.GetComponent<Renderer>().material;
         //a.mainTextureScale = new Vector2(maxX - minX / 1000, maxZ - minZ / 1000);
@@ -1901,6 +2505,75 @@ public class CityCreater : MonoBehaviour
         mainCamera = obj.GetComponent<CameraMove>();
         mainCamera.StartCamera();
     }
+
+
+
+    void SetCircleGround2(Dictionary<String, List<Dictionary<String, object>>> rootBlock, Dictionary<String, List<Dictionary<String, object>>> firstBlock, String root)
+    {
+        float maxX = float.Parse(rootBlock[root][0]["x"].ToString()) + float.Parse(rootBlock[root][0]["radius"].ToString());
+        float minX = float.Parse(rootBlock[root][0]["x"].ToString()) - float.Parse(rootBlock[root][0]["radius"].ToString());
+
+        float maxZ = float.Parse(rootBlock[root][0]["z"].ToString()) + float.Parse(rootBlock[root][0]["radius"].ToString());
+        float minZ = float.Parse(rootBlock[root][0]["z"].ToString()) - float.Parse(rootBlock[root][0]["radius"].ToString()); ;
+
+        string maxXKey = root;
+        string minXKey = root;
+
+        string maxZKey = root;
+        string minZKey = root;
+
+        foreach (String key in firstBlock.Keys)
+        {
+            if (maxX < float.Parse(firstBlock[key][0]["x"].ToString()) + float.Parse(firstBlock[key][0]["radius"].ToString()))
+            {
+                maxX = float.Parse(firstBlock[key][0]["x"].ToString()) + float.Parse(firstBlock[key][0]["radius"].ToString());
+                maxXKey = key;
+            }
+
+            if (maxZ < float.Parse(firstBlock[key][0]["z"].ToString()) + float.Parse(firstBlock[key][0]["radius"].ToString()))
+            {
+                maxZ = float.Parse(firstBlock[key][0]["z"].ToString()) + float.Parse(firstBlock[key][0]["radius"].ToString());
+                maxZKey = key;
+            }
+
+            if (minX > float.Parse(firstBlock[key][0]["x"].ToString()) - float.Parse(firstBlock[key][0]["radius"].ToString()))
+            {
+                minX = float.Parse(firstBlock[key][0]["x"].ToString()) - float.Parse(firstBlock[key][0]["radius"].ToString());
+                minXKey = key;
+            }
+
+            if (minZ > float.Parse(firstBlock[key][0]["z"].ToString()) - float.Parse(firstBlock[key][0]["radius"].ToString()))
+            {
+                minZ = float.Parse(firstBlock[key][0]["z"].ToString()) - float.Parse(firstBlock[key][0]["radius"].ToString());
+                minZKey = key;
+            }
+        }
+        //GameObject ground = Instantiate(this.CircleGround, new Vector3(0,0,0), transform.rotation) as GameObject;
+
+        
+        maxX = maxX + 50;
+       
+        maxZ = maxZ + 50;
+
+        minX = minX - 50;
+        
+        minZ = minZ - 50;
+
+        earth.transform.localScale = new Vector3(maxX - minX, 2, maxZ - minZ);
+        earth.transform.localPosition = new Vector3((maxX + minX) / 2, 0, (maxZ + minZ) / 2);
+
+        earth.name = "CircleGround";
+        earth.tag = "Ground";
+
+        //var a = earth.GetComponent<Renderer>().material;
+        //a.mainTextureScale = new Vector2(maxX - minX / 1000, maxZ - minZ / 1000);
+
+        // カメラをスタートする
+        GameObject obj = GameObject.Find("Main Camera");
+        mainCamera = obj.GetComponent<CameraMove>();
+        mainCamera.StartCamera();
+    }
+
 
 
     // 道を作っていく関数
@@ -2092,6 +2765,40 @@ public class CityCreater : MonoBehaviour
             GameObject street = Instantiate(this.street, new Vector3(midX, 2, midZ), Quaternion.Euler(0, -(float)rad * num * Mathf.Rad2Deg, 0)) as GameObject;
             street.transform.localScale = new Vector3(distance, 1, 50);
             street.name = "To:" + firstBlock[key][0]["name"].ToString();
+
+            var a = street.GetComponent<Renderer>().material;
+            a.mainTextureScale = new Vector2(distance / 100, 1);
+
+            num++;
+        }
+    }
+
+    void BuildCircleStreet2(Dictionary<String, List<Dictionary<String, object>>> rootBlock, Dictionary<String, List<Dictionary<String, object>>> firstBlock, String root)
+    {
+        float centerX = float.Parse(rootBlock[root][0]["x"].ToString());
+        float centerZ = float.Parse(rootBlock[root][0]["z"].ToString());
+
+        int num = 0;
+
+        foreach (String key in firstBlock.Keys)
+        {
+            float x = float.Parse(firstBlock[key][0]["x"].ToString());
+            float z = float.Parse(firstBlock[key][0]["z"].ToString());
+
+            float midX = (centerX + x) / 2;
+            float midZ = (centerZ + z) / 2;
+
+            Vector2 vec = new Vector2(centerX, centerZ) - new Vector2(x, z);
+            float distance = vec.magnitude;
+
+            float deg = 360 / (float)firstBlock.Count;
+            double rad = deg * Mathf.PI / 180.0;
+
+
+            GameObject street = Instantiate(this.street, new Vector3(midX, 2, midZ), Quaternion.Euler(0, -(float)rad * num * Mathf.Rad2Deg, 0)) as GameObject;
+            street.transform.localScale = new Vector3(distance, 1, 50);
+            street.name = "To:" + firstBlock[key][0]["name"].ToString();
+            street.tag = "Street";
 
             var a = street.GetComponent<Renderer>().material;
             a.mainTextureScale = new Vector2(distance / 100, 1);
@@ -2880,7 +3587,43 @@ public class CityCreater : MonoBehaviour
 
     public Dictionary<String, List<Dictionary<String, object>>> GetFirstBlockList()
     {
-        return this.firstBlockDictionary;
+        //return this.firstBlockDictionary;
+        return this.firstBlockDictionary2;
+    }
+
+    public void RemakeCity(String root, Boolean listFlag)
+    {
+        // リストで飛ぶときは直接行く
+        if (listFlag)
+        {
+            LocateBlockAndBuilding2(allDirectory, arrangedBuildings, root);
+        }
+        // リストから飛んでいない、かつrootに指定したブロックが現在のrootのときは1個上に行く
+        else if(root == currentRoot)
+        {
+            // プロジェクトのルートディレクトリに当たる場合は上がないので行かない
+            if(root != rootDirName)
+            {
+                LocateBlockAndBuilding2(allDirectory, arrangedBuildings, root.Substring(0, root.LastIndexOf("/")));
+            }
+        }
+        // それ以外の場合は下に階層がある場合のみ行く
+        else
+        {
+            foreach (String name in dir)
+            {
+                if (name.Contains(root + "/"))
+                {
+                    LocateBlockAndBuilding2(allDirectory, arrangedBuildings, root);
+                    break;
+                }
+            }
+        }       
+    }
+
+    public String GetRootName()
+    {
+        return rootDirName;
     }
 
 }
