@@ -123,8 +123,8 @@ public class CityCreater : MonoBehaviour
         //StartCityCreater("travatar");
         //StartCityCreater("cdec");
         //StartCityCreater("tensorflow");
-        StartCityCreater("dynet");
-        //StartCityCreater("discourse");
+        //StartCityCreater("dynet");
+        StartCityCreater("discourse");
         //StartCityCreater("crawlers");
 #else
 			    Application.ExternalCall("OnUnityReady");
@@ -3646,11 +3646,12 @@ public class CityCreater : MonoBehaviour
         return this.firstBlockDictionary2;
     }
 
-    public void RemakeCity(String root, Boolean listFlag)
+    public void RemakeCity(String root, Boolean directFlag)
     {
-        // リストで飛ぶときは直接行く
-        if (listFlag)
+        // リストで飛ぶときか上へのボタンを押したときは直接行く
+        if (directFlag)
         {
+            //Debug.Log(root);
             LocateBlockAndBuilding2(allDirectory, arrangedBuildings, root);
         }
         // リストから飛んでいない、かつrootに指定したブロックが現在のrootのときは1個上に行く

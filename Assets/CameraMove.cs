@@ -155,7 +155,10 @@ public class CameraMove : MonoBehaviour {
         {  
             firstBlockDicitonalyKeys.Add(key);
         }
-        
+
+        // 一番最初に置かれているブロックの方を見る
+        this.transform.LookAt(new Vector3(float.Parse(firstBlockDictionary[firstBlockDicitonalyKeys[0]][0]["x"].ToString()), 5, float.Parse(firstBlockDictionary[firstBlockDicitonalyKeys[0]][0]["z"].ToString())));
+
         keyNum = 0;
 
         ground = cc.GetGround();
