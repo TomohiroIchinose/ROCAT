@@ -60,6 +60,8 @@ public class CameraMove : MonoBehaviour {
 
     private float _lastTimeClick;
 
+    public RaderCameraMove rcm;
+
     // Use this for initialization
     void Start () {
 		view_src = false;
@@ -75,6 +77,7 @@ public class CameraMove : MonoBehaviour {
 
         cc = GameObject.Find ("CityCreater").GetComponent<CityCreater> ();
         list = GameObject.Find("List").GetComponent<Canvas>();
+        rcm = GameObject.Find("RadarCamera").GetComponent<RaderCameraMove>();
 
         file_name = canvas.transform.GetComponentInChildren<Text>();
         file_back = canvas.transform.GetComponentInChildren<Image>();
@@ -161,9 +164,14 @@ public class CameraMove : MonoBehaviour {
 
         keyNum = 0;
 
+        // 土台を更新
         ground = cc.GetGround();
 
         dirName.text = cc.GetCurrentDir();
+
+        // マップ用カメラの高さを調整
+        float height = ground.transform.localScale.x * 0.5f / Mathf.Tan(rcm.GetComponent<Camera>().fieldOfView * 0.5f * Mathf.Deg2Rad);
+        rcm.transform.position = (new Vector3(ground.transform.position.x, height, ground.transform.position.z));
 
     }
 
@@ -239,6 +247,9 @@ public class CameraMove : MonoBehaviour {
             this.transform.localPosition = new Vector3(0, 100, 0);
             this.transform.localRotation = new Quaternion(0,0,0,0);
             keyNum = 0;
+
+            // 一番最初に置かれているブロックの方を見る
+            this.transform.LookAt(new Vector3(float.Parse(firstBlockDictionary[firstBlockDicitonalyKeys[0]][0]["x"].ToString()), 5, float.Parse(firstBlockDictionary[firstBlockDicitonalyKeys[0]][0]["z"].ToString())));
         }
 
             if (Input.GetKeyDown(KeyCode.V))

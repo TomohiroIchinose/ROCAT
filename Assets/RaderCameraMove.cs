@@ -12,7 +12,6 @@ public class RaderCameraMove : MonoBehaviour {
     public Image block_back;
 
     public CityCreater cc;
-    private GameObject ground;
 
     // Use this for initialization
     void Start () {
@@ -27,12 +26,6 @@ public class RaderCameraMove : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        
-        ground = cc.GetGround();
-
-        float height = ground.transform.localScale.x * 0.5f / Mathf.Tan(this.GetComponent<Camera>().fieldOfView * 0.5f * Mathf.Deg2Rad);
-
-        this.transform.position = (new Vector3(this.transform.position.x, height, this.transform.position.z));
         ControlByMouse();
     }
 

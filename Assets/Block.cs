@@ -49,7 +49,13 @@ public class Block : MonoBehaviour {
         GetComponent<Renderer>().sharedMaterial = material;
     }
 
-#region Static
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Block")
+            Debug.Log(this.name + " , " + other.gameObject.name);
+    }
+
+    #region Static
     private static Dictionary<Color, Material> materialDict = new Dictionary<Color, Material>();
     private static readonly Color SELECTED_COLOR = Color.red;
     private static readonly Color END_COLOR = Color.gray;

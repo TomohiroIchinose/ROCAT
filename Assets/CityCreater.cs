@@ -275,7 +275,7 @@ public class CityCreater : MonoBehaviour
             if (edge != 0)
                 firstBlockDictionary2[key][0]["radius"] = (edge) * Mathf.Sqrt(2) / 2 * 100;
             else
-                firstBlockDictionary2[key][0]["radius"] = 50;
+                firstBlockDictionary2[key][0]["radius"] = 100;
         }
 
         // ブロックの配置を決める
@@ -352,17 +352,19 @@ public class CityCreater : MonoBehaviour
             // ブロックの先にSATDがあるなら炎をつくる
             foreach (String name in satdFilesList)
             {
-                if (name.Contains("/" + circleData.pathname) && !end)
+                
+                if (name.Contains("/" + circleData.pathname) && !end && "/" + circleData.pathname != name.Substring(0, name.LastIndexOf(name.Substring(name.LastIndexOf("/")))))
                 {
+                    //Debug.Log("/" + circleData.pathname + ", " + name.Substring(0, name.LastIndexOf(name.Substring(name.LastIndexOf("/")))));
                     GameObject fire = Instantiate(this.sense, new Vector3(0, 1, 0), transform.rotation) as GameObject;
                     var r = fire.GetComponent<ParticleSystem>().shape;
                     r.radius = float.Parse(firstBlockDictionary2[key][0]["radius"].ToString());
 
                     var s = fire.GetComponent<ParticleSystem>();
 
-                    s.startSize = 30;
+                    s.startSize = 50;
 
-                    s.startSpeed = 50;
+                    s.startSpeed = 70;
 
 
                     fire.transform.Rotate(new Vector3((float)270, (float)0, (float)0));
@@ -438,7 +440,7 @@ public class CityCreater : MonoBehaviour
 
                             var s = particle.GetComponent<ParticleSystem>();
 
-                            s.startSize = 20;
+                            s.startSize = 25;
 
                             s.startSpeed = 50;
 
@@ -467,6 +469,7 @@ public class CityCreater : MonoBehaviour
         sensor.MakeSensorList();
     }
 
+    // 指定したタグのオブジェクトを破壊していくメソッド
     void ObjectDestroyer(String tagName)
     {
         GameObject[] tagobjs = GameObject.FindGameObjectsWithTag(tagName);
@@ -813,7 +816,7 @@ public class CityCreater : MonoBehaviour
             return false;
     }
 
-
+    // 周りのブロックを大きさ順に並べた時のお名前のリストを返す
     List<String> SortFirstBlockName(List<String> nameList, Dictionary<String, List<Dictionary<String, object>>> blockList)
     {
         for(int i = 0; i < nameList.Count; i++)
@@ -1639,19 +1642,37 @@ public class CityCreater : MonoBehaviour
         double rad = deg * Mathf.PI / 180.0;
 
         float max = 0;
+        float min = 0;
 
-        // 一番大きい半径を取得する
+        Boolean start = true;
+
+        List<String> keyList = new List<string>();
+
+        // 一番大きい・小さい半径を取得する
         foreach (String key in first.Keys)
         {
-            if (float.Parse(first[key][0]["radius"].ToString()) >= max)
+            if (start)
+            {
                 max = float.Parse(first[key][0]["radius"].ToString());
+                min = float.Parse(first[key][0]["radius"].ToString());
+                start = false;
+            }
+            else {
+                if (float.Parse(first[key][0]["radius"].ToString()) >= max)
+                    max = float.Parse(first[key][0]["radius"].ToString());
+
+                if (float.Parse(first[key][0]["radius"].ToString()) <= min)
+                    min = float.Parse(first[key][0]["radius"].ToString());
+            }
+            keyList.Add(key);
         }
+
+
+        /*
         //Debug.Log(max);
         // 直径にブロック数/10をかける
         double circle_r = max * 2 * first.Count / 10;
 
-        // 1階層目の座標を決めていく
-        int radnumber = 0;
         foreach (String key in first.Keys)
         {
             //first[key][0]["x"] = Mathf.Cos((float)rad * radnumber) * (float.Parse(first[key][0]["radius"].ToString()) * 2 * first.Count / 5 + float.Parse(root[rootName][0]["radius"].ToString()) * 2);
@@ -1666,7 +1687,75 @@ public class CityCreater : MonoBehaviour
             //Debug.Log(first[key][0]["x"] + "," + first[key][0]["z"]);
             radnumber++;
         }
+        */
 
+
+        // 1階層目の座標を決めていく
+        int radnumber = 0;
+
+        // 周りのブロックが4つ以下なら各ブロックの直径分離せば重ならない
+        if (first.Count <= 4)
+        {
+            foreach (String key in first.Keys)
+            {
+                first[key][0]["x"] = Mathf.Cos((float)rad * radnumber) * (float.Parse(root[rootName][0]["radius"].ToString()) * 2 + float.Parse(first[key][0]["radius"].ToString()) * 2);
+                first[key][0]["z"] = Mathf.Sin((float)rad * radnumber) * (float.Parse(root[rootName][0]["radius"].ToString()) * 2 + float.Parse(first[key][0]["radius"].ToString()) * 2);
+                radnumber++;
+            }
+        }
+        else
+        {
+            // お名前のリストを半径順にする
+            keyList = SortFirstBlockName(keyList, first);
+
+            // お名前のリストの要素数
+            int listSize = keyList.Count;
+            int[] nameOrder = new int[listSize];
+
+
+            // 大小大小…となるようにお名前のリストの添字を並べていく
+            int number = 0;
+            int num2 = (int)Math.Ceiling((double)listSize / 2);
+
+            for (int i = 0; i < listSize; i += 2)
+            {
+                nameOrder[i] = number;
+
+                if (i + 1 < listSize)
+                    nameOrder[i + 1] = num2 + number;
+
+                number++;
+            }
+
+            radnumber = 0;
+            int plusMinus = 1;
+            for (int i = 0; i < first.Count; i++)
+            {
+                //Debug.Log(first[keyList[nameOrder[i]]][0]["name"]);
+
+                float minDistance = float.Parse(root[rootName][0]["radius"].ToString()) * 2 + float.Parse(first[keyList[nameOrder[i]]][0]["radius"].ToString()) * 2;
+                float distance = (max + (20 + plusMinus * 0) + float.Parse(root[rootName][0]["radius"].ToString()) * 2 + float.Parse(first[keyList[nameOrder[i]]][0]["radius"].ToString()) * (7 + plusMinus * 3 + (max - min) / -80));
+
+                // 差分のマイナスが大きすぎる場合はルートの直径＋そのブロックの直径分離す
+                if (distance < minDistance)
+                {
+                    first[keyList[nameOrder[i]]][0]["x"] = Mathf.Cos((float)rad * radnumber) * minDistance;
+                    first[keyList[nameOrder[i]]][0]["z"] = Mathf.Sin((float)rad * radnumber) * minDistance;
+                }
+                // 最大値*20 + ルートの直径 + そのブロックの半径*7 + 外側ならブロックの半径*3内側ならブロックの半径*-3 + ブロックの半径*最大値と最小値の差分の-1/80
+                // ブロックの半径の最大・最小値の差が大きいほど内向きに補正がかかってブロックが遠くなりすぎなくなる…はず
+                else
+                {
+                    first[keyList[nameOrder[i]]][0]["x"] = Mathf.Cos((float)rad * radnumber) * distance;
+                    first[keyList[nameOrder[i]]][0]["z"] = Mathf.Sin((float)rad * radnumber) * distance;
+                }
+                //first[keyList[nameOrder[i]]][0]["x"] = Mathf.Cos((float)rad * radnumber) * (max + (20 + plusMinus * 1) +  float.Parse(root[rootName][0]["radius"].ToString()) * 2 + float.Parse(first[keyList[nameOrder[i]]][0]["radius"].ToString()) * (7 + plusMinus * 3 + (max - min) / -100));
+                //first[keyList[nameOrder[i]]][0]["z"] = Mathf.Sin((float)rad * radnumber) * (max + (20 + plusMinus * 1) +  float.Parse(root[rootName][0]["radius"].ToString()) * 2 + float.Parse(first[keyList[nameOrder[i]]][0]["radius"].ToString()) * (7 + plusMinus * 3 + (max - min) / -100));
+
+                plusMinus *= -1;
+                radnumber++;
+            }
+        }
     }
 
 
@@ -2833,7 +2922,10 @@ public class CityCreater : MonoBehaviour
         float centerX = float.Parse(rootBlock[root][0]["x"].ToString());
         float centerZ = float.Parse(rootBlock[root][0]["z"].ToString());
 
-        int num = 0;
+        //int num = 0;
+
+        // 0度のベクトル
+        Vector2 uVec = new Vector2(1, 0);
 
         foreach (String key in firstBlock.Keys)
         {
@@ -2846,11 +2938,22 @@ public class CityCreater : MonoBehaviour
             Vector2 vec = new Vector2(centerX, centerZ) - new Vector2(x, z);
             float distance = vec.magnitude;
 
+            /*
             float deg = 360 / (float)firstBlock.Count;
             double rad = deg * Mathf.PI / 180.0;
+            */
 
+            // arcCos(ベクトルの内積 / ベクトルの大きさの積)で角度を出す
+            float newDeg = Mathf.Acos(Vector2.Dot(vec, uVec) / (vec.magnitude * uVec.magnitude));
 
-            GameObject street = Instantiate(this.street, new Vector3(midX, 2, midZ), Quaternion.Euler(0, -(float)rad * num * Mathf.Rad2Deg, 0)) as GameObject;
+            // arcCosは0～πまでしか出せないのでz軸がマイナスなら負の値にする
+            if (z < 0)
+                newDeg = -newDeg;
+
+            //GameObject street = Instantiate(this.street, new Vector3(midX, 2, midZ), Quaternion.Euler(0, -(float)rad * num * Mathf.Rad2Deg, 0)) as GameObject;
+
+            GameObject street = Instantiate(this.street, new Vector3(midX, 2, midZ), Quaternion.Euler(0, newDeg * Mathf.Rad2Deg, 0)) as GameObject;
+
             street.transform.localScale = new Vector3(distance, 1, 50);
             street.name = "To:" + firstBlock[key][0]["name"].ToString();
             street.tag = "Street";
@@ -2858,7 +2961,7 @@ public class CityCreater : MonoBehaviour
             var a = street.GetComponent<Renderer>().material;
             a.mainTextureScale = new Vector2(distance / 100, 1);
 
-            num++;
+            //num++;
         }
     }
 
