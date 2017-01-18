@@ -104,6 +104,7 @@ public class CityCreater : MonoBehaviour
 
     public float Radius = 0;
 
+    public List<String> satdFilesList = new List<String>();
 
     void Start()
     {
@@ -159,6 +160,8 @@ public class CityCreater : MonoBehaviour
         var rootDir = this.city["root_depth"] as IList;
         var firstDir = this.city["first_depth"] as IList;
 
+        var satdfiles = this.city["satdfiles"] as IList;
+
         // ディレクトリ一覧を作ってソートしておく
         for(int i=0; i< directories.Count; i++)
         {
@@ -188,7 +191,14 @@ public class CityCreater : MonoBehaviour
             }
         }
 
+        // SATDのあるファイルのリストを作っておく
+        foreach(Dictionary<string, object> content in satdfiles)
+        {
+            satdFilesList.Add(content["name"].ToString());
+            //Debug.Log(content["name"].ToString());
+        }
 
+        /*
         // 1階層目のディレクトリ一覧を作る
         foreach(Dictionary<string, object> content in firstDir)
         {
@@ -201,6 +211,7 @@ public class CityCreater : MonoBehaviour
                 noBuildingDirNameList.Add(content["name"].ToString());
             }
         }
+        */
 
         // ブロックごとにビルをまとめる *一時的にココでしてみる
         arrangedBuildings = ArrangeByKey(buildings, "block");
@@ -295,7 +306,13 @@ public class CityCreater : MonoBehaviour
         // メタ情報
         var rootData = rootCircle.GetComponent<BlockData>();
         rootData.pathname = root.Substring(1);
-        rootData.blockname = "root";
+
+        if (root == rootDirName)
+            rootData.blockname = "root";
+        else
+            rootData.blockname = root.Substring(rootDirName.Length);
+
+        rootData.end = false;
 
         /*
         // お名前カンバン
@@ -319,6 +336,44 @@ public class CityCreater : MonoBehaviour
             var circleData = firstCircle.GetComponent<BlockData>();
             circleData.pathname = key.Substring(1);
             circleData.blockname = key.Substring(key.ToString().LastIndexOf("/") + 1);
+
+            bool end = true;
+            foreach(String name in dir)
+            {
+                if (name.Contains("/" + circleData.pathname + "/"))
+                    end = false;
+            }
+            circleData.end = end;
+
+            // その先にディレクトリがない場合は色を変える
+            if (end)
+                firstCircle.GetComponent<Block>().SetMaterial(Color.gray);
+
+            // ブロックの先にSATDがあるなら炎をつくる
+            foreach (String name in satdFilesList)
+            {
+                if (name.Contains("/" + circleData.pathname) && !end)
+                {
+                    GameObject fire = Instantiate(this.sense, new Vector3(0, 1, 0), transform.rotation) as GameObject;
+                    var r = fire.GetComponent<ParticleSystem>().shape;
+                    r.radius = float.Parse(firstBlockDictionary2[key][0]["radius"].ToString());
+
+                    var s = fire.GetComponent<ParticleSystem>();
+
+                    s.startSize = 30;
+
+                    s.startSpeed = 50;
+
+
+                    fire.transform.Rotate(new Vector3((float)270, (float)0, (float)0));
+                    fire.transform.position = new Vector3(firstCircle.transform.localPosition.x, 2, firstCircle.transform.localPosition.z);
+                    fire.name = "sence:" + firstCircle.name;
+                    fire.layer = LayerMask.NameToLayer("Building");
+                    fire.tag = "SATDBuilding";
+                    break;
+                }
+            }
+
 
             // お名前カンバン
             GameObject dirtext = Instantiate(this.DirNamePlate, new Vector3(float.Parse(firstBlockDictionary2[key][0]["x"].ToString()), 200, float.Parse(firstBlockDictionary2[key][0]["z"].ToString())), transform.rotation) as GameObject;
@@ -3624,6 +3679,14 @@ public class CityCreater : MonoBehaviour
     public String GetRootName()
     {
         return rootDirName;
+    }
+
+    public String GetCurrentDir()
+    {
+        if (currentRoot == rootDirName)
+            return "/";
+        else
+            return currentRoot.Substring(rootDirName.Length);
     }
 
 }

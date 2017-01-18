@@ -55,6 +55,8 @@ public class CameraMove : MonoBehaviour {
     public List<String> firstBlockDicitonalyKeys;
     public int keyNum;
 
+    public Canvas currentDir;
+    public Text dirName;
 
     private float _lastTimeClick;
 
@@ -92,6 +94,8 @@ public class CameraMove : MonoBehaviour {
         //infoText = info.transform.GetComponentInChildren<Text>();
         infoText = info.transform.FindChild("Image/InfoText").gameObject.GetComponentInChildren<Text>();
         nameText = info.transform.FindChild("Image/NameText").gameObject.GetComponentInChildren<Text>();
+
+        dirName = currentDir.transform.GetComponentInChildren<Text>();
 
         /*
 		foreach( Transform child in canvas.transform){
@@ -155,6 +159,8 @@ public class CameraMove : MonoBehaviour {
         keyNum = 0;
 
         ground = cc.GetGround();
+
+        dirName.text = cc.GetCurrentDir();
 
     }
 
@@ -333,11 +339,7 @@ public class CameraMove : MonoBehaviour {
         if (Input.GetMouseButtonDown(1))
 		{
             //RightMouseClicked(building);
-            if(block != null)
-            {
-                //Debug.Log("###Remake###");
-                cc.RemakeCity("/" + block.name, false);
-            }
+            
                 
 		}
 
@@ -354,6 +356,11 @@ public class CameraMove : MonoBehaviour {
         {
             MouseClicked(building, block, marker);
             RightMouseClicked(building);
+            if (block != null)
+            {
+                //Debug.Log("###Remake###");
+                cc.RemakeCity("/" + block.name, false);
+            }
 
         }
 

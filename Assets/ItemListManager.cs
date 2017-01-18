@@ -60,8 +60,10 @@ public class ItemListManager : MonoBehaviour {
             // SATD数でソート
             arrangedList.Sort((b, a) => int.Parse(a["num"].ToString()) - int.Parse(b["num"].ToString()));
 
-            for (int i = 0; i < arrangedList.Count; i++)
+            for (int i = 0; i < arrangedList.Count + 1; i++)
             {
+                //Debug.Log(arrangedList[i]["name"]);
+                
                 // リスト用のButtonを生成
                 Button node = Instantiate(_itemNode) as Button;
                 node.transform.localPosition = new Vector3(0f, 0f, 0f);
@@ -82,16 +84,16 @@ public class ItemListManager : MonoBehaviour {
                 }
                 else
                 {
-                    // 値を設定
-                    string text = arrangedList[i]["name"].ToString().Substring(arrangedList[i]["name"].ToString().IndexOf(".git") + 5);
+                    // 値を設定(iにすると最初の1個を飛ばしちゃうのでi-1でしている)
+                    string text = arrangedList[i - 1]["name"].ToString().Substring(arrangedList[i - 1]["name"].ToString().IndexOf(".git") + 5);
 
                     _itemName.text = text;
-                    _itemNum.text = arrangedList[i]["num"].ToString();
+                    _itemNum.text = arrangedList[i -1]["num"].ToString();
 
                     // クリック時のイベントを付加
-                    string fullDir = arrangedList[i]["name"].ToString();
+                    string fullDir = arrangedList[i - 1]["name"].ToString();
 
-                    IList satdList = arrangedList[i]["SATD"] as IList;
+                    IList satdList = arrangedList[i - 1]["SATD"] as IList;
                     string satdListString = ":";
 
                     for (int j = 0; j < satdList.Count; j++)
