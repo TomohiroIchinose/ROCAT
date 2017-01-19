@@ -24,7 +24,7 @@ public class FileName : MonoBehaviour {
         this.transform.Rotate(new Vector3(0, -180, 0));
 
         //Debug.Log(Vector3.Distance(this.transform.localPosition, MainCamera.transform.localPosition));
-        if (Vector3.Distance(this.transform.localPosition, MainCamera.transform.localPosition) >= 1500 || Vector3.Distance(this.transform.localPosition, MainCamera.transform.localPosition) <= 300)
+        if (Vector3.Distance(this.transform.localPosition, MainCamera.transform.localPosition) >= 2000 || Vector3.Distance(this.transform.localPosition, MainCamera.transform.localPosition) <= 300)
         {
             Text.GetComponent<Renderer>().enabled = false;
             Back.GetComponent<Renderer>().enabled = false;

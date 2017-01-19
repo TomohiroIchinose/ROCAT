@@ -23,10 +23,14 @@ public class DirName : MonoBehaviour {
         this.transform.Rotate(new Vector3(0, -180, 0));
 
         //Debug.Log(Vector3.Distance(this.transform.localPosition, MainCamera.transform.localPosition));
-        if (Vector3.Distance(this.transform.localPosition, MainCamera.transform.localPosition) <= 700)
+        if (Vector3.Distance(this.transform.localPosition, MainCamera.transform.localPosition) <= 600)
         {
-            Text.GetComponent<Renderer>().enabled = false;
-            Back.GetComponent<Renderer>().enabled = false;
+            //Text.GetComponent<Renderer>().enabled = false;
+            //Back.GetComponent<Renderer>().enabled = false;
+
+            this.transform.localScale = new Vector3((float)0.5, (float)0.5, (float)0.5);
+            this.transform.localPosition = new Vector3(this.transform.localPosition.x, 100, this.transform.localPosition.z);
+
             //Text.GetComponent<TextMesh>().color = new Color(Text.GetComponent<TextMesh>().color.r, Text.GetComponent<TextMesh>().color.g, Text.GetComponent<TextMesh>().color.b, 0);
             //Back.GetComponent<MeshRenderer>().material.color = new Color(Back.GetComponent<MeshRenderer>().material.color.r, Back.GetComponent<MeshRenderer>().material.color.g, Back.GetComponent<MeshRenderer>().material.color.b, 0);
         }
@@ -37,17 +41,17 @@ public class DirName : MonoBehaviour {
 
             if (Vector3.Distance(this.transform.localPosition, MainCamera.transform.localPosition) >= 4000)
             {
-                this.transform.localScale = new Vector3(6, 6, 6);
+                this.transform.localScale = new Vector3(5, 5, 5);
                 this.transform.localPosition = new Vector3(this.transform.localPosition.x, 800, this.transform.localPosition.z);
             }
             else if (Vector3.Distance(this.transform.localPosition, MainCamera.transform.localPosition) >= 2500)
             {
-                this.transform.localScale = new Vector3(4, 4, 4);
+                this.transform.localScale = new Vector3(3, 3, 3);
                 this.transform.localPosition = new Vector3(this.transform.localPosition.x, 400, this.transform.localPosition.z);
             }
             else
             {
-                this.transform.localScale = new Vector3(2, 2, 2);
+                this.transform.localScale = new Vector3(1, 1, 1);
                 this.transform.localPosition = new Vector3(this.transform.localPosition.x, 200, this.transform.localPosition.z);
             }
 

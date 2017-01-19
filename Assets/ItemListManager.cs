@@ -47,6 +47,7 @@ public class ItemListManager : MonoBehaviour {
             // jsonファイルのデータを取得
             string json = cc.GetJsonText();
             this.city = Json.Deserialize(json) as Dictionary<string, object>;
+            //this.city = cc.GetCityData();
             var satd = this.city["satdfiles"] as IList;
 
             List<Dictionary<string, object>> arrangedList = new List<Dictionary<string, object>>();

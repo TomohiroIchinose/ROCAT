@@ -170,7 +170,7 @@ public class CameraMove : MonoBehaviour {
         dirName.text = cc.GetCurrentDir();
 
         // マップ用カメラの高さを調整
-        float height = ground.transform.localScale.x * 0.5f / Mathf.Tan(rcm.GetComponent<Camera>().fieldOfView * 0.5f * Mathf.Deg2Rad);
+        float height = (ground.transform.localScale.x > ground.transform.localScale.z ? ground.transform.localScale.x : ground.transform.localScale.z) * 0.5f / Mathf.Tan(rcm.GetComponent<Camera>().fieldOfView * 0.5f * Mathf.Deg2Rad);
         rcm.transform.position = (new Vector3(ground.transform.position.x, height, ground.transform.position.z));
 
     }
@@ -409,7 +409,9 @@ public class CameraMove : MonoBehaviour {
                             "\nSATD lines:\n";
 
             for (int i = 0; i < building.GetComponent<BuildingData>().satd.Count; i++)
-                infoText.text = infoText.text + building.GetComponent<BuildingData>().satd[i] + " ";
+                infoText.text = infoText.text + building.GetComponent<BuildingData>().satd[i] + ", ";
+
+            infoText.text = infoText.text.Substring(0, infoText.text.Length - 2) + "\n";
 
             if (!info.enabled)
                 info.enabled = true;

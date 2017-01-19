@@ -28,6 +28,8 @@ public class Block : MonoBehaviour {
 
         if(this.GetComponent<BlockData>().end)
             SetMaterial(Block.END_COLOR);
+        else if(this.GetComponent<BlockData>().insideSATD)
+            SetMaterial(Block.INSIDE_COLOR);
         else
             SetMaterial((Resources.Load("Sidewalk 1", typeof(Material)) as Material).color);
     }
@@ -59,6 +61,7 @@ public class Block : MonoBehaviour {
     private static Dictionary<Color, Material> materialDict = new Dictionary<Color, Material>();
     private static readonly Color SELECTED_COLOR = Color.red;
     private static readonly Color END_COLOR = Color.gray;
+    private static readonly Color INSIDE_COLOR = Color.yellow;
 
     public static bool HasMaterial(Color color)
     {

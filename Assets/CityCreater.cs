@@ -355,6 +355,7 @@ public class CityCreater : MonoBehaviour
                 
                 if (name.Contains("/" + circleData.pathname) && !end && "/" + circleData.pathname != name.Substring(0, name.LastIndexOf(name.Substring(name.LastIndexOf("/")))))
                 {
+                    /*
                     //Debug.Log("/" + circleData.pathname + ", " + name.Substring(0, name.LastIndexOf(name.Substring(name.LastIndexOf("/")))));
                     GameObject fire = Instantiate(this.sense, new Vector3(0, 1, 0), transform.rotation) as GameObject;
                     var r = fire.GetComponent<ParticleSystem>().shape;
@@ -362,7 +363,7 @@ public class CityCreater : MonoBehaviour
 
                     var s = fire.GetComponent<ParticleSystem>();
 
-                    s.startSize = 50;
+                    s.startSize = float.Parse(firstBlockDictionary2[key][0]["radius"].ToString()) / 2;
 
                     s.startSpeed = 70;
 
@@ -372,6 +373,11 @@ public class CityCreater : MonoBehaviour
                     fire.name = "sence:" + firstCircle.name;
                     fire.layer = LayerMask.NameToLayer("Building");
                     fire.tag = "SATDBuilding";
+                    */
+
+                    circleData.insideSATD = true;
+                    firstCircle.GetComponent<Block>().SetMaterial(Color.yellow);
+
                     break;
                 }
             }
@@ -3791,6 +3797,11 @@ public class CityCreater : MonoBehaviour
             return "/";
         else
             return currentRoot.Substring(rootDirName.Length);
+    }
+
+    public Dictionary<string, object> GetCityData()
+    {
+        return this.city;
     }
 
 }
