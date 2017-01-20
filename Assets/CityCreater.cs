@@ -122,9 +122,9 @@ public class CityCreater : MonoBehaviour
         //StartCityCreater("test");
         //StartCityCreater("travatar");
         //StartCityCreater("cdec");
-        //StartCityCreater("tensorflow");
+        StartCityCreater("tensorflow");
         //StartCityCreater("dynet");
-        StartCityCreater("discourse");
+        //StartCityCreater("discourse");
         //StartCityCreater("crawlers");
 #else
 			    Application.ExternalCall("OnUnityReady");
@@ -1740,7 +1740,7 @@ public class CityCreater : MonoBehaviour
                 //Debug.Log(first[keyList[nameOrder[i]]][0]["name"]);
 
                 float minDistance = float.Parse(root[rootName][0]["radius"].ToString()) * 2 + float.Parse(first[keyList[nameOrder[i]]][0]["radius"].ToString()) * 2;
-                float distance = (max + (20 + plusMinus * 0) + float.Parse(root[rootName][0]["radius"].ToString()) * 2 + float.Parse(first[keyList[nameOrder[i]]][0]["radius"].ToString()) * (7 + plusMinus * 3 + (max - min) / -80));
+                float distance = (max + (20 + plusMinus * 0) + float.Parse(root[rootName][0]["radius"].ToString()) * 2 + float.Parse(first[keyList[nameOrder[i]]][0]["radius"].ToString()) * (8 + plusMinus * 3 + (max - min) / -90));
 
                 // 差分のマイナスが大きすぎる場合はルートの直径＋そのブロックの直径分離す
                 if (distance < minDistance)
@@ -1755,9 +1755,6 @@ public class CityCreater : MonoBehaviour
                     first[keyList[nameOrder[i]]][0]["x"] = Mathf.Cos((float)rad * radnumber) * distance;
                     first[keyList[nameOrder[i]]][0]["z"] = Mathf.Sin((float)rad * radnumber) * distance;
                 }
-                //first[keyList[nameOrder[i]]][0]["x"] = Mathf.Cos((float)rad * radnumber) * (max + (20 + plusMinus * 1) +  float.Parse(root[rootName][0]["radius"].ToString()) * 2 + float.Parse(first[keyList[nameOrder[i]]][0]["radius"].ToString()) * (7 + plusMinus * 3 + (max - min) / -100));
-                //first[keyList[nameOrder[i]]][0]["z"] = Mathf.Sin((float)rad * radnumber) * (max + (20 + plusMinus * 1) +  float.Parse(root[rootName][0]["radius"].ToString()) * 2 + float.Parse(first[keyList[nameOrder[i]]][0]["radius"].ToString()) * (7 + plusMinus * 3 + (max - min) / -100));
-
                 plusMinus *= -1;
                 radnumber++;
             }
