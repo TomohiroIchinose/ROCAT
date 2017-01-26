@@ -122,8 +122,8 @@ public class CityCreater : MonoBehaviour
         //StartCityCreater("test");
         //StartCityCreater("travatar");
         //StartCityCreater("cdec");
-        StartCityCreater("tensorflow");
-        //StartCityCreater("dynet");
+        //StartCityCreater("tensorflow");
+        StartCityCreater("dynet");
         //StartCityCreater("discourse");
         //StartCityCreater("crawlers");
 #else
@@ -303,9 +303,12 @@ public class CityCreater : MonoBehaviour
         rootCircle.name = root.Substring(1);
         rootCircle.tag = "Block";
 
+        rootCircle.GetComponent<Block>().SetMaterial(Color.cyan);
+
         // メタ情報
         var rootData = rootCircle.GetComponent<BlockData>();
         rootData.pathname = root.Substring(1);
+        rootData.center = true;
 
         if (root == rootDirName)
             rootData.blockname = "root";
@@ -336,6 +339,8 @@ public class CityCreater : MonoBehaviour
             var circleData = firstCircle.GetComponent<BlockData>();
             circleData.pathname = key.Substring(1);
             circleData.blockname = key.Substring(key.ToString().LastIndexOf("/") + 1);
+            circleData.center = false;
+            
 
             bool end = true;
             foreach(String name in dir)
@@ -349,11 +354,11 @@ public class CityCreater : MonoBehaviour
             if (end)
                 firstCircle.GetComponent<Block>().SetMaterial(Color.gray);
 
-            // ブロックの先にSATDがあるなら炎をつくる
+            // ブロックの先にSATDがあるならブロックを黄色に
             foreach (String name in satdFilesList)
             {
                 
-                if (name.Contains("/" + circleData.pathname) && !end && "/" + circleData.pathname != name.Substring(0, name.LastIndexOf(name.Substring(name.LastIndexOf("/")))))
+                if (name.Contains("/" + circleData.pathname + "/") && !end && "/" + circleData.pathname != name.Substring(0, name.LastIndexOf(name.Substring(name.LastIndexOf("/")))))
                 {
                     /*
                     //Debug.Log("/" + circleData.pathname + ", " + name.Substring(0, name.LastIndexOf(name.Substring(name.LastIndexOf("/")))));
@@ -1740,7 +1745,7 @@ public class CityCreater : MonoBehaviour
                 //Debug.Log(first[keyList[nameOrder[i]]][0]["name"]);
 
                 float minDistance = float.Parse(root[rootName][0]["radius"].ToString()) * 2 + float.Parse(first[keyList[nameOrder[i]]][0]["radius"].ToString()) * 2;
-                float distance = (max + (20 + plusMinus * 0) + float.Parse(root[rootName][0]["radius"].ToString()) * 2 + float.Parse(first[keyList[nameOrder[i]]][0]["radius"].ToString()) * (8 + plusMinus * 3 + (max - min) / -90));
+                float distance = float.Parse(root[rootName][0]["radius"].ToString()) * 2 + (max * (2 + plusMinus * 1 + (max - min) * (plusMinus + 1) / 100000) +  float.Parse(first[keyList[nameOrder[i]]][0]["radius"].ToString()) * (2 + first.Count / 2 + plusMinus * 15 * (max - min) / 10000 - (max - min) / 100));
 
                 // 差分のマイナスが大きすぎる場合はルートの直径＋そのブロックの直径分離す
                 if (distance < minDistance)
@@ -1748,8 +1753,9 @@ public class CityCreater : MonoBehaviour
                     first[keyList[nameOrder[i]]][0]["x"] = Mathf.Cos((float)rad * radnumber) * minDistance;
                     first[keyList[nameOrder[i]]][0]["z"] = Mathf.Sin((float)rad * radnumber) * minDistance;
                 }
-                // 最大値*20 + ルートの直径 + そのブロックの半径*7 + 外側ならブロックの半径*3内側ならブロックの半径*-3 + ブロックの半径*最大値と最小値の差分の-1/80
-                // ブロックの半径の最大・最小値の差が大きいほど内向きに補正がかかってブロックが遠くなりすぎなくなる…はず
+
+                // ブロックの半径の最大・最小値の差が大きいほど・ブロックの個数が大きいほど外に向かう 差が大きいほど内側と外側の差が広がる
+                // でも正直結構テキトー。偉い数学の先生に最適解を聞いた方がよさそう
                 else
                 {
                     first[keyList[nameOrder[i]]][0]["x"] = Mathf.Cos((float)rad * radnumber) * distance;

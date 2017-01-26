@@ -22,8 +22,10 @@ public class DirName : MonoBehaviour {
         this.transform.LookAt(MainCamera.transform);
         this.transform.Rotate(new Vector3(0, -180, 0));
 
+        float distance = Vector3.Distance(new Vector3(this.transform.localPosition.x, 400, this.transform.localPosition.z), MainCamera.transform.localPosition);
+
         //Debug.Log(Vector3.Distance(this.transform.localPosition, MainCamera.transform.localPosition));
-        if (Vector3.Distance(this.transform.localPosition, MainCamera.transform.localPosition) <= 600)
+        if (distance <= 600)
         {
             //Text.GetComponent<Renderer>().enabled = false;
             //Back.GetComponent<Renderer>().enabled = false;
@@ -36,15 +38,15 @@ public class DirName : MonoBehaviour {
         }
         else
         {
-            Text.GetComponent<Renderer>().enabled = true;
-            Back.GetComponent<Renderer>().enabled = true;
+            //Text.GetComponent<Renderer>().enabled = true;
+            //Back.GetComponent<Renderer>().enabled = true;
 
-            if (Vector3.Distance(this.transform.localPosition, MainCamera.transform.localPosition) >= 4000)
+            if (distance >= 4000)
             {
                 this.transform.localScale = new Vector3(5, 5, 5);
                 this.transform.localPosition = new Vector3(this.transform.localPosition.x, 800, this.transform.localPosition.z);
             }
-            else if (Vector3.Distance(this.transform.localPosition, MainCamera.transform.localPosition) >= 2500)
+            else if (distance >= 1500)
             {
                 this.transform.localScale = new Vector3(3, 3, 3);
                 this.transform.localPosition = new Vector3(this.transform.localPosition.x, 400, this.transform.localPosition.z);

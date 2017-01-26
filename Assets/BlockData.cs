@@ -7,4 +7,5 @@ public class BlockData : MonoBehaviour {
     public string pathname;
     public bool end;
     public bool insideSATD;
+    public bool center;
 }

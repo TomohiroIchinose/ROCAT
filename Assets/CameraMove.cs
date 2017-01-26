@@ -120,8 +120,8 @@ public class CameraMove : MonoBehaviour {
 
     }
 
-	void Update ()
-	{
+    void Update()
+    {
         if (!isControlAvailable) { return; }
         ControlByKeyboard();
 		ControlByMouse();
@@ -143,13 +143,21 @@ public class CameraMove : MonoBehaviour {
     // カメラをスタートさせる
     public void StartCamera()
     {
+        isControlAvailable = false;
+
+        // 土台を更新
+        ground = cc.GetGround();
+
         //this.transform.position = (new Vector3(ground.transform.position.x - ground.transform.localScale.x / 2 + 10, (float)100, ground.transform.position.z - ground.transform.localScale.z / 2 + 10));
-        this.transform.localPosition = new Vector3(0, 100, 0);
-        //this.transform.LookAt(ground.transform);
+        //this.transform.localPosition = new Vector3(0, 100, 0);
+
+        
 
         mostheight = MostHeighestBuilding();
         this.enabled = true;
 
+        this.transform.localPosition = new Vector3(ground.transform.localPosition.x - ground.transform.localScale.x / 2, mostheight / 2 + 500, ground.transform.localPosition.z - ground.transform.localScale.x / 2);
+        this.transform.LookAt(new Vector3(ground.transform.localPosition.x + ground.transform.localScale.x / 2, 0, ground.transform.localPosition.z + ground.transform.localScale.x / 2));
 
         //firstBlockDictionary.Clear();
         firstBlockDictionary = cc.GetFirstBlockList();
@@ -160,18 +168,19 @@ public class CameraMove : MonoBehaviour {
         }
 
         // 一番最初に置かれているブロックの方を見る
-        this.transform.LookAt(new Vector3(float.Parse(firstBlockDictionary[firstBlockDicitonalyKeys[0]][0]["x"].ToString()), 5, float.Parse(firstBlockDictionary[firstBlockDicitonalyKeys[0]][0]["z"].ToString())));
+        //this.transform.LookAt(new Vector3(float.Parse(firstBlockDictionary[firstBlockDicitonalyKeys[0]][0]["x"].ToString()), 5, float.Parse(firstBlockDictionary[firstBlockDicitonalyKeys[0]][0]["z"].ToString())));
 
         keyNum = 0;
 
-        // 土台を更新
-        ground = cc.GetGround();
+        
 
         dirName.text = cc.GetCurrentDir();
 
         // マップ用カメラの高さを調整
         float height = (ground.transform.localScale.x > ground.transform.localScale.z ? ground.transform.localScale.x : ground.transform.localScale.z) * 0.5f / Mathf.Tan(rcm.GetComponent<Camera>().fieldOfView * 0.5f * Mathf.Deg2Rad);
         rcm.transform.position = (new Vector3(ground.transform.position.x, height, ground.transform.position.z));
+
+        isControlAvailable = true;
 
     }
 
@@ -783,15 +792,21 @@ public class CameraMove : MonoBehaviour {
     float MostHeighestBuilding()
     {
         float max = 0;
-        IList buildings = cc.GetCity()["buildings"] as IList;
-        foreach (Dictionary<string, object> building in buildings)
+
+        GameObject[] normalBuildingList = GameObject.FindGameObjectsWithTag("NormalBuilding");
+        GameObject[] satdBuildingList = GameObject.FindGameObjectsWithTag("SATDBuilding");
+
+        foreach(GameObject building in normalBuildingList)
         {
-            if (float.Parse(building["height"].ToString()) >= max)
-            {
-                max = float.Parse(building["height"].ToString());
-            }
+            if (building.transform.localScale.z * 10 >= max)
+                max = building.transform.localScale.z * 10;
         }
-        
+
+        foreach (GameObject building in satdBuildingList)
+        {
+            if (building.transform.localScale.z * 10 >= max)
+                max = building.transform.localScale.z * 10;
+        }
         return max;
     }
 }
