@@ -86,7 +86,7 @@ public class ItemListManager : MonoBehaviour {
                 else
                 {
                     // 値を設定(iにすると最初の1個を飛ばしちゃうのでi-1でしている)
-                    string text = arrangedList[i - 1]["name"].ToString().Substring(arrangedList[i - 1]["name"].ToString().IndexOf(".git") + 5);
+                    string text = "/" + arrangedList[i - 1]["name"].ToString().Substring(arrangedList[i - 1]["name"].ToString().IndexOf(".git") + 5);
 
                     _itemName.text = text;
                     _itemNum.text = arrangedList[i -1]["num"].ToString();

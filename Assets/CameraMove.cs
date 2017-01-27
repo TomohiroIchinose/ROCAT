@@ -621,7 +621,7 @@ public class CameraMove : MonoBehaviour {
                 }
                 else
                 {
-                    block_name.text = block.transform.name.Substring(block.transform.name.IndexOf(".git") + 5);
+                    block_name.text = "/" + block.transform.name.Substring(block.transform.name.IndexOf(".git") + 5);
                 }
                 block_back.color = new Color(block_back.color.r, block_back.color.g, block_back.color.b, 0.7f);
 
