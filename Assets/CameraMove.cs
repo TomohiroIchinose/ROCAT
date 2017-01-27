@@ -377,6 +377,7 @@ public class CameraMove : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0))
         {
+            /*
             MouseClicked(building, block, marker);
             RightMouseClicked(building);
             if (block != null)
@@ -384,15 +385,18 @@ public class CameraMove : MonoBehaviour {
                 //Debug.Log("###Remake###");
                 cc.RemakeCity("/" + block.name, false);
             }
+            */
 
         }
 
         if (Input.GetMouseButton(0) && isMouseAvailable || !isMouseAvailable)
         {
+            /*
             float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * CAMERA_CONTROL_SENSITIVITY;
             rotationY += Input.GetAxis("Mouse Y") * CAMERA_CONTROL_SENSITIVITY;
             rotationY = Mathf.Clamp(rotationY, MIN_ROTATION_Y, MAX_ROTATION_Y);
             transform.localEulerAngles = new Vector3(rotationY * -1, rotationX, 0);
+            */
             
         }
 
