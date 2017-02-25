@@ -91,7 +91,7 @@ public class CameraMove : MonoBehaviour {
 
         satdlist = list.transform.GetComponentInChildren<Image>();
 
-        list.enabled = false;
+        list.enabled = true;
 
         info.enabled = false;
         //infoText = info.transform.GetComponentInChildren<Text>();
@@ -290,7 +290,7 @@ public class CameraMove : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            list.enabled = !list.enabled;
+            //list.enabled = !list.enabled;
         }
 
 
@@ -789,7 +789,7 @@ public class CameraMove : MonoBehaviour {
 
             MouseClicked(search_block.GetComponent<Building>(), null, null);
             RightMouseClicked(search_block.GetComponent<Building>());
-            list.enabled = !list.enabled;
+            //list.enabled = !list.enabled;
         }
     }
 
