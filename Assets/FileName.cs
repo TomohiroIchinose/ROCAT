@@ -20,10 +20,12 @@ public class FileName : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        // メインカメラの方を向く
         this.transform.LookAt(MainCamera.transform);
         this.transform.Rotate(new Vector3(0, -180, 0));
 
         //Debug.Log(Vector3.Distance(this.transform.localPosition, MainCamera.transform.localPosition));
+        // すごく遠いorすごく近いと非表示にする
         if (Vector3.Distance(this.transform.localPosition, MainCamera.transform.localPosition) >= 2000 || Vector3.Distance(this.transform.localPosition, MainCamera.transform.localPosition) <= 300)
         {
             Text.GetComponent<Renderer>().enabled = false;
@@ -31,6 +33,7 @@ public class FileName : MonoBehaviour {
             //Text.GetComponent<TextMesh>().color = new Color(Text.GetComponent<TextMesh>().color.r, Text.GetComponent<TextMesh>().color.g, Text.GetComponent<TextMesh>().color.b, 0);
             //Back.GetComponent<MeshRenderer>().material.color = new Color(Back.GetComponent<MeshRenderer>().material.color.r, Back.GetComponent<MeshRenderer>().material.color.g, Back.GetComponent<MeshRenderer>().material.color.b, 0);
         }
+        // 程々の遠さのときに表示する
         else
         {
             Text.GetComponent<Renderer>().enabled = true;
@@ -40,11 +43,13 @@ public class FileName : MonoBehaviour {
         }
     }
 
+    // テキスト部分に名前をセットする
     public void SetNameText(string name)
     {
         Text.GetComponent<TextMesh>().text = name;
     }
 
+    // テキスト部分のサイズに応じて背景部分のサイズを変更する
     public void SetBackSize()
     {
         Bounds textBounds = Text.GetComponent<TextMesh>().GetComponent<Renderer>().bounds;

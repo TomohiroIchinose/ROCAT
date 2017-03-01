@@ -16,6 +16,7 @@ public class FireBehaviour : MonoBehaviour {
 
         //Debug.Log(this.name + ":" + Vector2.Distance(new Vector2(this.transform.position.x, this.transform.position.z), new Vector2(mainCamera.transform.position.x, mainCamera.transform.position.z)));
 
+        // 炎がメインカメラに近いと見えるようになって遠いと見えなくなるようにする
         if (Vector2.Distance(new Vector2(this.transform.position.x, this.transform.position.z), new Vector2(mainCamera.transform.position.x, mainCamera.transform.position.z)) < 2500)
         {
             //Debug.Log(this.name + ":ちかい");

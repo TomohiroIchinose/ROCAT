@@ -16,26 +16,29 @@ public class Block : MonoBehaviour {
         SetMaterial(originalColor);
     }
 
+    // オンマウスのとき
     public void Selected()
     {
         SetMaterial(Block.SELECTED_COLOR);
     }
 
+    // オンマウスの状態が解除されたとき
     public void Deselected()
     {
         //SetMaterial(originalColor);
         //SetMaterial((Resources.Load("Block", typeof(Material)) as Material).color);
 
         if (this.GetComponent<BlockData>().end)
-            SetMaterial(Block.END_COLOR);
+            SetMaterial(Block.END_COLOR);                   // サブディレクトリがないディレクトリの場合
         else if (this.GetComponent<BlockData>().insideSATD)
-            SetMaterial(Block.INSIDE_COLOR);
+            SetMaterial(Block.INSIDE_COLOR);                // サブディレクトリにSATDがあるディレクトリの場合
         else if (this.GetComponent<BlockData>().center)
-            SetMaterial(Block.CENTER_COLOR);
+            SetMaterial(Block.CENTER_COLOR);                // 中心にくるディレクトリの場合
         else
-            SetMaterial((Resources.Load("Sidewalk 1", typeof(Material)) as Material).color);
+            SetMaterial((Resources.Load("Sidewalk 1", typeof(Material)) as Material).color);    // サブディレクトリにSATDがないディレクトリの場合
     }
 
+    // マテリアルを設定する
     public void SetMaterial(Color color)
     {
         Material material = null;
@@ -53,6 +56,7 @@ public class Block : MonoBehaviour {
         GetComponent<Renderer>().sharedMaterial = material;
     }
 
+    // 他の土台にぶつかったか調べる（力学モデルで配置しようとしていたときのモノ、現在は使っていません）
     void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Block")

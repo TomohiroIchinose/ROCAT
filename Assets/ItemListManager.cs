@@ -39,6 +39,7 @@ public class ItemListManager : MonoBehaviour {
         cm = GameObject.Find("Main Camera").GetComponent<CameraMove>();
     }
 
+    // Startと同時にするとJsonファイルを読めずにエラーになるのでOnGUIで動かす
     void OnGUI () {
 
         // そのままだとループするのでcheckで1回だけ処理
@@ -75,6 +76,7 @@ public class ItemListManager : MonoBehaviour {
                 _itemName = node.transform.FindChild("FileName").GetComponent<Text>();
                 _itemNum = node.transform.FindChild("Num").GetComponent<Text>();
 
+                // 一行目の項目は説明なので別処理
                 if (first)
                 {
                     _itemName.text = "Files containing SATD";
@@ -91,18 +93,22 @@ public class ItemListManager : MonoBehaviour {
                     _itemName.text = text;
                     _itemNum.text = arrangedList[i -1]["num"].ToString();
 
-                    // クリック時のイベントを付加
-                    string fullDir = arrangedList[i - 1]["name"].ToString();
+
+                    // クリック時のイベントを付加するための情報生成
+                    string fullDir = arrangedList[i - 1]["name"].ToString();    // ファイルのフルパス
 
                     IList satdList = arrangedList[i - 1]["SATD"] as IList;
                     string satdListString = ":";
 
+                    // SATDのある行番号を順番に並べていく
                     for (int j = 0; j < satdList.Count; j++)
                     {
                         satdListString = satdListString + (int.Parse(satdList[j].ToString()) + 1).ToString() + ",";
                     }
                     satdListString = satdListString.Substring(0, satdListString.Length - 1);
 
+                    // 項目をクリックしたときにClickButtonメソッドが呼ばれるようにする
+                    // fullDir+satdListString はビルのオブジェクトの名前と一致するようにしている
                     node.onClick.AddListener(() => ClickButton(fullDir + satdListString));
                 }
             }

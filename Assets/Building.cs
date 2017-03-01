@@ -16,21 +16,24 @@ public class Building : MonoBehaviour
         SetMaterial(originalColor);
 	}
 
+    // オンマウスのとき
 	public void Selected()
 	{
 		SetMaterial(Building.SELECTED_COLOR);
 	}
 
+    // オンマウスの状態が解除されたとき
 	public void Deselected()
 	{
         //SetMaterial(originalColor);
         //SetMaterial((Resources.Load("Building", typeof(Material)) as Material).color);
         if (this.tag == "NormalBuilding")
-            SetMaterial((Resources.Load("Building_001_5", typeof(Material)) as Material).color);
+            SetMaterial((Resources.Load("Building_001_5", typeof(Material)) as Material).color);    // 普通のビルの場合
         else
-            SetMaterial(Building.SATD_COLOR);
+            SetMaterial(Building.SATD_COLOR);                                                       // SATDがあるビルの場合
     }
 
+    // マテリアルを設定する
 	public void SetMaterial(Color color)
 	{
 		Material material = null;

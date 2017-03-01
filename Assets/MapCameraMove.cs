@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class RaderCameraMove : MonoBehaviour {
+public class MapCameraMove : MonoBehaviour {
 
     public GameObject mainCamera;
     private Block selectedBlock;
@@ -29,15 +29,17 @@ public class RaderCameraMove : MonoBehaviour {
         ControlByMouse();
     }
 
+    // マウス操作に関する関数
     void ControlByMouse()
     {
         Block block = GetRaycastHitBlock();
 
         HighlighMouseOverBlock(block);
 
-
+        // クリックしたときの動作
         if (Input.GetMouseButtonDown(0))
         {
+            // 土台をクリックしていたらメインカメラで映っている画面で土台をクリックした時と同じ動作をする
             if (block != null)
             {
                 //Debug.Log("###Remake###");
@@ -47,6 +49,7 @@ public class RaderCameraMove : MonoBehaviour {
         }
     }
 
+    // マウスカーソル上にあるオブジェクトを返す（何もないor土台以外の場合はnull）
     private Block GetRaycastHitBlock()
     {
         RaycastHit hit;
@@ -60,22 +63,26 @@ public class RaderCameraMove : MonoBehaviour {
         return null;
     }
 
+    // マップ上の土台の上にマウスを乗せたときの動作（メインカメラで映っている画面で土台にマウスを載せた時と同じ動作をするようにしている）
     private void HighlighMouseOverBlock(Block block)
     {
         if (block != null)
         {
             if (selectedBlock == null || selectedBlock != block)
             {
+                // マウスが乗っている土台がrootディレクトリの場合
                 if (block.transform.name.IndexOf(".git") + 4 == block.transform.name.Length)
                 {
                     block_name.text = "(root)";
                 }
+                // rootディレクトリ以外のディレクトリの場合
                 else
                 {
                     block_name.text = block.transform.name.Substring(block.transform.name.IndexOf(".git") + 5);
                 }
-                block_back.color = new Color(block_back.color.r, block_back.color.g, block_back.color.b, 0.7f);
+                block_back.color = new Color(block_back.color.r, block_back.color.g, block_back.color.b, 0.7f); // ディレクトリ名を出す部分を表示する
 
+                // 土台から土台にマウスが移る場合、先に乗っていた方の土台からマウスが離れたことにするよう処理
                 if (selectedBlock)
                 {
                     selectedBlock.Deselected();
@@ -85,6 +92,7 @@ public class RaderCameraMove : MonoBehaviour {
                 selectedBlock.Selected();
             }
         }
+        // 土台以外のところにマウスがあるとき
         else
         {
             if (selectedBlock)
@@ -92,8 +100,8 @@ public class RaderCameraMove : MonoBehaviour {
                 selectedBlock.Deselected();
                 selectedBlock = null;
             }
-            block_name.text = "";
-            block_back.color = new Color(block_back.color.r, block_back.color.g, block_back.color.b, 0);
+            block_name.text = "";   // 
+            block_back.color = new Color(block_back.color.r, block_back.color.g, block_back.color.b, 0);        // ディレクトリ名を出す部分を非表示にする
         }
     }
 }

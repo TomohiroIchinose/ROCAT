@@ -16,6 +16,7 @@ public class UpperButton : MonoBehaviour {
 	
 	}
 
+    // ボタンクリック時に都市中央にある土台をクリックした時と同じ動作をする
     public void OnClick()
     {
         //Debug.Log(cc.GetRootName() + this.transform.root.gameObject.GetComponentInChildren<Text>().text.Substring(0, this.transform.root.gameObject.GetComponentInChildren<Text>().text.LastIndexOf("/")));

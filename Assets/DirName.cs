@@ -19,11 +19,13 @@ public class DirName : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        // メインカメラの方を向く
         this.transform.LookAt(MainCamera.transform);
         this.transform.Rotate(new Vector3(0, -180, 0));
 
         float distance = Vector3.Distance(new Vector3(this.transform.localPosition.x, 400, this.transform.localPosition.z), MainCamera.transform.localPosition);
 
+        // 距離に応じて大きさと位置を調整する
         //Debug.Log(Vector3.Distance(this.transform.localPosition, MainCamera.transform.localPosition));
         if (distance <= 600)
         {
@@ -62,11 +64,13 @@ public class DirName : MonoBehaviour {
         }
     }
 
+    // テキスト部分に名前をセットする
     public void SetNameText(string name)
     {
         Text.GetComponent<TextMesh>().text = name;
     }
 
+    // テキスト部分のサイズに応じて背景部分のサイズを変更する
     public void SetBackSize()
     {
         Bounds textBounds = Text.GetComponent<TextMesh>().GetComponent<Renderer>().bounds;

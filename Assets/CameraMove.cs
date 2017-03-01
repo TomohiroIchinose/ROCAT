@@ -9,62 +9,63 @@ using MiniJSON;
 //using CityCreater;
 
 public class CameraMove : MonoBehaviour {
+
 	const float SPEED = 0.1f;
-	public Canvas canvas;
-    public Canvas canvas2;
-	public Text file_name;
+
+	public Canvas canvas;   // 画面下に表示されるファイル名用Canvas
+    public Canvas canvas2;  // 画面下に表示されるディレクトリ名用Canvas
+
+    // 画面下に表示されるファイル名orディレクトリ名用のTextとImage
+    public Text file_name;
     public Text block_name;
     public Image file_back;
     public Image block_back;
-	private string src_txt = "";
+
+    // CityCreaterクラス
 	public CityCreater cc;
-	public string ta;
-	public Color preColor;
-	public Material viewMaterial;
-    public Material defaultBuildingMaterial;
-    public Material defaultBlockingMaterial;
-    public Material defaultMarkeringMaterial;
-    private bool view_src;
 
-    public bool isControlAvailable = false;
-    private bool isMouseAvailable = true;
-	private Building selectedBuilding;
-    private Block selectedBlock;
-    private Marker selectedMarker;
 
+    public bool isControlAvailable = false;     // カメラを操作できるかどうかの判定
+    private bool isMouseAvailable = true;       // 常にマウスに追従するかどうかの判定
+	private Building selectedBuilding;          // 現在マウスカーソルが乗っているビル
+    private Block selectedBlock;                // 現在マウスカーソルが乗っている土台
+
+    // カメラ制御用
 	private float rotationY = 0f;
 	private const float CAMERA_SPEED = 2000f;
 	private const float CAMERA_CONTROL_SENSITIVITY = 3F;
 	private const float MIN_ROTATION_Y = -90F;
 	private const float MAX_ROTATION_Y = 90F;
 
-    private GameObject ground;
-    private float mostheight;
+    private GameObject ground;      // 地面
+    private float mostheight;       // 最も高いビルの高さ
 
-    public Camera mapCamera;
-    public Camera sensorCamera;
+    public Camera mapCamera;        // マップのカメラ
+    public Camera sensorCamera;     // レーダーのカメラ
+    public MapCameraMove rcm;       // マップのカメラの操作用
 
+    // SATDのあるファイルのリスト用のCanvasとImage
     public Canvas list;
     public Image satdlist;
 
+    // ファイルの情報のウィンドウ用のCanvasとText
     public Canvas info;
     public Text infoText;
     public Text nameText;
 
+    // 周囲の土台の辞書とキーのリストと個数
     public Dictionary<String, List<Dictionary<String, object>>> firstBlockDictionary;
     public List<String> firstBlockDicitonalyKeys;
     public int keyNum;
 
+    // 現在中心にあるディレクトリの表示用のCanvasとText
     public Canvas currentDir;
     public Text dirName;
 
-    private float _lastTimeClick;
 
-    public RaderCameraMove rcm;
 
     // Use this for initialization
     void Start () {
-		view_src = false;
 
         this.enabled = false;
 
@@ -77,7 +78,7 @@ public class CameraMove : MonoBehaviour {
 
         cc = GameObject.Find ("CityCreater").GetComponent<CityCreater> ();
         list = GameObject.Find("List").GetComponent<Canvas>();
-        rcm = GameObject.Find("RadarCamera").GetComponent<RaderCameraMove>();
+        rcm = GameObject.Find("MapCamera").GetComponent<MapCameraMove>();
 
         file_name = canvas.transform.GetComponentInChildren<Text>();
         file_back = canvas.transform.GetComponentInChildren<Image>();
@@ -100,20 +101,6 @@ public class CameraMove : MonoBehaviour {
 
         dirName = currentDir.transform.GetComponentInChildren<Text>();
 
-        /*
-		foreach( Transform child in canvas.transform){
-			file_name = child.gameObject.GetComponent<Text>();
-            //block_name = child.gameObject.GetComponent<Text>();
-            file_name.text = "";
-            //block_name.text = "";
-		}
-        
-        foreach (Transform child in canvas2.transform)
-        {
-            block_name = child.gameObject.GetComponent<Text>();
-            block_name.text = "";
-        }
-        */
         ground = cc.GetGround();
 
         mapCamera.enabled = true;
@@ -122,11 +109,12 @@ public class CameraMove : MonoBehaviour {
 
     void Update()
     {
+        // 常にキーボードとマウス操作を受け付ける
         if (!isControlAvailable) { return; }
         ControlByKeyboard();
 		ControlByMouse();
 
-        // 土台？からはみ出ないように調整
+        // 地面からメインカメラがはみ出ないように座標を調整
         if (ground != null)
         {
             this.transform.position = (new Vector3(Mathf.Clamp(this.transform.position.x, (ground.transform.position.x - ground.transform.localScale.x / 2), (ground.transform.position.x + ground.transform.localScale.x / 2)),
@@ -147,18 +135,15 @@ public class CameraMove : MonoBehaviour {
 
         // 土台を更新
         ground = cc.GetGround();
-
-        //this.transform.position = (new Vector3(ground.transform.position.x - ground.transform.localScale.x / 2 + 10, (float)100, ground.transform.position.z - ground.transform.localScale.z / 2 + 10));
-        //this.transform.localPosition = new Vector3(0, 100, 0);
-
-        
-
+       
+        // 一番高いビルの高さを調べてメインカメラが動ける範囲を決めてからカメラを配置
         mostheight = MostHeighestBuilding();
         this.enabled = true;
 
         this.transform.localPosition = new Vector3(ground.transform.localPosition.x - ground.transform.localScale.x / 2, mostheight / 2 + 500, ground.transform.localPosition.z - ground.transform.localScale.x / 2);
         this.transform.LookAt(new Vector3(ground.transform.localPosition.x + ground.transform.localScale.x / 2, 0, ground.transform.localPosition.z + ground.transform.localScale.x / 2));
 
+        // 周りにある土台の一覧を作成する
         //firstBlockDictionary.Clear();
         firstBlockDictionary = cc.GetFirstBlockList();
         firstBlockDicitonalyKeys.Clear();
@@ -167,16 +152,11 @@ public class CameraMove : MonoBehaviour {
             firstBlockDicitonalyKeys.Add(key);
         }
 
-        // 一番最初に置かれているブロックの方を見る
-        //this.transform.LookAt(new Vector3(float.Parse(firstBlockDictionary[firstBlockDicitonalyKeys[0]][0]["x"].ToString()), 5, float.Parse(firstBlockDictionary[firstBlockDicitonalyKeys[0]][0]["z"].ToString())));
-
         keyNum = 0;
-
-        
 
         dirName.text = cc.GetCurrentDir();
 
-        // マップ用カメラの高さを調整
+        // マップ用カメラの位置を調整
         float height = (ground.transform.localScale.x > ground.transform.localScale.z ? ground.transform.localScale.x : ground.transform.localScale.z) * 0.5f / Mathf.Tan(rcm.GetComponent<Camera>().fieldOfView * 0.5f * Mathf.Deg2Rad);
         rcm.transform.position = (new Vector3(ground.transform.position.x, height, ground.transform.position.z));
 
@@ -184,22 +164,24 @@ public class CameraMove : MonoBehaviour {
 
     }
 
+    // キーボード操作関連の関数
     private void ControlByKeyboard()
 	{
         Building building = GetRaycastHitBuilding();
         Block block = GetRaycastHitBlock();
-        Marker marker = GetRaycastHitMarker();
 
         Rigidbody rigidBody = gameObject.GetComponent<Rigidbody>();
 		Vector3 velocity = Vector3.zero;
 
         float camera = CAMERA_SPEED;
 
+        // 左シフトで加速
         if(Input.GetKey(KeyCode.LeftControl))
         {
             camera = camera * 5;
         }
 
+        // 矢印キーまたはWASDキーで移動
 		if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
 		{
 			velocity += transform.forward * camera;
@@ -220,6 +202,7 @@ public class CameraMove : MonoBehaviour {
 
 		rigidBody.velocity = velocity;
 
+        // スペースキーで上昇or下降
 		if (Input.GetKey(KeyCode.Space))
 		{
             if (this.transform.position.y > 10 && Input.GetKey(KeyCode.LeftShift))
@@ -233,67 +216,56 @@ public class CameraMove : MonoBehaviour {
                 rigidBody.velocity = transform.up * camera;
         }
         
+        // カメラが常にマウスに追従するかどうか切り替え
 		if (Input.GetKeyDown(KeyCode.E))
 		{
 			isMouseAvailable = !isMouseAvailable;
 		}
         
+        // 中心の土台に移動
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            /*
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                this.transform.position = (new Vector3(ground.transform.position.x + ground.transform.localScale.x / 2 - 10, (float)100, ground.transform.position.z + ground.transform.localScale.z / 2 - 10));
-            }
-            else
-            {
-                this.transform.position = (new Vector3(ground.transform.position.x - ground.transform.localScale.x / 2 + 10, (float)100, ground.transform.position.z - ground.transform.localScale.z / 2 + 10));
-            }
-            
-                
-            this.transform.LookAt(ground.transform);
-            */
+
             this.transform.localPosition = new Vector3(0, 100, 0);
             this.transform.localRotation = new Quaternion(0,0,0,0);
             keyNum = 0;
 
-            // 一番最初に置かれているブロックの方を見る
+            // 一番最初に置かれている土台の方（＝中央）を見る
             this.transform.LookAt(new Vector3(float.Parse(firstBlockDictionary[firstBlockDicitonalyKeys[0]][0]["x"].ToString()), 5, float.Parse(firstBlockDictionary[firstBlockDicitonalyKeys[0]][0]["z"].ToString())));
         }
 
-            if (Input.GetKeyDown(KeyCode.V))
-		{
-			//view_src = !view_src;
-		}
-
+        // マップとレーダー切り替え
         if (Input.GetKeyDown(KeyCode.C))
         {
             mapCamera.enabled = !mapCamera.enabled;
             sensorCamera.enabled = !sensorCamera.enabled;
         }
 
+        // 後ろに大きく移動
         if (Input.GetKeyDown(KeyCode.Z))
         {
             this.transform.position += this.transform.forward * -3000;
         }
 
+        // 前に大きく移動
         if (Input.GetKeyDown(KeyCode.Q))
         {
             this.transform.position += this.transform.forward * 3000;
         }
 
+        // 真後ろを向く
         if (Input.GetKeyDown(KeyCode.X))
         {
             this.transform.rotation = this.transform.rotation * Quaternion.Euler(0, 180, 0);
         }
 
-
+        // SATDのあるファイルのリスト表示
         if (Input.GetKeyDown(KeyCode.F))
         {
             list.enabled = !list.enabled;
         }
 
-
+        // JKLIキーでカメラ操作
         if (Input.GetKeyDown(KeyCode.J))
         {
             this.transform.rotation = this.transform.rotation * Quaternion.Euler(0, -10, 0);
@@ -314,28 +286,29 @@ public class CameraMove : MonoBehaviour {
             this.transform.rotation = this.transform.rotation * Quaternion.Euler(10, 0, 0);
         }
 
+        // ,キーでカメラの角度をリセット
         if (Input.GetKeyDown(KeyCode.Comma))
         {
             this.transform.rotation = this.transform.rotation * Quaternion.Euler(-this.transform.localEulerAngles.x, 0, -this.transform.localEulerAngles.z);
         }
 
+        // Enterキーでマウスクリックと同じ動作
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            MouseClicked(building, block, marker);
+            MouseClicked(building, block);
         }
-
-
         
+        // Tabキーで周囲の土台へワープ        
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            // left
+            // ABC順
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 keyNum--;
                 if (keyNum == -1)
                     keyNum = firstBlockDictionary.Count - 1;
             }
-            // right
+            // ABC順の逆
             else
             {
                 keyNum++;
@@ -348,6 +321,7 @@ public class CameraMove : MonoBehaviour {
         
     }
 
+    // マウス操作関連の関数
 	private void ControlByMouse()
 	{
         float wheel = Input.GetAxis("Mouse ScrollWheel");
@@ -355,61 +329,51 @@ public class CameraMove : MonoBehaviour {
         Block block = GetRaycastHitBlock();
         Building building = GetRaycastHitBuilding();
         
-        Marker marker = GetRaycastHitMarker();
         HighlighMouseOverBuilding(building);
         HighlighMouseOverBlock(block);
 
+        // 右クリックしたとき
         if (Input.GetMouseButtonDown(1))
 		{
             //RightMouseClicked(building);
-            
-                
 		}
 
-        // if (!isMouseAvailable) {return;}
-
-        
+        // マウスホイールが動かされたとき
         if(wheel != 0)
         {
             this.transform.position += this.transform.forward * wheel * ground.transform.localScale.x / 20;
         }
         
-
+        // 左クリックしたとき
         if (Input.GetMouseButtonDown(0))
         {
-            MouseClicked(building, block, marker);
-            RightMouseClicked(building);
+            MouseClicked(building, block);
+            BuildingInfo(building);
+
+            // 土台がクリックされた場合は都市を再構成
             if (block != null)
             {
-                //Debug.Log("###Remake###");
                 cc.RemakeCity("/" + block.name, false);
             }
 
         }
 
+        // マウスカーソルの位置にメインカメラを向ける
         if (Input.GetMouseButton(0) && isMouseAvailable || !isMouseAvailable)
         {
             float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * CAMERA_CONTROL_SENSITIVITY;
             rotationY += Input.GetAxis("Mouse Y") * CAMERA_CONTROL_SENSITIVITY;
             rotationY = Mathf.Clamp(rotationY, MIN_ROTATION_Y, MAX_ROTATION_Y);
-            transform.localEulerAngles = new Vector3(rotationY * -1, rotationX, 0);
-            
+            transform.localEulerAngles = new Vector3(rotationY * -1, rotationX, 0);    
         }
 
-        /*
-        if(Input.GetMouseButtonDown(2))
-        {
-            this.transform.position += this.transform.forward * 2000;
-        }
-        */
     }
 
-    private void RightMouseClicked(Building building)
+    // ビル（＝ファイル）の情報を表示する
+    private void BuildingInfo(Building building)
     {
         if(building != null)
         {
-            //Debug.Log(building.GetComponent<BuildingData>().filename);
-
             nameText.text = building.GetComponent<BuildingData>().pathname;
 
             infoText.text = "LOC:" + building.GetComponent<BuildingData>().loc.ToString() +
@@ -422,9 +386,11 @@ public class CameraMove : MonoBehaviour {
 
             infoText.text = infoText.text.Substring(0, infoText.text.Length - 2) + "\n";
 
+            // ウィンドウを表示する
             if (!info.enabled)
                 info.enabled = true;
         }
+        // ビル以外のところをクリックしていた時はウィンドウを消す
         else
         {
             infoText.text = "null";
@@ -433,28 +399,29 @@ public class CameraMove : MonoBehaviour {
         }
     }
 
-	private void MouseClicked(Building building, Block block, Marker marker)
+    // マウスをクリックしたときにJavascriptを呼び出す
+	private void MouseClicked(Building building, Block block)
 	{
-        string path;
-        string filename;
-        string fileFullPath;
-        string type;
-        string satd = "";
+        string path;            // ファイルorディレクトリのパス
+        string filename;        // ファイル名
+        string fileFullPath;    // サーバにクローンしてあるファイルにアクセスするためのパス
+        string type;            // ファイルか土台か
+        string satd = "";       // SATDの一覧
 
-        if (building == null && marker == null)
+        if (building == null)
         {
             filename = "";
             fileFullPath = null;
 
             // ブロックをクリック
-            if (block != null && marker == null)
+            if (block != null)
             {
                 type = "block";
-                path = SearchPathFromFileNameforBlock("/" + block.transform.name);
-
+                //path = SearchPathFromFileNameforBlock("/" + block.transform.name);              
+                path = "/" + block.GetComponent<BlockData>().pathname;
 
                 // -------------for Normal repository---------------
-                
+
                 // ディレクトリがrootだったらrootに書き換える
                 if (path.IndexOf(".git") + 4 == path.Length)
                 {
@@ -467,6 +434,7 @@ public class CameraMove : MonoBehaviour {
                 }
                 
                 // -------------------------------------------------
+
 
                 // ---------------for Histrage---------------------
                 /*
@@ -485,53 +453,27 @@ public class CameraMove : MonoBehaviour {
                 path = "";
             }
         }
-        // ビルかマーカーををクリック
+        // ビルをクリック
         else
         {
-            // ビルをクリック
-            if (building != null)
+
+            type = "building";
+
+            filename = building.GetComponent<BuildingData>().filename;
+
+            if (building.GetComponent<BuildingData>().satd.Count > 0)
             {
-                type = "building";
-                
-                filename = (building.transform.name.Substring(building.transform.name.LastIndexOf("/") + 1));
-
-                int slashnum = filename.LastIndexOf(":");
-                filename = filename.Substring(0, slashnum);
-
-                if (slashnum + 1 != building.transform.name.Length)
+                for (int i = 0; i < building.GetComponent<BuildingData>().satd.Count; i++)
                 {
-                    satd = building.transform.name.Substring(building.transform.name.LastIndexOf("/") + 1).Substring(slashnum + 1, building.transform.name.Substring(building.transform.name.LastIndexOf("/") + 1).Length - slashnum - 1);
-                    //Debug.Log(satd);
-                    //satd = building.transform.name.Substring(slashnum + 1, building.transform.name.Length - slashnum - 1);
+                    satd = satd + building.GetComponent<BuildingData>().satd[i] + ",";
                 }
-                //Debug.Log(satd);
-                //Debug.Log(filename);
-
+                satd = satd.Substring(0, satd.Length - 1);
             }
-            // マーカーをクリック
-            else
-            {
-                type = "marker";
-
-                filename = (marker.transform.name.Substring(marker.transform.name.LastIndexOf("/") + 1));
-
-                int slashnum = filename.LastIndexOf(":");
-                filename = filename.Substring(0, slashnum);
-
-                satd = marker.transform.name.Substring(marker.transform.name.LastIndexOf("/") + 1).Substring(slashnum + 1, marker.transform.name.Substring(marker.transform.name.LastIndexOf("/") + 1).Length - slashnum - 1);
-                //Debug.Log(satd);
-                //satd = marker.transform.name.Substring(slashnum + 1, marker.transform.name.Length - slashnum - 1);
-
-            }
-            //path = SearchPathFromFileName(filename);
-            //Debug.Log(path);
+            
 
             // --------------for Normal repository--------------
 
-            //fileFullPath = path;
             fileFullPath = building.GetComponent<BuildingData>().fullpath;
-            //Debug.Log(fileFullPath);
-            //path = path.Substring(path.IndexOf(".git") + 5);
             path = building.GetComponent<BuildingData>().pathname;
             fileFullPath = "../" + fileFullPath.Substring(fileFullPath.IndexOf("repository"));
 
@@ -542,6 +484,7 @@ public class CameraMove : MonoBehaviour {
             }
 
             // -------------------------------------------------
+
 
             // ---------for Histrage repository-----------------
             /*
@@ -556,75 +499,71 @@ public class CameraMove : MonoBehaviour {
             path = path + "---" + filename;
             */
             // -------------------------------------------------
+
+
+            
         }
+
+// Unity以外のトコで実行したときにHTMLファイルのJavascriptの関数を呼び出す
 #if UNITY_EDITOR
-        //Debug.Log(path);
-        //Debug.Log(filename);
-        //Debug.Log(fileFullPath);
+
 #else
 			        Application.ExternalCall("OnBuildingClick", path , filename, fileFullPath, type, satd);
 #endif
-
-
-
-        /*
-		if (building == null) {return;}
-		string path = SearchPathFromFileName(building.transform.name);
-		src_txt = ReadFile(path);
-        */
     }
 
+    // ビルにマウスを合わせたときの動作
     private void HighlighMouseOverBuilding(Building building)
 	{
 		if (building != null)
 		{
 			if (selectedBuilding == null || selectedBuilding != building){
 				file_name.text = building.transform.name.Substring(building.transform.name.LastIndexOf("/") + 1);
-                file_back.color = new Color(file_back.color.r, file_back.color.g, file_back.color.b, 0.7f);
+                file_back.color = new Color(file_back.color.r, file_back.color.g, file_back.color.b, 0.7f);     // ファイル名を出す部分を表示する
 
+                // ビルからビルにマウスが動いたときに先にマウスが乗っていた方のビルの選択を解除
                 if (selectedBuilding)
 				{
-                    //selectedBuilding.GetComponent<Renderer>().material = defaultBuildingMaterial;
-                    //selectedBuilding.GetComponent<Renderer>().material.color = preColor;
                     selectedBuilding.Deselected();
                 }
 
 				selectedBuilding = building;
 				selectedBuilding.Selected();
-                //preColor = selectedBuilding.GetComponent<Renderer>().material.color;
-                //selectedBuilding.GetComponent<Renderer>().material = viewMaterial;
 			}
 		}
+        // ビル以外にマウスがあるとき
 		else
 		{
 			if (selectedBuilding)
 			{
-                //selectedBuilding.GetComponent<Renderer>().material = defaultBuildingMaterial;
-                //selectedBuilding.GetComponent<Renderer>().material.color = preColor;
                 selectedBuilding.Deselected();
                 selectedBuilding = null;
             }
 			file_name.text = "";
-            file_back.color = new Color(file_back.color.r, file_back.color.g, file_back.color.b, 0);
-		}
+            file_back.color = new Color(file_back.color.r, file_back.color.g, file_back.color.b, 0);            // ファイル名を出す部分を非表示にする
+        }
 	}
 
+    // 土台にマウスを合わせたときの動作
     private void HighlighMouseOverBlock(Block block)
     {
         if (block != null)
         {
             if (selectedBlock == null || selectedBlock != block)
             {
+                // マウスが乗っている土台がrootディレクトリの場合
                 if (block.transform.name.IndexOf(".git") + 4 == block.transform.name.Length)
                 {
                     block_name.text = "(root)";
                 }
+                // rootディレクトリ以外のディレクトリの場合
                 else
                 {
                     block_name.text = "/" + block.transform.name.Substring(block.transform.name.IndexOf(".git") + 5);
                 }
-                block_back.color = new Color(block_back.color.r, block_back.color.g, block_back.color.b, 0.7f);
+                block_back.color = new Color(block_back.color.r, block_back.color.g, block_back.color.b, 0.7f);     // ディレクトリ名を出す部分を表示する
 
+                // 土台から土台にマウスが移る場合、先に乗っていた方の土台からマウスが離れたことにするよう処理
                 if (selectedBlock)
                 {
                     selectedBlock.Deselected();
@@ -634,6 +573,7 @@ public class CameraMove : MonoBehaviour {
                 selectedBlock.Selected();
             }
         }
+        // 土台以外のところにマウスがあるとき
         else
         {
             if (selectedBlock)
@@ -642,10 +582,11 @@ public class CameraMove : MonoBehaviour {
                 selectedBlock = null;
             }
             block_name.text = "";
-            block_back.color = new Color(block_back.color.r, block_back.color.g, block_back.color.b, 0);
+            block_back.color = new Color(block_back.color.r, block_back.color.g, block_back.color.b, 0);            // ディレクトリ名を出す部分を非表示にする
         }
     }
 
+    // ビルにマウスを合わせたかどうか調べる
     private Building GetRaycastHitBuilding()
 	{
 		RaycastHit hit;
@@ -659,6 +600,7 @@ public class CameraMove : MonoBehaviour {
 		return null;
 	}
 
+    // 土台にマウスを合わせたかどうか調べる
     private Block GetRaycastHitBlock()
     {
         RaycastHit hit;
@@ -673,122 +615,39 @@ public class CameraMove : MonoBehaviour {
     }
 
 
-    private Marker GetRaycastHitMarker()
+    // SATDのリストをクリックしたときの動作
+    public void SATDListClick(string fileFullPath)
     {
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, 10000))
+        // ルートディレクトリを中心とすれば良い場合＝クリックした項目のビルがあるディレクトリがルートディレクトリorルートディレクトリのサブディレクトリの場合
+        // ルートディレクトリを中心として都市を再構成
+        if (fileFullPath.Substring(0, fileFullPath.LastIndexOf("/")).Substring(0, fileFullPath.Substring(0, fileFullPath.LastIndexOf("/")).LastIndexOf("/")).Length < cc.GetRootName().Length)
         {
-            Marker hitMarker = hit.transform.GetComponent<Marker>();
-            return hitMarker;
-        }
-
-        return null;
-    }
-
-
-    void OnGUI()
-	{
-		if(view_src)
-			//src_txt = GUI.TextArea (new Rect (5, 5, Screen.width-10, Screen.height-100), src_txt);
-			src_txt = GUI.TextArea (new Rect (5, 5, Screen.width-10, Screen.height-100), src_txt.Substring(0,Math.Min(10000,src_txt.Length)));
-
-	}
-
-    /*
-	string ReadFile(string path){
-		string st = "";
-		try {
-		// FileReadTest.txtファイルを読み込む
-		FileInfo fi = new FileInfo(path);
-
-
-			// 一行毎読み込み
-			using (StreamReader sr = new StreamReader(fi.OpenRead(), Encoding.UTF8)){
-				st = sr.ReadToEnd();
-			}
-		} catch (Exception e){
-			// 改行コード
-			st += SetDefaultText();
-		}
-
-		return st;
-	}
-    */
-
-	string SearchPathFromFileName(string file_name){
-		string path = "";
-		IList buildings = cc.GetCity()["buildings"] as IList;
-		foreach (Dictionary<string,object> building in buildings) {
-			if(building["name"].ToString() == file_name){
-				path = building["path"].ToString();
-			}
-		}
-		return path;
-
-	}
-
-    string SearchPathFromFileNameforBlock(string block_name)
-    {
-        string path = "";
-        IList blocks = cc.GetCity()["blocks"] as IList;
-        IList dirs = cc.GetCity()["directories"] as IList;
-        foreach (Dictionary<string, object> block in blocks)
-        {
-            if (block["name"].ToString() == block_name)
-            {
-                path = block["name"].ToString();
-            }
-        }
-
-        if (path == "")
-        {
-            for(int i = 0; i < dirs.Count; i++)
-            {
-                if ((string)dirs[i] == block_name)
-                    path = (string)dirs[i];
-            }
-        }
-
-        return path;
-
-    }
-
-    // 改行コード処理
-    string SetDefaultText(){
-		return "cant read\n";
-	}
-
-    public void SATDListClick(string dir_name)
-    {
-        //Debug.Log(dir_name);
-        //Debug.Log(dir_name.Substring(0, dir_name.LastIndexOf("/")).Substring(0, dir_name.Substring(0, dir_name.LastIndexOf("/")).LastIndexOf("/")));
-
-        if (dir_name.Substring(0, dir_name.LastIndexOf("/")).Substring(0, dir_name.Substring(0, dir_name.LastIndexOf("/")).LastIndexOf("/")).Length < cc.GetRootName().Length)
-        {
-            //Debug.Log("/" + cc.GetRootName());
             cc.RemakeCity(cc.GetRootName(), true);
         }
-            
+        // その他の場合＝クリックした項目のビルがあるディレクトリが周囲に来るように都市を再構成
         else
         {
-            //Debug.Log("/" + dir_name.Substring(0, dir_name.LastIndexOf("/")).Substring(0, dir_name.Substring(0, dir_name.LastIndexOf("/")).LastIndexOf("/")));
-            cc.RemakeCity("/" + dir_name.Substring(0, dir_name.LastIndexOf("/")).Substring(0, dir_name.Substring(0, dir_name.LastIndexOf("/")).LastIndexOf("/")), true);
+            cc.RemakeCity("/" + fileFullPath.Substring(0, fileFullPath.LastIndexOf("/")).Substring(0, fileFullPath.Substring(0, fileFullPath.LastIndexOf("/")).LastIndexOf("/")), true);
         }
 
-        GameObject search_block = GameObject.Find(dir_name);
-        if (search_block != null)
+        // クリックした項目のビルのオブジェクトを取ってくる
+        GameObject search_building = GameObject.Find(fileFullPath);
+        if (search_building != null)
         {
-            //Debug.Log(search_block.name);
-            this.transform.position = new Vector3(search_block.transform.position.x - search_block.transform.localScale.x * 15, search_block.transform.localScale.y * 10 + 200, search_block.transform.position.z);
-            this.transform.LookAt(search_block.transform);
+            // メインカメラをそのビルの近くに移動させる
+            this.transform.position = new Vector3(search_building.transform.position.x - search_building.transform.localScale.x * 15, search_building.transform.localScale.y * 10 + 200, search_building.transform.position.z);
+            this.transform.LookAt(search_building.transform);
 
-            MouseClicked(search_block.GetComponent<Building>(), null, null);
-            RightMouseClicked(search_block.GetComponent<Building>());
+            // そのビルをクリックしたときと同じ動作をするようにする
+            MouseClicked(search_building.GetComponent<Building>(), null);
+            BuildingInfo(search_building.GetComponent<Building>());
+
+            // リストを閉じる
             list.enabled = !list.enabled;
         }
     }
 
+    // 一番高いビルの高さを求める
     float MostHeighestBuilding()
     {
         float max = 0;
