@@ -809,6 +809,11 @@ public class CityCreater : MonoBehaviour
         // 以下の場合、163.221.29.171でアクセスするとJavascriptのエラーが起きるので注意！
         // rocat.naist.jpでアクセスすればOK
 
+        // 2017/03/22 追記
+        // "rocat.naist.jp"の部分はIP申請時に設定されたDNS名に合わせてください
+        // 公開していない（DNS名が無い）ときはIPアドレスを指定すればOKかと
+        // その他、Jsonファイルが存在するディレクトリやファイル名に合わせて適宜調整してね
+
         //string url = "http://kataribe-dev.naist.jp:802/public/code_city.json?id=" + id;
         //string url = "http://163.221.29.246/json/" + id + ".json";
         //string url = "http://163.221.29.171/json/" + id + ".json";
