@@ -1,5 +1,8 @@
-# Self-admitted technical debtの除去ゲーミフィケーションシステム  
+# HEIZO:Self-admitted technical debtの除去ゲーミフィケーションシステム  
 Splatoonもどきなんてなかったんや
 
 バッジテスト  
 [![badge](https://img.shields.io/badge/HEIZO-Ver1.0.0-orange.svg)](http://rocat.naist.jp/)
+
+
+プログラムの説明はAssetsのReadmeをご覧ください．
